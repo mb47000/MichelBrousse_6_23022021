@@ -30,4 +30,7 @@ module.exports = {
   devServer: {
     writeToDisk: true,
   },
+  experiments: {
+    topLevelAwait: true,
+  }
 };

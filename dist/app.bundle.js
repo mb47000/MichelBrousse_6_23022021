@@ -188,6 +188,111 @@ ansiHTML.reset()
 
 /***/ }),
 
+/***/ "./src/JsonFetcher.js":
+/*!****************************!*\
+  !*** ./src/JsonFetcher.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var JsonFetcher = /*#__PURE__*/function () {
+  function JsonFetcher(jsonData) {
+    _classCallCheck(this, JsonFetcher);
+
+    this.jsonData = jsonData;
+  }
+
+  _createClass(JsonFetcher, [{
+    key: "fetchData",
+    value: function () {
+      var _fetchData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return fetch(this.jsonData);
+
+              case 3:
+                response = _context.sent;
+
+                if (response.ok) {
+                  _context.next = 8;
+                  break;
+                }
+
+                throw new Error("la requete à échoué");
+
+              case 8:
+                return _context.abrupt("return", response.json());
+
+              case 9:
+                _context.next = 14;
+                break;
+
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](0);
+                console.error("Erreur: ".concat(_context.t0));
+
+              case 14:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 11]]);
+      }));
+
+      function fetchData() {
+        return _fetchData.apply(this, arguments);
+      }
+
+      return fetchData;
+    }()
+  }]);
+
+  return JsonFetcher;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (JsonFetcher);
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__) => {
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _JsonFetcher__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./JsonFetcher */ "./src/JsonFetcher.js");
+
+var jsonFetcher = new _JsonFetcher__WEBPACK_IMPORTED_MODULE_0__.default('./src/data/data.json');
+var data = await jsonFetcher.fetchData();
+console.log(data);
+__webpack_handle_async_dependencies__();
+}, 1);
+
+/***/ }),
+
 /***/ "./node_modules/events/events.js":
 /*!***************************************!*\
   !*** ./node_modules/events/events.js ***!
@@ -9011,6 +9116,193 @@ module.exports = /*#__PURE__*/function (_BaseClient) {
 
 /***/ }),
 
+/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8080":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/webpack-dev-server/client/index.js?http://localhost:8080 ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+var __resourceQuery = "?http://localhost:8080";
+
+/* global __resourceQuery WorkerGlobalScope self */
+
+/* eslint prefer-destructuring: off */
+
+var stripAnsi = __webpack_require__(/*! strip-ansi */ "./node_modules/webpack-dev-server/node_modules/strip-ansi/index.js");
+
+var socket = __webpack_require__(/*! ./socket */ "./node_modules/webpack-dev-server/client/socket.js");
+
+var overlay = __webpack_require__(/*! ./overlay */ "./node_modules/webpack-dev-server/client/overlay.js");
+
+var _require = __webpack_require__(/*! ./utils/log */ "./node_modules/webpack-dev-server/client/utils/log.js"),
+    log = _require.log,
+    setLogLevel = _require.setLogLevel;
+
+var sendMessage = __webpack_require__(/*! ./utils/sendMessage */ "./node_modules/webpack-dev-server/client/utils/sendMessage.js");
+
+var reloadApp = __webpack_require__(/*! ./utils/reloadApp */ "./node_modules/webpack-dev-server/client/utils/reloadApp.js");
+
+var createSocketUrl = __webpack_require__(/*! ./utils/createSocketUrl */ "./node_modules/webpack-dev-server/client/utils/createSocketUrl.js");
+
+var status = {
+  isUnloading: false,
+  currentHash: ''
+};
+var options = {
+  hot: false,
+  hotReload: true,
+  liveReload: false,
+  initial: true,
+  useWarningOverlay: false,
+  useErrorOverlay: false,
+  useProgress: false
+};
+var socketUrl = createSocketUrl(__resourceQuery);
+self.addEventListener('beforeunload', function () {
+  status.isUnloading = true;
+});
+
+if (typeof window !== 'undefined') {
+  var qs = window.location.search.toLowerCase();
+  options.hotReload = qs.indexOf('hotreload=false') === -1;
+}
+
+var onSocketMessage = {
+  hot: function hot() {
+    options.hot = true;
+    log.info('[WDS] Hot Module Replacement enabled.');
+  },
+  liveReload: function liveReload() {
+    options.liveReload = true;
+    log.info('[WDS] Live Reloading enabled.');
+  },
+  invalid: function invalid() {
+    log.info('[WDS] App updated. Recompiling...'); // fixes #1042. overlay doesn't clear if errors are fixed but warnings remain.
+
+    if (options.useWarningOverlay || options.useErrorOverlay) {
+      overlay.clear();
+    }
+
+    sendMessage('Invalid');
+  },
+  hash: function hash(_hash) {
+    status.currentHash = _hash;
+  },
+  'still-ok': function stillOk() {
+    log.info('[WDS] Nothing changed.');
+
+    if (options.useWarningOverlay || options.useErrorOverlay) {
+      overlay.clear();
+    }
+
+    sendMessage('StillOk');
+  },
+  'log-level': function logLevel(level) {
+    var hotCtx = __webpack_require__("./node_modules/webpack/hot sync ^\\.\\/log$");
+
+    if (hotCtx.keys().indexOf('./log') !== -1) {
+      hotCtx('./log').setLogLevel(level);
+    }
+
+    setLogLevel(level);
+  },
+  overlay: function overlay(value) {
+    if (typeof document !== 'undefined') {
+      if (typeof value === 'boolean') {
+        options.useWarningOverlay = false;
+        options.useErrorOverlay = value;
+      } else if (value) {
+        options.useWarningOverlay = value.warnings;
+        options.useErrorOverlay = value.errors;
+      }
+    }
+  },
+  progress: function progress(_progress) {
+    if (typeof document !== 'undefined') {
+      options.useProgress = _progress;
+    }
+  },
+  'progress-update': function progressUpdate(data) {
+    if (options.useProgress) {
+      log.info("[WDS] ".concat(data.percent, "% - ").concat(data.msg, "."));
+    }
+
+    sendMessage('Progress', data);
+  },
+  ok: function ok() {
+    sendMessage('Ok');
+
+    if (options.useWarningOverlay || options.useErrorOverlay) {
+      overlay.clear();
+    }
+
+    if (options.initial) {
+      return options.initial = false;
+    } // eslint-disable-line no-return-assign
+
+
+    reloadApp(options, status);
+  },
+  'content-changed': function contentChanged() {
+    log.info('[WDS] Content base changed. Reloading...');
+    self.location.reload();
+  },
+  warnings: function warnings(_warnings) {
+    log.warn('[WDS] Warnings while compiling.');
+
+    var strippedWarnings = _warnings.map(function (warning) {
+      return stripAnsi(warning);
+    });
+
+    sendMessage('Warnings', strippedWarnings);
+
+    for (var i = 0; i < strippedWarnings.length; i++) {
+      log.warn(strippedWarnings[i]);
+    }
+
+    if (options.useWarningOverlay) {
+      overlay.showMessage(_warnings);
+    }
+
+    if (options.initial) {
+      return options.initial = false;
+    } // eslint-disable-line no-return-assign
+
+
+    reloadApp(options, status);
+  },
+  errors: function errors(_errors) {
+    log.error('[WDS] Errors while compiling. Reload prevented.');
+
+    var strippedErrors = _errors.map(function (error) {
+      return stripAnsi(error);
+    });
+
+    sendMessage('Errors', strippedErrors);
+
+    for (var i = 0; i < strippedErrors.length; i++) {
+      log.error(strippedErrors[i]);
+    }
+
+    if (options.useErrorOverlay) {
+      overlay.showMessage(_errors);
+    }
+
+    options.initial = false;
+  },
+  error: function error(_error) {
+    log.error(_error);
+  },
+  close: function close() {
+    log.error('[WDS] Disconnected!');
+    sendMessage('Close');
+  }
+};
+socket(socketUrl, onSocketMessage);
+
+/***/ }),
+
 /***/ "./node_modules/webpack-dev-server/client/overlay.js":
 /*!***********************************************************!*\
   !*** ./node_modules/webpack-dev-server/client/overlay.js ***!
@@ -9656,6 +9948,94 @@ webpackContext.id = "./node_modules/webpack/hot sync ^\\.\\/log$";
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackThen = typeof Symbol === "function" ? Symbol("webpack then") : "__webpack_then__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var completeQueue = (queue) => {
+/******/ 			if(queue) {
+/******/ 				queue.forEach(fn => fn.r--);
+/******/ 				queue.forEach(fn => fn.r-- ? fn.r++ : fn());
+/******/ 			}
+/******/ 		}
+/******/ 		var completeFunction = fn => !--fn.r && fn();
+/******/ 		var queueFunction = (queue, fn) => queue ? queue.push(fn) : completeFunction(fn);
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackThen]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [], result;
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						completeQueue(queue);
+/******/ 						queue = 0;
+/******/ 					});
+/******/ 					var obj = { [webpackThen]: (fn, reject) => { queueFunction(queue, fn); dep.catch(reject); } };
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			return { [webpackThen]: (fn) => { completeFunction(fn); }, [webpackExports]: dep };
+/******/ 		}));
+/******/ 		__webpack_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue = hasAwait && [];
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var isEvaluating = true;
+/******/ 			var nested = false;
+/******/ 			var whenAll = (deps, onResolve, onReject) => {
+/******/ 				if (nested) return;
+/******/ 				nested = true;
+/******/ 				onResolve.r += deps.length;
+/******/ 				deps.map((dep, i) => {
+/******/ 					dep[webpackThen](onResolve, onReject);
+/******/ 				});
+/******/ 				nested = false;
+/******/ 			};
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = () => {
+/******/ 					resolve(exports);
+/******/ 					completeQueue(queue);
+/******/ 					queue = 0;
+/******/ 				};
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackThen] = (fn, rejectFn) => {
+/******/ 				if (isEvaluating) { return completeFunction(fn); }
+/******/ 				if (currentDeps) whenAll(currentDeps, fn, rejectFn);
+/******/ 				queueFunction(queue, fn);
+/******/ 				promise.catch(rejectFn);
+/******/ 			};
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				if(!deps) return outerResolve();
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn, result;
+/******/ 				var promise = new Promise((resolve, reject) => {
+/******/ 					fn = () => (resolve(result = currentDeps.map(d => d[webpackExports])))
+/******/ 					fn.r = 0;
+/******/ 					whenAll(currentDeps, fn, reject);
+/******/ 				});
+/******/ 				return fn.r ? promise : result;
+/******/ 			}).then(outerResolve, reject);
+/******/ 			isEvaluating = false;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -9673,6 +10053,17 @@ webpackContext.id = "./node_modules/webpack/hot sync ^\\.\\/log$";
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -9683,200 +10074,13 @@ webpackContext.id = "./node_modules/webpack/hot sync ^\\.\\/log$";
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
-(() => {
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-console.log("Project ");
-})();
-
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-/*!*******************************************************************************!*\
-  !*** ./node_modules/webpack-dev-server/client/index.js?http://localhost:8080 ***!
-  \*******************************************************************************/
-var __resourceQuery = "?http://localhost:8080";
-
-/* global __resourceQuery WorkerGlobalScope self */
-
-/* eslint prefer-destructuring: off */
-
-var stripAnsi = __webpack_require__(/*! strip-ansi */ "./node_modules/webpack-dev-server/node_modules/strip-ansi/index.js");
-
-var socket = __webpack_require__(/*! ./socket */ "./node_modules/webpack-dev-server/client/socket.js");
-
-var overlay = __webpack_require__(/*! ./overlay */ "./node_modules/webpack-dev-server/client/overlay.js");
-
-var _require = __webpack_require__(/*! ./utils/log */ "./node_modules/webpack-dev-server/client/utils/log.js"),
-    log = _require.log,
-    setLogLevel = _require.setLogLevel;
-
-var sendMessage = __webpack_require__(/*! ./utils/sendMessage */ "./node_modules/webpack-dev-server/client/utils/sendMessage.js");
-
-var reloadApp = __webpack_require__(/*! ./utils/reloadApp */ "./node_modules/webpack-dev-server/client/utils/reloadApp.js");
-
-var createSocketUrl = __webpack_require__(/*! ./utils/createSocketUrl */ "./node_modules/webpack-dev-server/client/utils/createSocketUrl.js");
-
-var status = {
-  isUnloading: false,
-  currentHash: ''
-};
-var options = {
-  hot: false,
-  hotReload: true,
-  liveReload: false,
-  initial: true,
-  useWarningOverlay: false,
-  useErrorOverlay: false,
-  useProgress: false
-};
-var socketUrl = createSocketUrl(__resourceQuery);
-self.addEventListener('beforeunload', function () {
-  status.isUnloading = true;
-});
-
-if (typeof window !== 'undefined') {
-  var qs = window.location.search.toLowerCase();
-  options.hotReload = qs.indexOf('hotreload=false') === -1;
-}
-
-var onSocketMessage = {
-  hot: function hot() {
-    options.hot = true;
-    log.info('[WDS] Hot Module Replacement enabled.');
-  },
-  liveReload: function liveReload() {
-    options.liveReload = true;
-    log.info('[WDS] Live Reloading enabled.');
-  },
-  invalid: function invalid() {
-    log.info('[WDS] App updated. Recompiling...'); // fixes #1042. overlay doesn't clear if errors are fixed but warnings remain.
-
-    if (options.useWarningOverlay || options.useErrorOverlay) {
-      overlay.clear();
-    }
-
-    sendMessage('Invalid');
-  },
-  hash: function hash(_hash) {
-    status.currentHash = _hash;
-  },
-  'still-ok': function stillOk() {
-    log.info('[WDS] Nothing changed.');
-
-    if (options.useWarningOverlay || options.useErrorOverlay) {
-      overlay.clear();
-    }
-
-    sendMessage('StillOk');
-  },
-  'log-level': function logLevel(level) {
-    var hotCtx = __webpack_require__("./node_modules/webpack/hot sync ^\\.\\/log$");
-
-    if (hotCtx.keys().indexOf('./log') !== -1) {
-      hotCtx('./log').setLogLevel(level);
-    }
-
-    setLogLevel(level);
-  },
-  overlay: function overlay(value) {
-    if (typeof document !== 'undefined') {
-      if (typeof value === 'boolean') {
-        options.useWarningOverlay = false;
-        options.useErrorOverlay = value;
-      } else if (value) {
-        options.useWarningOverlay = value.warnings;
-        options.useErrorOverlay = value.errors;
-      }
-    }
-  },
-  progress: function progress(_progress) {
-    if (typeof document !== 'undefined') {
-      options.useProgress = _progress;
-    }
-  },
-  'progress-update': function progressUpdate(data) {
-    if (options.useProgress) {
-      log.info("[WDS] ".concat(data.percent, "% - ").concat(data.msg, "."));
-    }
-
-    sendMessage('Progress', data);
-  },
-  ok: function ok() {
-    sendMessage('Ok');
-
-    if (options.useWarningOverlay || options.useErrorOverlay) {
-      overlay.clear();
-    }
-
-    if (options.initial) {
-      return options.initial = false;
-    } // eslint-disable-line no-return-assign
-
-
-    reloadApp(options, status);
-  },
-  'content-changed': function contentChanged() {
-    log.info('[WDS] Content base changed. Reloading...');
-    self.location.reload();
-  },
-  warnings: function warnings(_warnings) {
-    log.warn('[WDS] Warnings while compiling.');
-
-    var strippedWarnings = _warnings.map(function (warning) {
-      return stripAnsi(warning);
-    });
-
-    sendMessage('Warnings', strippedWarnings);
-
-    for (var i = 0; i < strippedWarnings.length; i++) {
-      log.warn(strippedWarnings[i]);
-    }
-
-    if (options.useWarningOverlay) {
-      overlay.showMessage(_warnings);
-    }
-
-    if (options.initial) {
-      return options.initial = false;
-    } // eslint-disable-line no-return-assign
-
-
-    reloadApp(options, status);
-  },
-  errors: function errors(_errors) {
-    log.error('[WDS] Errors while compiling. Reload prevented.');
-
-    var strippedErrors = _errors.map(function (error) {
-      return stripAnsi(error);
-    });
-
-    sendMessage('Errors', strippedErrors);
-
-    for (var i = 0; i < strippedErrors.length; i++) {
-      log.error(strippedErrors[i]);
-    }
-
-    if (options.useErrorOverlay) {
-      overlay.showMessage(_errors);
-    }
-
-    options.initial = false;
-  },
-  error: function error(_error) {
-    log.error(_error);
-  },
-  close: function close() {
-    log.error('[WDS] Disconnected!');
-    sendMessage('Close');
-  }
-};
-socket(socketUrl, onSocketMessage);
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	__webpack_require__("./src/index.js");
+/******/ 	// This entry module used 'module' so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./node_modules/webpack-dev-server/client/index.js?http://localhost:8080");
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=app.js.map
