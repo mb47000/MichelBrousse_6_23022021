@@ -27,7 +27,6 @@ for (const photographer in photographers) {
     router.addRoute({ path: `/${name}`, page: photographerPage });
 }
 
-
 const container = document.querySelector("body");
 
 Render.injectHtml(router.pageToLoad().getHtml(), container);

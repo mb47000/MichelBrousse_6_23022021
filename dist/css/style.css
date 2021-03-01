@@ -17,6 +17,14 @@ a {
 
 ul {
   list-style: none;
+  display: flex;
+}
+
+.card__avatar {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  max-width: 200px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -409,7 +409,7 @@ var Router = /*#__PURE__*/function () {
 
     this.currentRoute = window.location.pathname;
     history.pushState({
-      pageID: this.currentRoute
+      route: this.currentRoute
     }, this.currentRoute, this.currentRoute);
   }
 
@@ -418,10 +418,12 @@ var Router = /*#__PURE__*/function () {
     value: function listenNavigation(querySelector, container) {
       var _this = this;
 
-      document.querySelectorAll(querySelector).forEach(function (item) {
-        item.addEventListener("click", function (event) {
-          return _this.redirectOnClick(event, container);
-        });
+      document.addEventListener("click", function (event) {
+        if (event.target.tagName == querySelector.toUpperCase()) {
+          console.log("hi");
+
+          _this.redirectOnClick(event, container);
+        }
       });
       window.addEventListener("popstate", function (event) {
         return _this.redirectOnHistoryNavigation(event, container);
@@ -465,7 +467,6 @@ var Router = /*#__PURE__*/function () {
       _Render__WEBPACK_IMPORTED_MODULE_0__.default.injectHtml(this.pageToLoad().addProps({
         id: id
       }).getHtml(), container);
-      this.listenNavigation("a", container);
     }
   }]);
 
@@ -495,11 +496,101 @@ var Card = function Card() {
   _classCallCheck(this, Card);
 };
 
+_defineProperty(Card, "tags", function (tags) {
+  var tagHtml = "<ul>";
+  tags.forEach(function (tag) {
+    tagHtml += "<li><button class=\"tag\" value=\"".concat(tag, "\">").concat(tag, "</button></li>");
+  });
+  tagHtml += "</ul>";
+  return tagHtml;
+});
+
 _defineProperty(Card, "getHtml", function (entity) {
-  return "<div><a href=\"/".concat(entity.name.replace(/\s/g, ""), "\" data-id=").concat(entity.id, ">").concat(entity.name, "</a></div>");
+  return "<div class=\"card\"><img class=\"card__avatar\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/".concat(entity.name.replace(/\s/g, ""), ".jpg\"><h2><a href=\"/").concat(entity.name.replace(/\s/g, ""), "\" data-id=").concat(entity.id, ">").concat(entity.name, "</a></h2><div><p>").concat(entity.city, "</p><p>").concat(entity.tagline, "</p><p>").concat(entity.price, "\u20AC/jour</p></div>\n    <div>").concat(Card.tags(entity.tags), "\n    </div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Card);
+
+/***/ }),
+
+/***/ "./src/components/Tags.js":
+/*!********************************!*\
+  !*** ./src/components/Tags.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Render__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Render */ "./src/Render.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var Tags = /*#__PURE__*/function () {
+  function Tags(tags, entityList, containerSelector, renderMethod) {
+    var _this = this;
+
+    _classCallCheck(this, Tags);
+
+    _defineProperty(this, "getHtml", function () {
+      var tagHtml = "<ul>";
+
+      _this.tagList.forEach(function (tag) {
+        tagHtml += "<li><button class=\"tag\" value=\"".concat(tag, "\">").concat(tag, "</button></li>");
+      });
+
+      tagHtml += "</ul>";
+
+      if (!_this.listenerIsOn) {
+        document.addEventListener("click", function (event) {
+          return _this.tagListener(event, _this.entityList, _this.containerSelector, _this.renderMethod);
+        });
+        _this.listenerIsOn = true;
+      }
+
+      return tagHtml;
+    });
+
+    this.tagList = tags;
+    this.entityList = entityList;
+    this.containerSelector = containerSelector;
+    this.listenerIsOn = false;
+    this.renderMethod = renderMethod;
+  }
+
+  _createClass(Tags, [{
+    key: "tagListener",
+    value: function tagListener(event, entityList, containerSelector, renderMethod) {
+      var element = event.target;
+      var filteredEntity = {};
+
+      if (element.classList.contains("tag")) {
+        for (var entity in entityList) {
+          var tag = entityList[entity].tags;
+
+          if (tag.includes(element.value)) {
+            filteredEntity[entityList[entity].id] = entityList[entity];
+          }
+        }
+
+        _Render__WEBPACK_IMPORTED_MODULE_0__.default.injectHtml(renderMethod(filteredEntity), document.querySelector(containerSelector));
+      }
+    }
+  }]);
+
+  return Tags;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Tags);
 
 /***/ }),
 
@@ -567,6 +658,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_Card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Card */ "./src/components/Card.js");
+/* harmony import */ var _components_Tags__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Tags */ "./src/components/Tags.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -577,24 +681,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var HomePage = /*#__PURE__*/function () {
   function HomePage(data) {
     var _this = this;
 
     _classCallCheck(this, HomePage);
 
-    _defineProperty(this, "cards", function () {
-      var cards = "";
+    _defineProperty(this, "tagListenerStatus", false);
+
+    _defineProperty(this, "tags", function () {
+      var tagList = [];
 
       for (var photographer in _this.photographers) {
-        cards += _components_Card__WEBPACK_IMPORTED_MODULE_0__.default.getHtml(_this.photographers[photographer]);
+        var tag = _this.photographers[photographer].tags;
+        tagList = tagList.concat(tag);
+      }
+
+      tagList = _toConsumableArray(new Set(tagList));
+      var tags = new _components_Tags__WEBPACK_IMPORTED_MODULE_1__.default(tagList, _this.photographers, '.cards', _this.cards);
+      return tags.getHtml();
+    });
+
+    _defineProperty(this, "cards", function (entity) {
+      var cards = "";
+
+      for (var photographer in entity) {
+        cards += _components_Card__WEBPACK_IMPORTED_MODULE_0__.default.getHtml(entity[photographer]);
       }
 
       return cards;
     });
 
     _defineProperty(this, "getHtml", function () {
-      return "<div>Page d'accueil</div>".concat(_this.cards());
+      return "<h1>Page d'accueil</h1><div>".concat(_this.tags(), "</div><div class=\"cards\">").concat(_this.cards(_this.photographers), "</div>");
     });
 
     this.photographers = data;
