@@ -2,7 +2,6 @@ import Card from "../components/Card";
 import Tags from "../components/Tags";
 
 class HomePage {
-
   tagListenerStatus = false;
 
   constructor(data) {
@@ -15,17 +14,26 @@ class HomePage {
   }
 
   tags = () => {
-    let tagList = [];
-    for (const photographer in this.photographers) {
-      let tag = this.photographers[photographer].tags;
-      tagList = tagList.concat(tag);
+    if (!this.tagListenerStatus) {
+      let tagList = [];
+      for (const photographer in this.photographers) {
+        let tag = this.photographers[photographer].tags;
+        tagList = tagList.concat(tag);
+      }
+
+      tagList = [...new Set(tagList)];
+
+      this.photographerTags = new Tags(
+        tagList,
+        this.photographers,
+        ".cards",
+        this.cards
+      );
+
+      this.tagListenerStatus = true;
     }
 
-    tagList = [...new Set(tagList)];
-
-    const tags = new Tags(tagList, this.photographers, '.cards', this.cards)
-
-    return tags.getHtml();
+    return this.photographerTags.getHtml();
   };
 
   cards = (entity) => {

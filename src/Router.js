@@ -16,7 +16,6 @@ class Router {
     document.addEventListener("click", (event) => {
 
       if(event.target.tagName == querySelector.toUpperCase()){
-        console.log("hi");
         this.redirectOnClick(event, container)
     }
     });

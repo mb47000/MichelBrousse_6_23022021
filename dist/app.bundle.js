@@ -200,9 +200,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Photographer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Photographer */ "./src/Photographer.js");
+/* harmony import */ var _Media__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Media */ "./src/Media.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -211,6 +213,21 @@ var Factory = function Factory() {
 
   _defineProperty(this, "createPhotographer", function (data) {
     return new _Photographer__WEBPACK_IMPORTED_MODULE_0__.default(data);
+  });
+
+  _defineProperty(this, "createMedia", function (data, type) {
+    switch (type) {
+      case "image":
+        return new _Media__WEBPACK_IMPORTED_MODULE_1__.default(data, "image");
+
+      case "video":
+        return new _Media__WEBPACK_IMPORTED_MODULE_1__.default(data, "video");
+
+      default:
+        break;
+    }
+
+    console.log(type);
   });
 };
 
@@ -301,6 +318,48 @@ var JsonFetcher = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (JsonFetcher);
+
+/***/ }),
+
+/***/ "./src/Media.js":
+/*!**********************!*\
+  !*** ./src/Media.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Media = function Media(_ref, type) {
+  var id = _ref.id,
+      photographerId = _ref.photographerId,
+      _ref$image = _ref.image,
+      image = _ref$image === void 0 ? null : _ref$image,
+      _ref$video = _ref.video,
+      video = _ref$video === void 0 ? null : _ref$video,
+      tags = _ref.tags,
+      likes = _ref.likes,
+      date = _ref.date,
+      price = _ref.price;
+
+  _classCallCheck(this, Media);
+
+  this.type = type;
+  this.id = id;
+  this.photographerId = photographerId;
+  this.image = image;
+  this.video = video;
+  this.tags = tags;
+  this.likes = likes;
+  this.date = date;
+  this.price = price;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Media);
 
 /***/ }),
 
@@ -420,8 +479,6 @@ var Router = /*#__PURE__*/function () {
 
       document.addEventListener("click", function (event) {
         if (event.target.tagName == querySelector.toUpperCase()) {
-          console.log("hi");
-
           _this.redirectOnClick(event, container);
         }
       });
@@ -574,6 +631,8 @@ var Tags = /*#__PURE__*/function () {
       var filteredEntity = {};
 
       if (element.classList.contains("tag")) {
+        console.log("+1");
+
         for (var entity in entityList) {
           var tag = entityList[entity].tags;
 
@@ -619,8 +678,13 @@ var jsonFetcher = new _JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("./src/d
 var store = await jsonFetcher.fetchData();
 var factory = new _Factory__WEBPACK_IMPORTED_MODULE_5__.default();
 var photographers = {};
+var medias = {};
 store.photographers.forEach(function (photographer) {
   photographers[photographer.id] = factory.createPhotographer(photographer);
+});
+store.media.forEach(function (data) {
+  var type = Object.keys(data)[2];
+  medias[data.id] = factory.createMedia(data, type);
 });
 var homePage = new _pages_HomePage__WEBPACK_IMPORTED_MODULE_3__.default(photographers);
 var photographerPage = new _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__.default(photographers);
@@ -691,16 +755,20 @@ var HomePage = /*#__PURE__*/function () {
     _defineProperty(this, "tagListenerStatus", false);
 
     _defineProperty(this, "tags", function () {
-      var tagList = [];
+      if (!_this.tagListenerStatus) {
+        var tagList = [];
 
-      for (var photographer in _this.photographers) {
-        var tag = _this.photographers[photographer].tags;
-        tagList = tagList.concat(tag);
+        for (var photographer in _this.photographers) {
+          var tag = _this.photographers[photographer].tags;
+          tagList = tagList.concat(tag);
+        }
+
+        tagList = _toConsumableArray(new Set(tagList));
+        _this.photographerTags = new _components_Tags__WEBPACK_IMPORTED_MODULE_1__.default(tagList, _this.photographers, ".cards", _this.cards);
+        _this.tagListenerStatus = true;
       }
 
-      tagList = _toConsumableArray(new Set(tagList));
-      var tags = new _components_Tags__WEBPACK_IMPORTED_MODULE_1__.default(tagList, _this.photographers, '.cards', _this.cards);
-      return tags.getHtml();
+      return _this.photographerTags.getHtml();
     });
 
     _defineProperty(this, "cards", function (entity) {

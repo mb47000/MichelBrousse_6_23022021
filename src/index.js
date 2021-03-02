@@ -11,9 +11,15 @@ const store = await jsonFetcher.fetchData();
 const factory = new Factory();
 
 const photographers = {};
+const medias = {}
 
 store.photographers.forEach(photographer => {
     photographers[photographer.id] = factory.createPhotographer(photographer);
+});
+
+store.media.forEach(data => {
+    let type = Object.keys(data)[2];
+    medias[data.id] = factory.createMedia(data, type);
 });
 
 const homePage = new HomePage(photographers);
