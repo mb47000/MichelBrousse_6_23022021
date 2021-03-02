@@ -4,7 +4,7 @@ class Router {
   constructor() {
     this.currentRoute = window.location.pathname;
     history.pushState(
-      { pageID: this.currentRoute },
+      { route: this.currentRoute },
       this.currentRoute,
       this.currentRoute
     );
@@ -13,10 +13,11 @@ class Router {
   routes = {};
 
   listenNavigation(querySelector, container) {
-    document.querySelectorAll(querySelector).forEach((item) => {
-      item.addEventListener("click", (event) =>
+    document.addEventListener("click", (event) => {
+
+      if(event.target.tagName == querySelector.toUpperCase()){
         this.redirectOnClick(event, container)
-      );
+    }
     });
 
     window.addEventListener("popstate", (event) =>
@@ -51,7 +52,6 @@ class Router {
   loadPage(container, route, id) {
     this.currentRoute = route;
     Render.injectHtml(this.pageToLoad().addProps({ id }).getHtml(), container);
-    this.listenNavigation("a", container);
   }
 }
 
