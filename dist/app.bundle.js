@@ -631,8 +631,6 @@ var Tags = /*#__PURE__*/function () {
       var filteredEntity = {};
 
       if (element.classList.contains("tag")) {
-        console.log("+1");
-
         for (var entity in entityList) {
           var tag = entityList[entity].tags;
 

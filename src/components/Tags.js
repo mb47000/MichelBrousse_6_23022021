@@ -36,7 +36,6 @@ class Tags {
     let element = event.target;
     let filteredEntity = {};
     if (element.classList.contains("tag")) {
-        console.log("+1")
       for (const entity in entityList) {
         let tag = entityList[entity].tags;
         if (tag.includes(element.value)) {
