@@ -1,0 +1,18 @@
+.nav {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.nav__list {
+  display: flex;
+}
+
+@media (max-width: 820px) {
+  .nav {
+    order: 3;
+    width: 100%;
+  }
+}

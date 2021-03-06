@@ -1,5 +1,6 @@
 import Card from "../components/Card";
 import Tags from "../components/Tags";
+import Header from "../components/Header";
 
 class HomePage {
   tagListenerStatus = false;
@@ -12,6 +13,8 @@ class HomePage {
     this.props = props;
     return this;
   }
+
+  header = () => Header.getHtml();
 
   tags = () => {
     if (!this.tagListenerStatus) {
@@ -44,10 +47,10 @@ class HomePage {
     return cards;
   };
 
-  getHtml = () =>
-    `<h1>Page d'accueil</h1><div>${this.tags()}</div><div class="cards">${this.cards(
+  getPage = () =>
+    `<main class="container">${this.header()}<nav aria-label="Photographer categories"  class="nav">${this.tags()}</nav><div class="cards" ${this.cards(
       this.photographers
-    )}</div>`;
+    )}</div></main>`;
 }
 
 export default HomePage;

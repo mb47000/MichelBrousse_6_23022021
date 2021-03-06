@@ -1,15 +1,11 @@
 class PhotographerPage {
-  constructor(data) {
-    this.photographers = data;
-  }
-  
-  getHtml = () =>{
-  return  `<div>Page d'un photographe ${this.photographers[+this.props.id].name}</div><a href="/">home page</a>`;}
+
+  getPage = () =>{
+  return  `<div>Page d'un photographe ${this.props.name}</div><a href="/" class="a-navigation">home page</a>`;}
 
   addProps = (props) => {
     this.props = props;
-    return this;
-    
+    return this;   
   };
 }
 
