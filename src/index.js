@@ -28,12 +28,16 @@ const photographerPage = new PhotographerPage(photographers);
 
 const container = document.querySelector("body");
 const router = new Router(container);
-router.addRoute({ path: "/", page: homePage.getPage });
-router.addRoute({ path: "/index.html", page: homePage.getPage });
+
+
+router.addRoute({ path: "/MichelBrousse_6_23022021/", page: homePage.getPage });
+router.addRoute({ path: "/MichelBrousse_6_23022021/index.html", page: homePage.getPage });
+router.addRoute({ path: "/MichelBrousse_6_23022021/404", page: "<h1>page 404</h1>" });
+
 for (const photographer in photographers) {
   let id = photographers[photographer].id;
   router.addRoute({
-    path: `/photographer/${id}`,
+    path: `/MichelBrousse_6_23022021/photographer/${id}`,
     page: photographerPage.getPage,
   });
 }

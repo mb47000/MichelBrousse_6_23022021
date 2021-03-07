@@ -544,8 +544,11 @@ var Router = /*#__PURE__*/function () {
   }, {
     key: "pageToLoad",
     value: function pageToLoad() {
-      console.log(this.currentRoute);
-      return this.routes[this.currentRoute]();
+      if (Object.keys(this.routes).includes(this.currentRoute)) {
+        return this.routes[this.currentRoute]();
+      } else {
+        return this.routes['/404'];
+      }
     }
   }, {
     key: "redirectOnClick",
@@ -773,18 +776,22 @@ var photographerPage = new _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__.
 var container = document.querySelector("body");
 var router = new _Router__WEBPACK_IMPORTED_MODULE_0__.default(container);
 router.addRoute({
-  path: "/",
+  path: "/MichelBrousse_6_23022021/",
   page: homePage.getPage
 });
 router.addRoute({
-  path: "/index.html",
+  path: "/MichelBrousse_6_23022021/index.html",
   page: homePage.getPage
+});
+router.addRoute({
+  path: "/MichelBrousse_6_23022021/404",
+  page: "<h1>page 404</h1>"
 });
 
 for (var photographer in photographers) {
   var id = photographers[photographer].id;
   router.addRoute({
-    path: "/photographer/".concat(id),
+    path: "/MichelBrousse_6_23022021/photographer/".concat(id),
     page: photographerPage.getPage
   });
 }

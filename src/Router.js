@@ -25,8 +25,11 @@ class Router {
   }
 
   pageToLoad() {
-    console.log(this.currentRoute)
-    return this.routes[this.currentRoute]();
+    if (Object.keys(this.routes).includes(this.currentRoute)) {
+      return this.routes[this.currentRoute]();
+    } else {
+      return this.routes['/404']
+    }
   }
 
   redirectOnClick(event, container) {
