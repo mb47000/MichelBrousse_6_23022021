@@ -218,10 +218,10 @@ var Factory = function Factory() {
   _defineProperty(this, "createMedia", function (data, type) {
     switch (type) {
       case "image":
-        return new _Media__WEBPACK_IMPORTED_MODULE_1__.default(data, "image");
+        return new _Media__WEBPACK_IMPORTED_MODULE_1__.default(data, type);
 
       case "video":
-        return new _Media__WEBPACK_IMPORTED_MODULE_1__.default(data, "video");
+        return new _Media__WEBPACK_IMPORTED_MODULE_1__.default(data, type);
 
       default:
         break;
@@ -363,6 +363,56 @@ var Media = function Media(_ref, type) {
 
 /***/ }),
 
+/***/ "./src/Orm.js":
+/*!********************!*\
+  !*** ./src/Orm.js ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Orm = /*#__PURE__*/function () {
+  function Orm(data) {
+    _classCallCheck(this, Orm);
+
+    if (Orm.exists) {
+      return Orm.instance;
+    }
+
+    this._data = data;
+    Orm.instance = this;
+    Orm.exists = true;
+    return this;
+  }
+
+  _createClass(Orm, [{
+    key: "getData",
+    value: function getData() {
+      return this._data;
+    }
+  }, {
+    key: "setData",
+    value: function setData(data) {
+      this._data = data;
+    }
+  }]);
+
+  return Orm;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Orm);
+
+/***/ }),
+
 /***/ "./src/Photographer.js":
 /*!*****************************!*\
   !*** ./src/Photographer.js ***!
@@ -494,7 +544,8 @@ var Router = /*#__PURE__*/function () {
   }, {
     key: "pageToLoad",
     value: function pageToLoad() {
-      return this.routes[this.currentRoute];
+      console.log(this.currentRoute);
+      return this.routes[this.currentRoute]();
     }
   }, {
     key: "redirectOnClick",
@@ -556,7 +607,7 @@ _defineProperty(Card, "tags", function (tags) {
 });
 
 _defineProperty(Card, "getHtml", function (entity) {
-  return "<div class=\"card\"><img class=\"card__avatar\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/".concat(entity.name.replace(/\s/g, ""), ".jpg\"><h2><a href=\"/").concat(entity.name.replace(/\s/g, ""), "\" class=\"a-navigation\" data-id=").concat(entity.id, ">").concat(entity.name, "</a></h2><div><p>").concat(entity.city, "</p><p>").concat(entity.tagline, "</p><p>").concat(entity.price, "\u20AC/jour</p></div>\n    <div>").concat(Card.tags(entity.tags), "\n    </div>");
+  return "<div class=\"card\"><img class=\"card__avatar\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/".concat(entity.name.replace(/\s/g, ""), ".jpg\"><h2><a href=\"/photographer/").concat(entity.id, "\" class=\"a-navigation\" data-id=").concat(entity.id, ">").concat(entity.name, "</a></h2><div><p>").concat(entity.city, "</p><p>").concat(entity.tagline, "</p><p>").concat(entity.price, "\u20AC/jour</p></div>\n    <div>").concat(Card.tags(entity.tags), "\n    </div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Card);
@@ -696,6 +747,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_HomePage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/HomePage */ "./src/pages/HomePage.js");
 /* harmony import */ var _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/PhotographerPage */ "./src/pages/PhotographerPage.js");
 /* harmony import */ var _Factory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Factory */ "./src/Factory.js");
+/* harmony import */ var _Orm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Orm */ "./src/Orm.js");
+
 
 
 
@@ -703,14 +756,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var jsonFetcher = new _JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("./src/data/data.json");
-var store = await jsonFetcher.fetchData();
+var dataBase = await jsonFetcher.fetchData();
+var orm = new _Orm__WEBPACK_IMPORTED_MODULE_6__.default(dataBase);
 var factory = new _Factory__WEBPACK_IMPORTED_MODULE_5__.default();
 var photographers = {};
 var medias = {};
-store.photographers.forEach(function (photographer) {
+orm.getData().photographers.forEach(function (photographer) {
   photographers[photographer.id] = factory.createPhotographer(photographer);
 });
-store.media.forEach(function (data) {
+orm.getData().media.forEach(function (data) {
   var type = Object.keys(data)[2];
   medias[data.id] = factory.createMedia(data, type);
 });
@@ -720,14 +774,18 @@ var container = document.querySelector("body");
 var router = new _Router__WEBPACK_IMPORTED_MODULE_0__.default(container);
 router.addRoute({
   path: "/",
-  page: homePage.getPage()
+  page: homePage.getPage
+});
+router.addRoute({
+  path: "/index.html",
+  page: homePage.getPage
 });
 
 for (var photographer in photographers) {
-  var name = photographers[photographer].name.replace(/\s/g, "");
+  var id = photographers[photographer].id;
   router.addRoute({
-    path: "/".concat(name),
-    page: photographerPage.addProps(photographers[photographer]).getPage()
+    path: "/photographer/".concat(id),
+    page: photographerPage.getPage
   });
 }
 
@@ -852,19 +910,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var PhotographerPage = function PhotographerPage() {
+var PhotographerPage = function PhotographerPage(photographers) {
   var _this = this;
 
   _classCallCheck(this, PhotographerPage);
 
   _defineProperty(this, "getPage", function () {
-    return "<div>Page d'un photographe ".concat(_this.props.name, "</div><a href=\"/\" class=\"a-navigation\">home page</a>");
+    var url = window.location.pathname.split("/");
+    var id = url[url.length - 1];
+    return "<div>Page d'un photographe ".concat(_this.photographers[id].name, "</div><a href=\"/\" class=\"a-navigation\">home page</a>");
   });
 
   _defineProperty(this, "addProps", function (props) {
     _this.props = props;
     return _this;
   });
+
+  this.photographers = photographers;
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhotographerPage);

@@ -25,7 +25,8 @@ class Router {
   }
 
   pageToLoad() {
-    return this.routes[this.currentRoute];
+    console.log(this.currentRoute)
+    return this.routes[this.currentRoute]();
   }
 
   redirectOnClick(event, container) {
