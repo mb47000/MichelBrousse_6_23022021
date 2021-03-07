@@ -4,37 +4,40 @@ import JsonFetcher from "./JsonFetcher";
 import HomePage from "./pages/HomePage";
 import PhotographerPage from "./pages/PhotographerPage";
 import Factory from "./Factory";
+import Orm from "./Orm"
 
 const jsonFetcher = new JsonFetcher("./src/data/data.json");
-const store = await jsonFetcher.fetchData();
-
+const dataBase = await jsonFetcher.fetchData();
+const orm = new Orm(dataBase);
 const factory = new Factory();
 
 const photographers = {};
-const medias = {}
+const medias = {};
 
-store.photographers.forEach(photographer => {
-    photographers[photographer.id] = factory.createPhotographer(photographer);
+orm.getData().photographers.forEach((photographer) => {
+  photographers[photographer.id] = factory.createPhotographer(photographer);
 });
 
-store.media.forEach(data => {
-    let type = Object.keys(data)[2];
-    medias[data.id] = factory.createMedia(data, type);
+orm.getData().media.forEach((data) => {
+  let type = Object.keys(data)[2];
+  medias[data.id] = factory.createMedia(data, type);
 });
 
 const homePage = new HomePage(photographers);
 const photographerPage = new PhotographerPage(photographers);
 
-const router = new Router();
-router.addRoute({ path: "/", page: homePage });
-
+const container = document.querySelector("body");
+const router = new Router(container);
+router.addRoute({ path: "/", page: homePage.getPage });
+router.addRoute({ path: "/index.html", page: homePage.getPage });
 for (const photographer in photographers) {
-   let name = photographers[photographer].name.replace(/\s/g, '');
-    router.addRoute({ path: `/${name}`, page: photographerPage });
+  let id = photographers[photographer].id;
+  router.addRoute({
+    path: `/photographer/${id}`,
+    page: photographerPage.getPage,
+  });
 }
 
-const container = document.querySelector("body");
+Render.injectHtml(router.pageToLoad(), container);
 
-Render.injectHtml(router.pageToLoad().getHtml(), container);
-
-router.listenNavigation("a", container,);
+router.listenNavigation("a-navigation");

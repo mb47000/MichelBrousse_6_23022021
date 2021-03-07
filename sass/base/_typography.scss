@@ -1,0 +1,106 @@
+html {
+	font-family: "DM Sans", sans-serif;
+}
+.page-title,
+.user__name {
+	font-size: 2.25rem;
+	font-weight: normal;
+}
+.page-title {
+	color: #911c1c;
+}
+.user__name {
+	color: #d3573c;
+	line-height: 2.938rem;
+}
+.user__infos-location {
+	font-size: 0.8125rem;
+	line-height: 1.063rem;
+	color: #911c1c;
+}
+.user__infos-catchphrase {
+	font-size: 0.625rem;
+	line-height: 0.8125rem;
+}
+.user__infos-price {
+	font-size: 0.5625rem;
+	line-height: 0.75rem;
+	color: #757575;
+}
+.user__categories-link,
+.nav__item {
+	font-size: 0.75rem;
+	line-height: 1rem;
+	font-weight: 500;
+	color: #911c1c;
+}
+
+.photographer-infos__name {
+	font-size: 4rem;
+	line-height: 5.208rem;
+	color: #d3573c;
+}
+
+.photographer-infos__location {
+	font-size: 1.5rem;
+	line-height: 1.953rem;
+	color: #911c1c;
+}
+
+.photographer-infos__catchphrase {
+	font-size: 1.125rem;
+	line-height: 1.465rem;
+	color: #525252;
+}
+.photographer-infos__categories-link {
+	font-size: 1.125rem;
+	line-height: 1.465rem;
+	font-weight: 500;
+	color: #911c1c;
+}
+.photographer-infos__contact {
+	font-size: 1.25rem;
+	line-height: 1.628rem;
+	font-weight: 700;
+	color: #ffffff;
+}
+
+.photographer-medias__sort-label {
+	font-size: 1.125rem;
+	line-height: 1.465rem;
+	font-weight: 700;
+	color: #000000;
+}
+.photographer-medias__sort-button,
+.photographer-medias__sort-list {
+	font-size: 1.125rem;
+	line-height: 1.465rem;
+	font-weight: 700;
+	color: #ffffff;
+}
+.media-card {
+	font-size: 1.5rem;
+	line-height: 1.5rem;
+	color: #911c1c;
+}
+
+.contact-form__title {
+	font-size: 4rem;
+	line-height: 5.208rem;
+	font-weight: 400;
+}
+.contact-form__label {
+	font-size: 2.25rem;
+	line-height: 2.938rem;
+	color: #312e2e;
+}
+.contact-form__submit {
+	font-size: 1.125rem;
+	line-height: 1.465rem;
+	color: white;
+}
+.lightbox-modal__title {
+	font-size: 1.5rem;
+	line-height: 1.953rem;
+	color: #911c1c;
+}

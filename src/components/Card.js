@@ -14,7 +14,7 @@ class Card {
     `<div class="card"><img class="card__avatar" src="./dist/SamplePhotos/PhotographersIDPhotos/${entity.name.replace(
       /\s/g,
       ""
-    )}.jpg"><h2><a href="/${entity.name.replace(/\s/g, "")}" data-id=${
+    )}.jpg"><h2><a href="/photographer/${entity.id}" class="a-navigation" data-id=${
       entity.id
     }>${entity.name}</a></h2><div><p>${entity.city}</p><p>${
       entity.tagline

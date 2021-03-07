@@ -7,9 +7,9 @@ class Factory {
   createMedia = (data, type) => {
     switch (type) {
       case "image":
-        return new Media(data, "image");
+        return new Media(data, type);
       case "video":
-        return new Media(data, "video");
+        return new Media(data, type);
       default:
         break;
     }

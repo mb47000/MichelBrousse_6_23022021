@@ -1,27 +1,22 @@
 import Render from "./Render";
 
 class Router {
-  constructor() {
+  constructor(appContainer) {
+    this.appContainer = appContainer;
     this.currentRoute = window.location.pathname;
-    history.pushState(
-      { route: this.currentRoute },
-      this.currentRoute,
-      this.currentRoute
-    );
   }
 
   routes = {};
 
-  listenNavigation(querySelector, container) {
+  listenNavigation(querySelector) {
     document.addEventListener("click", (event) => {
-
-      if(event.target.tagName == querySelector.toUpperCase()){
-        this.redirectOnClick(event, container)
+      if(event.target.classList.contains(querySelector)){
+        this.redirectOnClick(event, this.appContainer)
     }
     });
 
     window.addEventListener("popstate", (event) =>
-      this.redirectOnHistoryNavigation(event, container)
+      this.redirectOnHistoryNavigation(event, this.appContainer)
     );
   }
 
@@ -30,28 +25,25 @@ class Router {
   }
 
   pageToLoad() {
-    return this.routes[this.currentRoute];
+    console.log(this.currentRoute)
+    return this.routes[this.currentRoute]();
   }
 
   redirectOnClick(event, container) {
     event.preventDefault();
     let route = event.target.attributes["href"].value;
-    let id = event.target.attributes["data-id"]
-      ? event.target.attributes["data-id"].value
-      : "";
-    history.pushState({ route, id }, route, route);
-    this.loadPage(container, route, id);
+    history.pushState({ route }, route, route);
+    this.loadPage(container, route);
   }
 
   redirectOnHistoryNavigation(event, container) {
-    let route = event.state.route;
-    let id = event.state.id;
-    this.loadPage(container, route, id);
+    let route = window.location.pathname;
+    this.loadPage(container, route);
   }
 
-  loadPage(container, route, id) {
+  loadPage(container, route) {
     this.currentRoute = route;
-    Render.injectHtml(this.pageToLoad().addProps({ id }).getHtml(), container);
+    Render.injectHtml(this.pageToLoad(), container);
   }
 }
 

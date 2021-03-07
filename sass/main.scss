@@ -1,10 +1,17 @@
-// @import "./utils/variables";
-// @import "./utils/functions";
-@import "./utils/mixins";
-// @import "./utils/extensions";
+@import 'utils/variables';
+@import 'utils/mixins';
+@import 'utils/keyframes';
 
-@import "./base/base";
-// @import "./base/typography";
+@import 'base/reset';
+@import 'base/typography';
+@import 'components/category';
 
-@import "./components/card"
+@import 'layout/header';
+@import 'layout/nav';
+@import 'layout/footer';
+@import 'layout/container';
+
+@import 'pages/index';
+@import 'pages/photographer';
+
 

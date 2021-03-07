@@ -10,10 +10,10 @@ class Tags {
   }
 
   getHtml = () => {
-    let tagHtml = `<ul>`;
+    let tagHtml = `<ul class="nav__list">`;
 
     this.tagList.forEach((tag) => {
-      tagHtml += `<li><button class="tag" value="${tag}">${tag}</button></li>`;
+      tagHtml += `<li class="nav__item"><a class="tag nav__link">${tag}</a></li>`;
     });
 
     tagHtml += `</ul>`;
@@ -35,14 +35,15 @@ class Tags {
   tagListener(event, entityList, containerSelector, renderMethod) {
     let element = event.target;
     let filteredEntity = {};
+
     if (element.classList.contains("tag")) {
       for (const entity in entityList) {
         let tag = entityList[entity].tags;
-        if (tag.includes(element.value)) {
+        if (tag.includes(element.text)) {
           filteredEntity[entityList[entity].id] = entityList[entity];
         }
       }
-
+      console.log(filteredEntity, containerSelector)
       Render.injectHtml(
         renderMethod(filteredEntity),
         document.querySelector(containerSelector)
