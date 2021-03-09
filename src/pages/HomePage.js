@@ -1,23 +1,20 @@
 import Card from "../components/Card";
 import Tags from "../components/Tags";
 import Header from "../components/Header";
+import Page from "../classes/Page";
 
-class HomePage {
-  tagListenerStatus = false;
+class HomePage extends Page {
+  #tagListenerStatus = false;
 
-  constructor(data) {
-    this.photographers = data;
-  }
-
-  addProps(props) {
-    this.props = props;
-    return this;
+  constructor() {
+    super();
+    this.photographers = this.orm.getAllPhotographers();
   }
 
   header = () => Header.getHtml();
 
   tags = () => {
-    if (!this.tagListenerStatus) {
+    if (!this.#tagListenerStatus) {
       let tagList = [];
       for (const photographer in this.photographers) {
         let tag = this.photographers[photographer].tags;
@@ -26,12 +23,14 @@ class HomePage {
 
       tagList = [...new Set(tagList)];
 
-      this.photographerTags = new Tags(
-        tagList,
-        this.photographers,
-        ".cards",
-        this.cards
-      );
+      this.photographerTags = new Tags(tagList);
+
+      document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("tag")) {
+         let filterPhotographer = this.orm.getPhotographerByTag(event.target.text)
+         this.render(this.cards(filterPhotographer), document.querySelector(".cards"))
+        }
+      })
 
       this.tagListenerStatus = true;
     }
@@ -48,9 +47,9 @@ class HomePage {
   };
 
   getPage = () =>
-    `<main class="container">${this.header()}<nav aria-label="Photographer categories"  class="nav">${this.tags()}</nav><div class="cards" ${this.cards(
+    `<main class="container">${this.header()}<nav aria-label="Photographer categories"  class="nav">${this.tags()}</nav><h1 class="page-title">Nos photographes</h1><section class="cards section">${this.cards(
       this.photographers
-    )}</div></main>`;
+    )}</section></main>`;
 }
 
 export default HomePage;

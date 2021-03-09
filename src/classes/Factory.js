@@ -1,5 +1,5 @@
-import Photographer from "./Photographer";
-import Media from "./Media";
+import Photographer from "../entity/Photographer";
+import Media from "../entity/Media";
 
 class Factory {
   createPhotographer = (data) => new Photographer(data);
@@ -13,7 +13,6 @@ class Factory {
       default:
         break;
     }
-    console.log(type);
   };
 }
 
