@@ -10,9 +10,13 @@ class Router {
 
   listenNavigation(querySelector) {
     document.addEventListener("click", (event) => {
-      if(event.target.classList.contains(querySelector)){
-        this.redirectOnClick(event, this.appContainer)
-    }
+      if (event.target.classList.contains(querySelector)) {
+        event.preventDefault();
+        this.redirectOnClick(event.target, this.appContainer);
+      } else if (event.target.parentNode.classList.contains(querySelector)) {
+        event.preventDefault();
+        this.redirectOnClick(event.target.parentNode, this.appContainer);
+      }
     });
 
     window.addEventListener("popstate", (event) =>
@@ -28,13 +32,13 @@ class Router {
     if (Object.keys(this.routes).includes(this.currentRoute)) {
       return this.routes[this.currentRoute]();
     } else {
-      return this.routes['/404']
+      return this.routes["/404"];
     }
   }
 
-  redirectOnClick(event, container) {
-    event.preventDefault();
-    let route = event.target.attributes["href"].value;
+  redirectOnClick(element, container) {
+
+    let route = element.attributes["href"].value;
     history.pushState({ route }, route, route);
     this.loadPage(container, route);
   }

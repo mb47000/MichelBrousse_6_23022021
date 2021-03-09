@@ -1,5 +1,3 @@
-import Render from "../classes/Render";
-
 class Tags {
   constructor(tags) {
     this.tagList = tags;

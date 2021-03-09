@@ -535,7 +535,13 @@ var Router = /*#__PURE__*/function () {
 
       document.addEventListener("click", function (event) {
         if (event.target.classList.contains(querySelector)) {
-          _this.redirectOnClick(event, _this.appContainer);
+          event.preventDefault();
+
+          _this.redirectOnClick(event.target, _this.appContainer);
+        } else if (event.target.parentNode.classList.contains(querySelector)) {
+          event.preventDefault();
+
+          _this.redirectOnClick(event.target.parentNode, _this.appContainer);
         }
       });
       window.addEventListener("popstate", function (event) {
@@ -555,14 +561,13 @@ var Router = /*#__PURE__*/function () {
       if (Object.keys(this.routes).includes(this.currentRoute)) {
         return this.routes[this.currentRoute]();
       } else {
-        return this.routes['/404'];
+        return this.routes["/404"];
       }
     }
   }, {
     key: "redirectOnClick",
-    value: function redirectOnClick(event, container) {
-      event.preventDefault();
-      var route = event.target.attributes["href"].value;
+    value: function redirectOnClick(element, container) {
+      var route = element.attributes["href"].value;
       history.pushState({
         route: route
       }, route, route);
@@ -650,7 +655,7 @@ var Header = /*#__PURE__*/function () {
   _createClass(Header, null, [{
     key: "getHtml",
     value: function getHtml() {
-      return "<header role=\"banner\" class=\"header\"><a href=\"index.html\" class=\"header__link\"><img src=\"../../dist/SamplePhotos/logo-fisheye.png\" alt=\"Fisheye Homepage\" class=\"header__img\"/></a></header>";
+      return "<header role=\"banner\" class=\"header\"><a href=\"/index.html\" class=\"header__link a-navigation\"><img src=\"../../dist/SamplePhotos/logo-fisheye.png\" alt=\"Fisheye Homepage\" class=\"header__img\"/></a></header>";
     }
   }]);
 
@@ -672,14 +677,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _classes_Render__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/Render */ "./src/classes/Render.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
 
 var Tags = /*#__PURE__*/function () {
   function Tags(tags) {
@@ -982,6 +984,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _classes_Page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/Page */ "./src/classes/Page.js");
+/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./src/components/Header.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1004,6 +1007,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var PhotographerPage = /*#__PURE__*/function (_Page) {
   _inherits(PhotographerPage, _Page);
 
@@ -1022,7 +1026,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
       var photographer = _this.orm.getPhotographerById(id);
 
-      return "<div>Page d'un photographe ".concat(photographer.name, "</div><a href=\"/\" class=\"a-navigation\">home page</a>");
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(photographer.city, ", ").concat(photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"http://").concat(window.location.hostname, ":8080/dist/SamplePhotos/PhotographersIDPhotos/").concat(photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section></main>");
     });
 
     return _this;
