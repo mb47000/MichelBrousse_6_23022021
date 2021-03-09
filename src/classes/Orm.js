@@ -61,7 +61,18 @@ class Orm {
   }
 
   getAllMedia() {
-    return this.Media;
+    return this.medias;
+  }
+
+  getMediasByPhotographerId(id) {
+    let medias = this.getAllMedia();
+    let filteredMedias = {};
+    for (const entity in medias) {
+      if (medias[entity].photographerId == id) {
+        filteredMedias[medias[entity].id] = medias[entity];
+      }
+    }
+    return filteredMedias;
   }
 }
 

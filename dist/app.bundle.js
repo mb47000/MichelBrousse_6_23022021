@@ -420,7 +420,21 @@ var Orm = /*#__PURE__*/function () {
   }, {
     key: "getAllMedia",
     value: function getAllMedia() {
-      return this.Media;
+      return this.medias;
+    }
+  }, {
+    key: "getMediasByPhotographerId",
+    value: function getMediasByPhotographerId(id) {
+      var medias = this.getAllMedia();
+      var filteredMedias = {};
+
+      for (var entity in medias) {
+        if (medias[entity].photographerId == id) {
+          filteredMedias[medias[entity].id] = medias[entity];
+        }
+      }
+
+      return filteredMedias;
     }
   }]);
 
@@ -663,6 +677,43 @@ var Header = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
+
+/***/ }),
+
+/***/ "./src/components/Media.js":
+/*!*********************************!*\
+  !*** ./src/components/Media.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Media = /*#__PURE__*/function () {
+  function Media() {
+    _classCallCheck(this, Media);
+  }
+
+  _createClass(Media, null, [{
+    key: "getHtml",
+    value: function getHtml(media, photographerName) {
+      var mediaSrc = media.type == 'image' ? media.image : media.video;
+      return "<div class=\"media-card modal-trigger\" data-target=\"lightbox\" tabIndex=\"0\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(mediaSrc, "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"fas fa-heart\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>");
+    }
+  }]);
+
+  return Media;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Media);
 
 /***/ }),
 
@@ -985,6 +1036,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _classes_Page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/Page */ "./src/classes/Page.js");
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./src/components/Header.js");
+/* harmony import */ var _components_Media__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Media */ "./src/components/Media.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1008,6 +1060,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var PhotographerPage = /*#__PURE__*/function (_Page) {
   _inherits(PhotographerPage, _Page);
 
@@ -1020,13 +1073,27 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
     _this = _super.call(this);
 
+    _defineProperty(_assertThisInitialized(_this), "mediasCards", function (photographerMedias, photographerName) {
+      var mediaCards = "";
+
+      for (var media in photographerMedias) {
+        if (photographerMedias[media].type == "image") {
+          mediaCards += _components_Media__WEBPACK_IMPORTED_MODULE_2__.default.getHtml(photographerMedias[media], photographerName);
+        }
+      }
+
+      return mediaCards;
+    });
+
     _defineProperty(_assertThisInitialized(_this), "getPage", function () {
       var url = window.location.pathname.split("/");
       var id = url[url.length - 1];
 
       var photographer = _this.orm.getPhotographerById(id);
 
-      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(photographer.city, ", ").concat(photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"http://").concat(window.location.hostname, ":8080/dist/SamplePhotos/PhotographersIDPhotos/").concat(photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section></main>");
+      var medias = _this.orm.getMediasByPhotographerId(id);
+
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(photographer.city, ", ").concat(photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n    <span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n      Trier par\n    </span>\n    <button\n      id=\"sortMediaButton\"\n      class=\"photographer-medias__sort-button\"\n      aria-haspopup=\"listbox\"\n      aria-labelledby=\"sortMediasLabel\"\n    >\n      Popularit\xE9\n    </button>\n    <ul\n      id=\"sortMediaList\"\n      class=\"photographer-medias__sort-list\"\n      tabindex=\"-1\"\n      role=\"listbox\"\n      aria-labelledby=\"exp_elem\"\n    >\n      <li class=\"photographer-medias__sort-option\" role=\"option\">\n        Popularit\xE9\n      </li>\n      <li class=\"photographer-medias__sort-option\" role=\"option\">Date</li>\n      <li class=\"photographer-medias__sort-option\" role=\"option\">\n        Titre\n      </li>\n    </ul>\n  </div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(medias, photographer.name), "</div></section></main>");
     });
 
     return _this;
