@@ -188,10 +188,10 @@ ansiHTML.reset()
 
 /***/ }),
 
-/***/ "./src/Factory.js":
-/*!************************!*\
-  !*** ./src/Factory.js ***!
-  \************************/
+/***/ "./src/classes/Factory.js":
+/*!********************************!*\
+  !*** ./src/classes/Factory.js ***!
+  \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -199,8 +199,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Photographer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Photographer */ "./src/Photographer.js");
-/* harmony import */ var _Media__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Media */ "./src/Media.js");
+/* harmony import */ var _entity_Photographer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../entity/Photographer */ "./src/entity/Photographer.js");
+/* harmony import */ var _entity_Media__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../entity/Media */ "./src/entity/Media.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -212,22 +212,20 @@ var Factory = function Factory() {
   _classCallCheck(this, Factory);
 
   _defineProperty(this, "createPhotographer", function (data) {
-    return new _Photographer__WEBPACK_IMPORTED_MODULE_0__.default(data);
+    return new _entity_Photographer__WEBPACK_IMPORTED_MODULE_0__.default(data);
   });
 
   _defineProperty(this, "createMedia", function (data, type) {
     switch (type) {
       case "image":
-        return new _Media__WEBPACK_IMPORTED_MODULE_1__.default(data, type);
+        return new _entity_Media__WEBPACK_IMPORTED_MODULE_1__.default(data, type);
 
       case "video":
-        return new _Media__WEBPACK_IMPORTED_MODULE_1__.default(data, type);
+        return new _entity_Media__WEBPACK_IMPORTED_MODULE_1__.default(data, type);
 
       default:
         break;
     }
-
-    console.log(type);
   });
 };
 
@@ -235,10 +233,10 @@ var Factory = function Factory() {
 
 /***/ }),
 
-/***/ "./src/JsonFetcher.js":
-/*!****************************!*\
-  !*** ./src/JsonFetcher.js ***!
-  \****************************/
+/***/ "./src/classes/JsonFetcher.js":
+/*!************************************!*\
+  !*** ./src/classes/JsonFetcher.js ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -321,10 +319,10 @@ var JsonFetcher = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./src/Media.js":
-/*!**********************!*\
-  !*** ./src/Media.js ***!
-  \**********************/
+/***/ "./src/classes/Orm.js":
+/*!****************************!*\
+  !*** ./src/classes/Orm.js ***!
+  \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -332,57 +330,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Media = function Media(_ref, type) {
-  var id = _ref.id,
-      photographerId = _ref.photographerId,
-      _ref$image = _ref.image,
-      image = _ref$image === void 0 ? null : _ref$image,
-      _ref$video = _ref.video,
-      video = _ref$video === void 0 ? null : _ref$video,
-      tags = _ref.tags,
-      likes = _ref.likes,
-      date = _ref.date,
-      price = _ref.price;
-
-  _classCallCheck(this, Media);
-
-  this.type = type;
-  this.id = id;
-  this.photographerId = photographerId;
-  this.image = image;
-  this.video = video;
-  this.tags = tags;
-  this.likes = likes;
-  this.date = date;
-  this.price = price;
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Media);
-
-/***/ }),
-
-/***/ "./src/Orm.js":
-/*!********************!*\
-  !*** ./src/Orm.js ***!
-  \********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
+/* harmony import */ var _Factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Factory */ "./src/classes/Factory.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 var Orm = /*#__PURE__*/function () {
   function Orm(data) {
     _classCallCheck(this, Orm);
+
+    _defineProperty(this, "photographers", {});
+
+    _defineProperty(this, "medias", {});
 
     if (Orm.exists) {
       return Orm.instance;
@@ -391,6 +356,9 @@ var Orm = /*#__PURE__*/function () {
     this._data = data;
     Orm.instance = this;
     Orm.exists = true;
+    this.factory = new _Factory__WEBPACK_IMPORTED_MODULE_0__.default();
+    this.setPhotographers();
+    this.setMedias();
     return this;
   }
 
@@ -404,6 +372,56 @@ var Orm = /*#__PURE__*/function () {
     value: function setData(data) {
       this._data = data;
     }
+  }, {
+    key: "setPhotographers",
+    value: function setPhotographers() {
+      var _this = this;
+
+      this.getData().photographers.forEach(function (photographer) {
+        _this.photographers[photographer.id] = _this.factory.createPhotographer(photographer);
+      });
+    }
+  }, {
+    key: "getAllPhotographers",
+    value: function getAllPhotographers() {
+      return this.photographers;
+    }
+  }, {
+    key: "getPhotographerById",
+    value: function getPhotographerById(id) {
+      return this.photographers[id];
+    }
+  }, {
+    key: "getPhotographerByTag",
+    value: function getPhotographerByTag(tag) {
+      var photographers = this.getAllPhotographers();
+      var filteredPhotographers = {};
+
+      for (var entity in photographers) {
+        var tags = photographers[entity].tags;
+
+        if (tags.includes(tag)) {
+          filteredPhotographers[photographers[entity].id] = photographers[entity];
+        }
+      }
+
+      return filteredPhotographers;
+    }
+  }, {
+    key: "setMedias",
+    value: function setMedias() {
+      var _this2 = this;
+
+      this.getData().media.forEach(function (data) {
+        var type = Object.keys(data)[2];
+        _this2.medias[data.id] = _this2.factory.createMedia(data, type);
+      });
+    }
+  }, {
+    key: "getAllMedia",
+    value: function getAllMedia() {
+      return this.Media;
+    }
   }]);
 
   return Orm;
@@ -413,9 +431,9 @@ var Orm = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./src/Photographer.js":
+/***/ "./src/classes/Page.js":
 /*!*****************************!*\
-  !*** ./src/Photographer.js ***!
+  !*** ./src/classes/Page.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -424,38 +442,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Orm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Orm */ "./src/classes/Orm.js");
+/* harmony import */ var _Render__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Render */ "./src/classes/Render.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Photographer = function Photographer(_ref) {
-  var name = _ref.name,
-      id = _ref.id,
-      city = _ref.city,
-      country = _ref.country,
-      tags = _ref.tags,
-      tagline = _ref.tagline,
-      price = _ref.price,
-      portrait = _ref.portrait;
 
-  _classCallCheck(this, Photographer);
 
-  this.name = name;
-  this.id = id;
-  this.city = city;
-  this.country = country;
-  this.tags = tags;
-  this.tagline = tagline;
-  this.price = price;
-  this.portrait = portrait;
+
+var Page = function Page() {
+  _classCallCheck(this, Page);
+
+  this.orm = new _Orm__WEBPACK_IMPORTED_MODULE_0__.default();
+  this.render = _Render__WEBPACK_IMPORTED_MODULE_1__.default.injectHtml;
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Photographer);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Page);
 
 /***/ }),
 
-/***/ "./src/Render.js":
-/*!***********************!*\
-  !*** ./src/Render.js ***!
-  \***********************/
+/***/ "./src/classes/Render.js":
+/*!*******************************!*\
+  !*** ./src/classes/Render.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -488,10 +496,10 @@ var Render = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./src/Router.js":
-/*!***********************!*\
-  !*** ./src/Router.js ***!
-  \***********************/
+/***/ "./src/classes/Router.js":
+/*!*******************************!*\
+  !*** ./src/classes/Router.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -499,7 +507,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Render__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Render */ "./src/Render.js");
+/* harmony import */ var _Render__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Render */ "./src/classes/Render.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -527,7 +535,13 @@ var Router = /*#__PURE__*/function () {
 
       document.addEventListener("click", function (event) {
         if (event.target.classList.contains(querySelector)) {
-          _this.redirectOnClick(event, _this.appContainer);
+          event.preventDefault();
+
+          _this.redirectOnClick(event.target, _this.appContainer);
+        } else if (event.target.parentNode.classList.contains(querySelector)) {
+          event.preventDefault();
+
+          _this.redirectOnClick(event.target.parentNode, _this.appContainer);
         }
       });
       window.addEventListener("popstate", function (event) {
@@ -547,14 +561,13 @@ var Router = /*#__PURE__*/function () {
       if (Object.keys(this.routes).includes(this.currentRoute)) {
         return this.routes[this.currentRoute]();
       } else {
-        return this.routes['/404'];
+        return this.routes["/404"];
       }
     }
   }, {
     key: "redirectOnClick",
-    value: function redirectOnClick(event, container) {
-      event.preventDefault();
-      var route = event.target.attributes["href"].value;
+    value: function redirectOnClick(element, container) {
+      var route = element.attributes["href"].value;
       history.pushState({
         route: route
       }, route, route);
@@ -601,16 +614,16 @@ var Card = function Card() {
 };
 
 _defineProperty(Card, "tags", function (tags) {
-  var tagHtml = "<ul>";
+  var tagHtml = "<ul class=\"user__categories-list\">";
   tags.forEach(function (tag) {
-    tagHtml += "<li><button class=\"tag\" value=\"".concat(tag, "\">").concat(tag, "</button></li>");
+    tagHtml += "<li class=\"user__categories-item\"><a class=\"tag user__categories-link\" value=\"".concat(tag, "\">").concat(tag, "</a></li>");
   });
   tagHtml += "</ul>";
   return tagHtml;
 });
 
 _defineProperty(Card, "getHtml", function (entity) {
-  return "<div class=\"card\"><img class=\"card__avatar\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/".concat(entity.name.replace(/\s/g, ""), ".jpg\"><h2><a href=\"/photographer/").concat(entity.id, "\" class=\"a-navigation\" data-id=").concat(entity.id, ">").concat(entity.name, "</a></h2><div><p>").concat(entity.city, "</p><p>").concat(entity.tagline, "</p><p>").concat(entity.price, "\u20AC/jour</p></div>\n    <div>").concat(Card.tags(entity.tags), "\n    </div>");
+  return "<div class=\"card user\"><a href=\"/photographer/".concat(entity.id, "\" class=\"a-navigation\" data-id=").concat(entity.id, "><a href=\"/photographer/").concat(entity.id, "\" class=\"a-navigation user__link\"><img class=\"card__avatar user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\"></a><h2 class=\"user__name\"><a href=\"/photographer/").concat(entity.id, "\" class=\"a-navigation\">").concat(entity.name, "</a></h2></a><div class=\"user__infos\"><p class=\"user__infos-location\">").concat(entity.city, "</p><p>").concat(entity.tagline, "</p><p>").concat(entity.price, "\u20AC/jour</p></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Card);
@@ -642,7 +655,7 @@ var Header = /*#__PURE__*/function () {
   _createClass(Header, null, [{
     key: "getHtml",
     value: function getHtml() {
-      return "<header role=\"banner\" class=\"header\">\n        <a href=\"index.html\" class=\"header__link\">\n            <img src=\"../../dist/SamplePhotos/logo-fisheye.png\" alt=\"Fisheye Homepage\" class=\"header__img\"/>\n        </a>\n    </header>";
+      return "<header role=\"banner\" class=\"header\"><a href=\"/index.html\" class=\"header__link a-navigation\"><img src=\"../../dist/SamplePhotos/logo-fisheye.png\" alt=\"Fisheye Homepage\" class=\"header__img\"/></a></header>";
     }
   }]);
 
@@ -664,67 +677,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Render__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Render */ "./src/Render.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
 var Tags = /*#__PURE__*/function () {
-  function Tags(tags, entityList, containerSelector, renderMethod) {
-    var _this = this;
-
+  function Tags(tags) {
     _classCallCheck(this, Tags);
 
-    _defineProperty(this, "getHtml", function () {
-      var tagHtml = "<ul class=\"nav__list\">";
-
-      _this.tagList.forEach(function (tag) {
-        tagHtml += "<li class=\"nav__item\"><a class=\"tag nav__link\">".concat(tag, "</a></li>");
-      });
-
-      tagHtml += "</ul>";
-
-      if (!_this.listenerIsOn) {
-        document.addEventListener("click", function (event) {
-          return _this.tagListener(event, _this.entityList, _this.containerSelector, _this.renderMethod);
-        });
-        _this.listenerIsOn = true;
-      }
-
-      return tagHtml;
-    });
-
     this.tagList = tags;
-    this.entityList = entityList;
-    this.containerSelector = containerSelector;
-    this.listenerIsOn = false;
-    this.renderMethod = renderMethod;
   }
 
   _createClass(Tags, [{
-    key: "tagListener",
-    value: function tagListener(event, entityList, containerSelector, renderMethod) {
-      var element = event.target;
-      var filteredEntity = {};
-
-      if (element.classList.contains("tag")) {
-        for (var entity in entityList) {
-          var tag = entityList[entity].tags;
-
-          if (tag.includes(element.text)) {
-            filteredEntity[entityList[entity].id] = entityList[entity];
-          }
-        }
-
-        console.log(filteredEntity, containerSelector);
-        _Render__WEBPACK_IMPORTED_MODULE_0__.default.injectHtml(renderMethod(filteredEntity), document.querySelector(containerSelector));
-      }
+    key: "getHtml",
+    value: function getHtml() {
+      var tagHtml = "<ul class=\"nav__list\">";
+      this.tagList.forEach(function (tag) {
+        tagHtml += "<li class=\"nav__item\"><a class=\"tag nav__link\">".concat(tag, "</a></li>");
+      });
+      tagHtml += "</ul>";
+      return tagHtml;
     }
   }]);
 
@@ -732,6 +706,87 @@ var Tags = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Tags);
+
+/***/ }),
+
+/***/ "./src/entity/Media.js":
+/*!*****************************!*\
+  !*** ./src/entity/Media.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Media = function Media(_ref, type) {
+  var id = _ref.id,
+      photographerId = _ref.photographerId,
+      _ref$image = _ref.image,
+      image = _ref$image === void 0 ? null : _ref$image,
+      _ref$video = _ref.video,
+      video = _ref$video === void 0 ? null : _ref$video,
+      tags = _ref.tags,
+      likes = _ref.likes,
+      date = _ref.date,
+      price = _ref.price;
+
+  _classCallCheck(this, Media);
+
+  this.type = type;
+  this.id = id;
+  this.photographerId = photographerId;
+  this.image = image;
+  this.video = video;
+  this.tags = tags;
+  this.likes = likes;
+  this.date = date;
+  this.price = price;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Media);
+
+/***/ }),
+
+/***/ "./src/entity/Photographer.js":
+/*!************************************!*\
+  !*** ./src/entity/Photographer.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Photographer = function Photographer(_ref) {
+  var name = _ref.name,
+      id = _ref.id,
+      city = _ref.city,
+      country = _ref.country,
+      tags = _ref.tags,
+      tagline = _ref.tagline,
+      price = _ref.price,
+      portrait = _ref.portrait;
+
+  _classCallCheck(this, Photographer);
+
+  this.name = name;
+  this.id = id;
+  this.city = city;
+  this.country = country;
+  this.tags = tags;
+  this.tagline = tagline;
+  this.price = price;
+  this.portrait = portrait;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Photographer);
 
 /***/ }),
 
@@ -744,59 +799,47 @@ var Tags = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__) => {
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Router */ "./src/Router.js");
-/* harmony import */ var _Render__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Render */ "./src/Render.js");
-/* harmony import */ var _JsonFetcher__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./JsonFetcher */ "./src/JsonFetcher.js");
+/* harmony import */ var _classes_Router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classes/Router */ "./src/classes/Router.js");
+/* harmony import */ var _classes_Render__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./classes/Render */ "./src/classes/Render.js");
+/* harmony import */ var _classes_JsonFetcher__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./classes/JsonFetcher */ "./src/classes/JsonFetcher.js");
 /* harmony import */ var _pages_HomePage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/HomePage */ "./src/pages/HomePage.js");
 /* harmony import */ var _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/PhotographerPage */ "./src/pages/PhotographerPage.js");
-/* harmony import */ var _Factory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Factory */ "./src/Factory.js");
-/* harmony import */ var _Orm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Orm */ "./src/Orm.js");
+/* harmony import */ var _classes_Orm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./classes/Orm */ "./src/classes/Orm.js");
 
 
 
 
 
 
-
-var jsonFetcher = new _JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("./src/data/data.json");
-var dataBase = await jsonFetcher.fetchData();
-var orm = new _Orm__WEBPACK_IMPORTED_MODULE_6__.default(dataBase);
-var factory = new _Factory__WEBPACK_IMPORTED_MODULE_5__.default();
-var photographers = {};
-var medias = {};
-orm.getData().photographers.forEach(function (photographer) {
-  photographers[photographer.id] = factory.createPhotographer(photographer);
-});
-orm.getData().media.forEach(function (data) {
-  var type = Object.keys(data)[2];
-  medias[data.id] = factory.createMedia(data, type);
-});
-var homePage = new _pages_HomePage__WEBPACK_IMPORTED_MODULE_3__.default(photographers);
-var photographerPage = new _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__.default(photographers);
-var container = document.querySelector("body");
-var router = new _Router__WEBPACK_IMPORTED_MODULE_0__.default(container);
+var jsonFetcher = new _classes_JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("./src/data/data.json");
+var orm = new _classes_Orm__WEBPACK_IMPORTED_MODULE_5__.default(await jsonFetcher.fetchData());
+var homePage = new _pages_HomePage__WEBPACK_IMPORTED_MODULE_3__.default();
+var photographerPage = new _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__.default();
+var appContainer = document.querySelector("body");
+var router = new _classes_Router__WEBPACK_IMPORTED_MODULE_0__.default(appContainer);
 router.addRoute({
-  path: "/MichelBrousse_6_23022021/",
+  path: "/",
   page: homePage.getPage
 });
 router.addRoute({
-  path: "/MichelBrousse_6_23022021/index.html",
+  path: "/index.html",
   page: homePage.getPage
 });
 router.addRoute({
-  path: "/MichelBrousse_6_23022021/404",
+  path: "/404",
   page: "<h1>page 404</h1>"
 });
+var photographers = orm.getAllPhotographers();
 
 for (var photographer in photographers) {
   var id = photographers[photographer].id;
   router.addRoute({
-    path: "/MichelBrousse_6_23022021/photographer/".concat(id),
+    path: "/photographer/".concat(id),
     page: photographerPage.getPage
   });
 }
 
-_Render__WEBPACK_IMPORTED_MODULE_1__.default.injectHtml(router.pageToLoad(), container);
+_classes_Render__WEBPACK_IMPORTED_MODULE_1__.default.injectHtml(router.pageToLoad(), appContainer);
 router.listenNavigation("a-navigation");
 __webpack_handle_async_dependencies__();
 }, 1);
@@ -817,6 +860,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Card */ "./src/components/Card.js");
 /* harmony import */ var _components_Tags__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Tags */ "./src/components/Tags.js");
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Header */ "./src/components/Header.js");
+/* harmony import */ var _classes_Page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../classes/Page */ "./src/classes/Page.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -831,30 +877,54 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to get private field on non-instance"); } if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
 
 
 
 
-var HomePage = /*#__PURE__*/function () {
-  function HomePage(data) {
-    var _this = this;
+
+
+var _tagListenerStatus = new WeakMap();
+
+var HomePage = /*#__PURE__*/function (_Page) {
+  _inherits(HomePage, _Page);
+
+  var _super = _createSuper(HomePage);
+
+  function HomePage() {
+    var _this;
 
     _classCallCheck(this, HomePage);
 
-    _defineProperty(this, "tagListenerStatus", false);
+    _this = _super.call(this);
 
-    _defineProperty(this, "header", function () {
+    _tagListenerStatus.set(_assertThisInitialized(_this), {
+      writable: true,
+      value: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "header", function () {
       return _components_Header__WEBPACK_IMPORTED_MODULE_2__.default.getHtml();
     });
 
-    _defineProperty(this, "tags", function () {
-      if (!_this.tagListenerStatus) {
+    _defineProperty(_assertThisInitialized(_this), "tags", function () {
+      if (!_classPrivateFieldGet(_assertThisInitialized(_this), _tagListenerStatus)) {
         var tagList = [];
 
         for (var photographer in _this.photographers) {
@@ -863,14 +933,21 @@ var HomePage = /*#__PURE__*/function () {
         }
 
         tagList = _toConsumableArray(new Set(tagList));
-        _this.photographerTags = new _components_Tags__WEBPACK_IMPORTED_MODULE_1__.default(tagList, _this.photographers, ".cards", _this.cards);
+        _this.photographerTags = new _components_Tags__WEBPACK_IMPORTED_MODULE_1__.default(tagList);
+        document.addEventListener("click", function (event) {
+          if (event.target.classList.contains("tag")) {
+            var filterPhotographer = _this.orm.getPhotographerByTag(event.target.text);
+
+            _this.render(_this.cards(filterPhotographer), document.querySelector(".cards"));
+          }
+        });
         _this.tagListenerStatus = true;
       }
 
       return _this.photographerTags.getHtml();
     });
 
-    _defineProperty(this, "cards", function (entity) {
+    _defineProperty(_assertThisInitialized(_this), "cards", function (entity) {
       var cards = "";
 
       for (var photographer in entity) {
@@ -880,23 +957,16 @@ var HomePage = /*#__PURE__*/function () {
       return cards;
     });
 
-    _defineProperty(this, "getPage", function () {
-      return "<main class=\"container\">".concat(_this.header(), "<nav aria-label=\"Photographer categories\"  class=\"nav\">").concat(_this.tags(), "</nav><div class=\"cards\" ").concat(_this.cards(_this.photographers), "</div></main>");
+    _defineProperty(_assertThisInitialized(_this), "getPage", function () {
+      return "<main class=\"container\">".concat(_this.header(), "<nav aria-label=\"Photographer categories\"  class=\"nav\">").concat(_this.tags(), "</nav><h1 class=\"page-title\">Nos photographes</h1><section class=\"cards section\">").concat(_this.cards(_this.photographers), "</section></main>");
     });
 
-    this.photographers = data;
+    _this.photographers = _this.orm.getAllPhotographers();
+    return _this;
   }
 
-  _createClass(HomePage, [{
-    key: "addProps",
-    value: function addProps(props) {
-      this.props = props;
-      return this;
-    }
-  }]);
-
   return HomePage;
-}();
+}(_classes_Page__WEBPACK_IMPORTED_MODULE_3__.default);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HomePage);
 
@@ -913,28 +983,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _classes_Page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/Page */ "./src/classes/Page.js");
+/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./src/components/Header.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var PhotographerPage = function PhotographerPage(photographers) {
-  var _this = this;
 
-  _classCallCheck(this, PhotographerPage);
 
-  _defineProperty(this, "getPage", function () {
-    var url = window.location.pathname.split("/");
-    var id = url[url.length - 1];
-    return "<div>Page d'un photographe ".concat(_this.photographers[id].name, "</div><a href=\"/\" class=\"a-navigation\">home page</a>");
-  });
 
-  _defineProperty(this, "addProps", function (props) {
-    _this.props = props;
+var PhotographerPage = /*#__PURE__*/function (_Page) {
+  _inherits(PhotographerPage, _Page);
+
+  var _super = _createSuper(PhotographerPage);
+
+  function PhotographerPage() {
+    var _this;
+
+    _classCallCheck(this, PhotographerPage);
+
+    _this = _super.call(this);
+
+    _defineProperty(_assertThisInitialized(_this), "getPage", function () {
+      var url = window.location.pathname.split("/");
+      var id = url[url.length - 1];
+
+      var photographer = _this.orm.getPhotographerById(id);
+
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(photographer.city, ", ").concat(photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"http://").concat(window.location.hostname, ":8080/dist/SamplePhotos/PhotographersIDPhotos/").concat(photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section></main>");
+    });
+
     return _this;
-  });
+  }
 
-  this.photographers = photographers;
-};
+  return PhotographerPage;
+}(_classes_Page__WEBPACK_IMPORTED_MODULE_0__.default);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhotographerPage);
 
