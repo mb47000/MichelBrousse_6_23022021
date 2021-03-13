@@ -2,7 +2,7 @@ class Media {
   static getHtml(media, photographerName) {
     let mediaSrc = media.type == 'image' ? media.image : media.video;
 
-    return `<div class="media-card modal-trigger" data-target="lightbox" tabIndex="0">
+    return `<div class="media-card modal-trigger" data-target="lightbox" data-id=${media.id} tabIndex="0">
 						<div class="media-card__upper-body">
 							<img
 								class="media-card__img"

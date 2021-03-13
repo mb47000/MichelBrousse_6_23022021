@@ -246,6 +246,7 @@
 	// display: flex;
 	justify-content: center;
 	align-items: flex-end;
+	display: none;
 
 	&__wrap {
 		height: calc(100% - 2.5rem);

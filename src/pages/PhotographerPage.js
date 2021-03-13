@@ -1,13 +1,70 @@
 import Page from "../classes/Page";
 import Header from "../components/Header";
 import Media from "../components/Media";
+import Lightbox from "../components/Lightbox";
 
 class PhotographerPage extends Page {
+  #lightBoxListenerStatus = false;
+
   constructor() {
     super();
   }
 
+  lightBoxInit = () => {
+    let mediasFilter = this.medias;
+    this.mediasKeys = Object.keys(mediasFilter);
+    if (!this.#lightBoxListenerStatus) {
+      document.addEventListener("click", (event) => {
+        if (
+          event.target.parentNode.parentNode.classList.contains("modal-trigger")
+        ) {
+          let target = event.target.parentNode.parentNode;
+          this.currentKey = this.mediasKeys.indexOf(target.getAttribute("data-id"));
+          this.render(
+            Lightbox.getContent(
+              mediasFilter[target.getAttribute("data-id")],
+              this.photographer.name.replace(/\s/g, "")
+            ),
+            document.querySelector(".lightbox-modal__wrap")
+          );
+          document.querySelector("#lightbox").style.display = "flex";
+        }
+
+        if (event.target.classList.contains("modal-close")) {
+          document.getElementById("lightbox").style.display = "none";
+        }
+
+        if (event.target.classList.contains("lightbox-modal__previous") || event.target.parentNode.classList.contains("lightbox-modal__previous")) {
+         if (this.currentKey > 0) {
+          this.render(
+            Lightbox.getContent(
+              this.medias[this.mediasKeys[--this.currentKey]],
+              this.photographer.name.replace(/\s/g, "")
+            ),
+            document.querySelector(".lightbox-modal__wrap")
+          );
+         }
+        }
+
+        if (event.target.classList.contains("lightbox-modal__next") || event.target.parentNode.classList.contains("lightbox-modal__next")) {
+          console.log("next")
+          if (this.currentKey < this.mediasKeys.length - 1) {
+            this.render(
+              Lightbox.getContent(
+                this.medias[this.mediasKeys[++this.currentKey]],
+                this.photographer.name.replace(/\s/g, "")
+              ),
+              document.querySelector(".lightbox-modal__wrap")
+            );
+          }
+         }
+      });
+    }
+  };
+
   mediasCards = (photographerMedias, photographerName) => {
+    this.lightBoxInit();
+
     let mediaCards = "";
     for (const media in photographerMedias) {
       if (photographerMedias[media].type == "image") {
@@ -23,8 +80,11 @@ class PhotographerPage extends Page {
   getPage = () => {
     let url = window.location.pathname.split("/");
     let id = url[url.length - 1];
+    this.id = id;
+    this.photographer = this.orm.getPhotographerById(id);
     let photographer = this.orm.getPhotographerById(id);
     let medias = this.orm.getMediasByPhotographerId(id);
+    this.medias = medias;
 
     return `<main class="container">${Header.getHtml()}<section class="section photographer-infos">
     <div class="photographer-infos__details">
@@ -78,7 +138,7 @@ class PhotographerPage extends Page {
   </div><div class="photographer-medias__grid">${this.mediasCards(
     medias,
     photographer.name
-  )}</div></section></main>`;
+  )}</div></section>${Lightbox.getHtml()}</main>`;
   };
 }
 
