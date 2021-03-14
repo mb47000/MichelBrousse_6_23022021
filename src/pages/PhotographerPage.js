@@ -5,10 +5,32 @@ import Lightbox from "../components/Lightbox";
 
 class PhotographerPage extends Page {
   #lightBoxListenerStatus = false;
+  #dropDownListenerStatus = false;
 
   constructor() {
     super();
   }
+
+  dropDownInit = () => {
+    if (!this.#dropDownListenerStatus) {
+      console.log("in dropdownInit");
+      document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("dropdown-button")) {
+          console.log("in dropdownEvent");
+          const dropdownLi = document.getElementsByClassName(
+            "dropdown-content"
+          );
+          const dropdownContent = document.getElementById("sortMediaList");
+          dropdownContent.style.display = "block			";
+          for (let content of dropdownLi) {
+            content.tabIndex = "0";
+          }
+          dropdownLi[1].focus();
+        }
+      });
+      this.#dropDownListenerStatus = true;
+    }
+  };
 
   lightBoxInit = () => {
     let mediasFilter = this.medias;
@@ -19,7 +41,9 @@ class PhotographerPage extends Page {
           event.target.parentNode.parentNode.classList.contains("modal-trigger")
         ) {
           let target = event.target.parentNode.parentNode;
-          this.currentKey = this.mediasKeys.indexOf(target.getAttribute("data-id"));
+          this.currentKey = this.mediasKeys.indexOf(
+            target.getAttribute("data-id")
+          );
           this.render(
             Lightbox.getContent(
               mediasFilter[target.getAttribute("data-id")],
@@ -34,20 +58,26 @@ class PhotographerPage extends Page {
           document.getElementById("lightbox").style.display = "none";
         }
 
-        if (event.target.classList.contains("lightbox-modal__previous") || event.target.parentNode.classList.contains("lightbox-modal__previous")) {
-         if (this.currentKey > 0) {
-          this.render(
-            Lightbox.getContent(
-              this.medias[this.mediasKeys[--this.currentKey]],
-              this.photographer.name.replace(/\s/g, "")
-            ),
-            document.querySelector(".lightbox-modal__wrap")
-          );
-         }
+        if (
+          event.target.classList.contains("lightbox-modal__previous") ||
+          event.target.parentNode.classList.contains("lightbox-modal__previous")
+        ) {
+          if (this.currentKey > 0) {
+            this.render(
+              Lightbox.getContent(
+                this.medias[this.mediasKeys[--this.currentKey]],
+                this.photographer.name.replace(/\s/g, "")
+              ),
+              document.querySelector(".lightbox-modal__wrap")
+            );
+          }
         }
 
-        if (event.target.classList.contains("lightbox-modal__next") || event.target.parentNode.classList.contains("lightbox-modal__next")) {
-          console.log("next")
+        if (
+          event.target.classList.contains("lightbox-modal__next") ||
+          event.target.parentNode.classList.contains("lightbox-modal__next")
+        ) {
+          console.log("next");
           if (this.currentKey < this.mediasKeys.length - 1) {
             this.render(
               Lightbox.getContent(
@@ -57,7 +87,7 @@ class PhotographerPage extends Page {
               document.querySelector(".lightbox-modal__wrap")
             );
           }
-         }
+        }
       });
     }
   };
@@ -85,6 +115,7 @@ class PhotographerPage extends Page {
     let photographer = this.orm.getPhotographerById(id);
     let medias = this.orm.getMediasByPhotographerId(id);
     this.medias = medias;
+    this.dropDownInit();
 
     return `<main class="container">${Header.getHtml()}<section class="section photographer-infos">
     <div class="photographer-infos__details">
@@ -109,36 +140,26 @@ class PhotographerPage extends Page {
     />
   </div></section><section class="section photographer-medias">
   <div class="photographer-medias__sort-wrap">
-    <span id="sortMediasLabel" class="photographer-medias__sort-label">
-      Trier par
-    </span>
-    <button
-      id="sortMediaButton"
-      class="photographer-medias__sort-button"
-      aria-haspopup="listbox"
-      aria-labelledby="sortMediasLabel"
-    >
-      Popularité
-    </button>
-    <ul
-      id="sortMediaList"
-      class="photographer-medias__sort-list"
-      tabindex="-1"
-      role="listbox"
-      aria-labelledby="exp_elem"
-    >
-      <li class="photographer-medias__sort-option" role="option">
-        Popularité
-      </li>
-      <li class="photographer-medias__sort-option" role="option">Date</li>
-      <li class="photographer-medias__sort-option" role="option">
-        Titre
-      </li>
-    </ul>
-  </div><div class="photographer-medias__grid">${this.mediasCards(
-    medias,
-    photographer.name
-  )}</div></section>${Lightbox.getHtml()}</main>`;
+					<span id="sortMediasLabel" class="photographer-medias__sort-label">
+						Trier par
+					</span>
+					<button id="sortMediaButton" class="photographer-medias__sort-button dropdown-button background-element" aria-haspopup="listbox" aria-labelledby="sortMediasLabel">
+						Popularité
+					</button>
+					<ul id="sortMediaList" class="photographer-medias__sort-list dropdown-content" tabindex="-1" role="listbox" aria-labelledby="exp_elem">
+						<li class="photographer-medias__sort-option" role="option">
+							<a href="" class="photographer-medias__sort-option-link dropdown-content">Popularité</a>
+						</li>
+						<li class="photographer-medias__sort-option" role="option">
+							<a href="" class="photographer-medias__sort-option-link dropdown-content">Date</a>
+						</li><li class="photographer-medias__sort-option" role="option">
+							<a href="" class="photographer-medias__sort-option-link dropdown-content">Titre</a>
+						</li>
+					</ul>
+				</div><div class="photographer-medias__grid">${this.mediasCards(
+          medias,
+          photographer.name
+        )}</div></section>${Lightbox.getHtml()}</main>`;
   };
 }
 

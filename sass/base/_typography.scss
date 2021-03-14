@@ -84,6 +84,13 @@ html {
 	color: #911c1c;
 }
 
+.media-card__price,
+.media-card__like {
+	font-size: 1.5rem;
+	line-height: 1.5rem;
+	font-weight: 500;
+}
+
 .contact-form__title {
 	font-size: 4rem;
 	line-height: 5.208rem;
@@ -103,4 +110,74 @@ html {
 	font-size: 1.5rem;
 	line-height: 1.953rem;
 	color: #911c1c;
+}
+.photographer-widget {
+	font-weight: 500;
+	font-size: 1.5rem;
+	line-height: 1.938rem;
+}
+@media (max-width: 600px) {
+	.page-title,
+	.user__name {
+		font-size: 0.875rem;
+		line-height: 1.125rem;
+		font-weight: normal;
+	}
+	.user__name {
+		font-size: 2.25rem;
+		line-height: 2.938rem;
+	}
+	.photographer-infos__name {
+		font-size: 2.25rem;
+		line-height: 2.938rem;
+	}
+	.photographer-infos__location {
+		font-size: 0.813rem;
+		line-height: 1.063rem;
+	}
+	.photographer-infos__catchphrase {
+		font-size: 0.813rem;
+		line-height: 1.063rem;
+	}
+	.photographer-infos__categories-link {
+		font-size: 0.813rem;
+		line-height: 1.063rem;
+		font-weight: 500;
+		color: #911c1c;
+	}
+	.photographer-infos__contact {
+		font-size: 1.125rem;
+		line-height: 1.438rem;
+		font-weight: 700;
+	}
+	.media-card__title {
+		font-size: 0.875rem;
+		line-height: 1.125rem;
+	}
+	.media-card__price {
+		font-size: 0.75rem;
+		line-height: 1rem;
+	}
+	.media-card__like {
+		font-size: 0.875rem;
+		line-height: 1.125rem;
+	}
+	.contact-form__title {
+		font-size: 2.25rem;
+		line-height: 2.938rem;
+		font-weight: 400;
+	}
+	.contact-form__label {
+		font-size: 1.5rem;
+		line-height: 1.938rem;
+	}
+	.contact-form__submit {
+		font-size: 1.125rem;
+		line-height: 1.438rem;
+	}
+	.lightbox-modal__title {
+		font-size: 0.875rem;
+		line-height: 1.125rem;
+		color: #911c1c;
+	}
 }

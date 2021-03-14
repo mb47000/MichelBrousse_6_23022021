@@ -548,6 +548,8 @@ var Router = /*#__PURE__*/function () {
       var _this = this;
 
       document.addEventListener("click", function (event) {
+        event.preventDefault();
+
         if (event.target.classList.contains(querySelector)) {
           event.preventDefault();
 
@@ -637,7 +639,7 @@ _defineProperty(Card, "tags", function (tags) {
 });
 
 _defineProperty(Card, "getHtml", function (entity) {
-  return "<div class=\"card user\"><a href=\"/photographer/".concat(entity.id, "\" class=\"a-navigation\" data-id=").concat(entity.id, "><a href=\"/photographer/").concat(entity.id, "\" class=\"a-navigation user__link\"><img class=\"card__avatar user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\"></a><h2 class=\"user__name\"><a href=\"/photographer/").concat(entity.id, "\" class=\"a-navigation\">").concat(entity.name, "</a></h2></a><div class=\"user__infos\"><p class=\"user__infos-location\">").concat(entity.city, "</p><p>").concat(entity.tagline, "</p><p>").concat(entity.price, "\u20AC/jour</p></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></div>");
+  return "<div class=\"card user\"><a href=\"/photographer/".concat(entity.id, "\" class=\"a-navigation\" data-id=").concat(entity.id, "><img class=\"card__avatar user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\"><h2 class=\"user__name\">").concat(entity.name, "</h2></a><div class=\"user__infos\"><p class=\"user__infos-location\">").concat(entity.city, "</p><p>").concat(entity.tagline, "</p><p>").concat(entity.price, "\u20AC/jour</p></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Card);
@@ -1071,6 +1073,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Lightbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Lightbox */ "./src/components/Lightbox.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -1089,6 +1097,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to set private field on non-instance"); } if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } return value; }
+
 function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to get private field on non-instance"); } if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
 
 
@@ -1097,6 +1107,8 @@ function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateM
 
 
 var _lightBoxListenerStatus = new WeakMap();
+
+var _dropDownListenerStatus = new WeakMap();
 
 var PhotographerPage = /*#__PURE__*/function (_Page) {
   _inherits(PhotographerPage, _Page);
@@ -1113,6 +1125,43 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
     _lightBoxListenerStatus.set(_assertThisInitialized(_this), {
       writable: true,
       value: false
+    });
+
+    _dropDownListenerStatus.set(_assertThisInitialized(_this), {
+      writable: true,
+      value: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "dropDownInit", function () {
+      if (!_classPrivateFieldGet(_assertThisInitialized(_this), _dropDownListenerStatus)) {
+        console.log("in dropdownInit");
+        document.addEventListener("click", function (event) {
+          if (event.target.classList.contains("dropdown-button")) {
+            console.log("in dropdownEvent");
+            var dropdownLi = document.getElementsByClassName("dropdown-content");
+            var dropdownContent = document.getElementById("sortMediaList");
+            dropdownContent.style.display = "block			";
+
+            var _iterator = _createForOfIteratorHelper(dropdownLi),
+                _step;
+
+            try {
+              for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                var content = _step.value;
+                content.tabIndex = "0";
+              }
+            } catch (err) {
+              _iterator.e(err);
+            } finally {
+              _iterator.f();
+            }
+
+            dropdownLi[1].focus();
+          }
+        });
+
+        _classPrivateFieldSet(_assertThisInitialized(_this), _dropDownListenerStatus, true);
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "lightBoxInit", function () {
@@ -1176,7 +1225,10 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
       var medias = _this.orm.getMediasByPhotographerId(id);
 
       _this.medias = medias;
-      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(photographer.city, ", ").concat(photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n    <span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n      Trier par\n    </span>\n    <button\n      id=\"sortMediaButton\"\n      class=\"photographer-medias__sort-button\"\n      aria-haspopup=\"listbox\"\n      aria-labelledby=\"sortMediasLabel\"\n    >\n      Popularit\xE9\n    </button>\n    <ul\n      id=\"sortMediaList\"\n      class=\"photographer-medias__sort-list\"\n      tabindex=\"-1\"\n      role=\"listbox\"\n      aria-labelledby=\"exp_elem\"\n    >\n      <li class=\"photographer-medias__sort-option\" role=\"option\">\n        Popularit\xE9\n      </li>\n      <li class=\"photographer-medias__sort-option\" role=\"option\">Date</li>\n      <li class=\"photographer-medias__sort-option\" role=\"option\">\n        Titre\n      </li>\n    </ul>\n  </div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(medias, photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml(), "</main>");
+
+      _this.dropDownInit();
+
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(photographer.city, ", ").concat(photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(medias, photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml(), "</main>");
     });
 
     return _this;

@@ -10,6 +10,7 @@ class Router {
 
   listenNavigation(querySelector) {
     document.addEventListener("click", (event) => {
+      event.preventDefault()
       if (event.target.classList.contains(querySelector)) {
         event.preventDefault();
         this.redirectOnClick(event.target, this.appContainer);
