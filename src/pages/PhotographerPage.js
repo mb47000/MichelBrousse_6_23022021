@@ -13,10 +13,8 @@ class PhotographerPage extends Page {
 
   dropDownInit = () => {
     if (!this.#dropDownListenerStatus) {
-      console.log("in dropdownInit");
       document.addEventListener("click", (event) => {
         if (event.target.classList.contains("dropdown-button")) {
-          console.log("in dropdownEvent");
           const dropdownLi = document.getElementsByClassName(
             "dropdown-content"
           );
@@ -26,6 +24,42 @@ class PhotographerPage extends Page {
             content.tabIndex = "0";
           }
           dropdownLi[1].focus();
+        }
+
+        if (event.target.classList.contains("dropdown-content")) {
+          const dropdownContent = document.getElementById("sortMediaList");
+          const dropdownButton = document.getElementById("sortMediaButton")
+          dropdownButton.innerHTML = event.target.innerHTML;
+          dropdownContent.prepend(event.target.parentNode);
+          dropdownContent.style.display = "none";
+          dropdownContent.tabIndex = "-1";
+          switch (event.target.innerHTML) {
+            case "Popularité":
+              this.mediasKeys.sort(
+                (a, b) => parseInt(this.medias[b].likes) - parseInt(this.medias[a].likes)
+              );
+              break;
+            case "Date":
+              this.mediasKeys.sort(
+                (a, b) =>
+                  new Date(this.medias[b].date.replace(/-/g, "/")) -
+                  new Date(this.medias[a].date.replace(/-/g, "/"))
+              );
+              break;
+            case "Titre":
+              console.log(this.mediasKeys)
+              this.mediasKeys.sort((a, b) => {
+                if (this.medias[a][this.medias[a].type] < this.medias[b][this.medias[b].type]) {
+                  return -1;
+                }
+                if (this.medias[a][this.medias[a].type] > this.medias[b][this.medias[b].type]) {
+                  return 1;
+                }
+                return 0;
+              });
+              console.log(this.mediasKeys)
+              break;
+          }
         }
       });
       this.#dropDownListenerStatus = true;
@@ -77,7 +111,7 @@ class PhotographerPage extends Page {
           event.target.classList.contains("lightbox-modal__next") ||
           event.target.parentNode.classList.contains("lightbox-modal__next")
         ) {
-          console.log("next");
+          console.log("next", this.mediasKeys, this.currentKey);
           if (this.currentKey < this.mediasKeys.length - 1) {
             this.render(
               Lightbox.getContent(
@@ -97,12 +131,10 @@ class PhotographerPage extends Page {
 
     let mediaCards = "";
     for (const media in photographerMedias) {
-      if (photographerMedias[media].type == "image") {
         mediaCards += Media.getHtml(
           photographerMedias[media],
           photographerName
         );
-      }
     }
     return mediaCards;
   };

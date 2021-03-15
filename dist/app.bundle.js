@@ -702,11 +702,13 @@ var Lightbox = function Lightbox() {
 };
 
 _defineProperty(Lightbox, "getHtml", function () {
-  return "\n    <div class=\"lightbox-modal\"  id=\"lightbox\">\n\t\t\t\t<div class=\"lightbox-modal__wrap\">\n\t\t\t\t</div>\n\t\t\t</div>";
+  return "\n    <div class=\"lightbox-modal modal\"  id=\"lightbox\">\n\t\t\t\t<div class=\"lightbox-modal__wrap\">\n\t\t\t\t</div>\n\t\t\t</div>";
 });
 
 _defineProperty(Lightbox, "getContent", function (media, path) {
-  return "<button class=\"lightbox-modal__close modal-close\" data-target=\"lightbox\">X</button>\n <button class=\"lightbox-modal__previous\"><i class=\"fas fa-chevron-left\"></i></button>\n\t <div class=\"lightbox-modal__content\">".concat(media.id, "<img\n\t\t src=\"../../dist/SamplePhotos/").concat(path, "/").concat(media.image, "\"\n\t\t alt=\"\"\n\t\t class=\"lightbox-modal__img\"\n\t />\n\t </div>\n\t <button href=\"\" class=\"lightbox-modal__next\"><i class=\"fas fa-chevron-right\"></i></button>\n\t <div class=\"lightbox-modal__title-wrap\">\n\t\t <p class=\"lightbox-modal__title\">Arc en ciel</p>\n\t </div>");
+  var type = media.type == "image" ? "img" : "video";
+  var typeSrc = media.type == "image" ? media.image : media.video;
+  return "<button class=\"lightbox-modal__close modal-close\" data-target=\"lightbox\">X</button>\n <button class=\"lightbox-modal__previous\"><i class=\"fas fa-chevron-left\"></i></button>\n\t <div class=\"lightbox-modal__content lightbox-modal__img-wrap\">".concat(media.id, "<").concat(type, "\n\t\t src=\"../../dist/SamplePhotos/").concat(path, "/").concat(typeSrc, "\"\n\t\t alt=\"\"\n\t\t class=\"lightbox-modal__img carousel__image\"\n\t\t ").concat(type === "video" ? "controls" : "", "\n\t />\n\t </div>\n\t <button href=\"\" class=\"lightbox-modal__next\"><i class=\"fas fa-chevron-right\"></i></button>\n\t <div class=\"lightbox-modal__title-wrap\">\n\t\t <p class=\"lightbox-modal__title\">Arc en ciel</p>\n\t </div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Lightbox);
@@ -738,8 +740,8 @@ var Media = /*#__PURE__*/function () {
   _createClass(Media, null, [{
     key: "getHtml",
     value: function getHtml(media, photographerName) {
-      var mediaSrc = media.type == 'image' ? media.image : media.video;
-      return "<div class=\"media-card modal-trigger\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"../../dist/SamplePhotos/").concat(photographerName.replace(/\s/g, ""), "/").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(mediaSrc, "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"fas fa-heart\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>");
+      var mediaSrc = media.type == 'image' ? "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(media.image) : 'https://via.placeholder.com/150';
+      return "<div class=\"media-card modal-trigger\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(mediaSrc, "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"fas fa-heart\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>");
     }
   }]);
 
@@ -1134,10 +1136,8 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
     _defineProperty(_assertThisInitialized(_this), "dropDownInit", function () {
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _dropDownListenerStatus)) {
-        console.log("in dropdownInit");
         document.addEventListener("click", function (event) {
           if (event.target.classList.contains("dropdown-button")) {
-            console.log("in dropdownEvent");
             var dropdownLi = document.getElementsByClassName("dropdown-content");
             var dropdownContent = document.getElementById("sortMediaList");
             dropdownContent.style.display = "block			";
@@ -1157,6 +1157,52 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
             }
 
             dropdownLi[1].focus();
+          }
+
+          if (event.target.classList.contains("dropdown-content")) {
+            var _dropdownContent = document.getElementById("sortMediaList");
+
+            var dropdownButton = document.getElementById("sortMediaButton");
+            dropdownButton.innerHTML = event.target.innerHTML;
+
+            _dropdownContent.prepend(event.target.parentNode);
+
+            _dropdownContent.style.display = "none";
+            _dropdownContent.tabIndex = "-1";
+
+            switch (event.target.innerHTML) {
+              case "Popularité":
+                _this.mediasKeys.sort(function (a, b) {
+                  return parseInt(_this.medias[b].likes) - parseInt(_this.medias[a].likes);
+                });
+
+                break;
+
+              case "Date":
+                _this.mediasKeys.sort(function (a, b) {
+                  return new Date(_this.medias[b].date.replace(/-/g, "/")) - new Date(_this.medias[a].date.replace(/-/g, "/"));
+                });
+
+                break;
+
+              case "Titre":
+                console.log(_this.mediasKeys);
+
+                _this.mediasKeys.sort(function (a, b) {
+                  if (_this.medias[a][_this.medias[a].type] < _this.medias[b][_this.medias[b].type]) {
+                    return -1;
+                  }
+
+                  if (_this.medias[a][_this.medias[a].type] > _this.medias[b][_this.medias[b].type]) {
+                    return 1;
+                  }
+
+                  return 0;
+                });
+
+                console.log(_this.mediasKeys);
+                break;
+            }
           }
         });
 
@@ -1190,7 +1236,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
           }
 
           if (event.target.classList.contains("lightbox-modal__next") || event.target.parentNode.classList.contains("lightbox-modal__next")) {
-            console.log("next");
+            console.log("next", _this.mediasKeys, _this.currentKey);
 
             if (_this.currentKey < _this.mediasKeys.length - 1) {
               _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[_this.mediasKeys[++_this.currentKey]], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__wrap"));
@@ -1206,9 +1252,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
       var mediaCards = "";
 
       for (var media in photographerMedias) {
-        if (photographerMedias[media].type == "image") {
-          mediaCards += _components_Media__WEBPACK_IMPORTED_MODULE_2__.default.getHtml(photographerMedias[media], photographerName);
-        }
+        mediaCards += _components_Media__WEBPACK_IMPORTED_MODULE_2__.default.getHtml(photographerMedias[media], photographerName);
       }
 
       return mediaCards;
