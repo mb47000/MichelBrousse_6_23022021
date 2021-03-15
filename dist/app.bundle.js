@@ -1170,39 +1170,9 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
             _dropdownContent.style.display = "none";
             _dropdownContent.tabIndex = "-1";
 
-            switch (event.target.innerHTML) {
-              case "Popularité":
-                _this.mediasKeys.sort(function (a, b) {
-                  return parseInt(_this.medias[b].likes) - parseInt(_this.medias[a].likes);
-                });
+            _this.mediasFilter(event.target.innerHTML);
 
-                break;
-
-              case "Date":
-                _this.mediasKeys.sort(function (a, b) {
-                  return new Date(_this.medias[b].date.replace(/-/g, "/")) - new Date(_this.medias[a].date.replace(/-/g, "/"));
-                });
-
-                break;
-
-              case "Titre":
-                console.log(_this.mediasKeys);
-
-                _this.mediasKeys.sort(function (a, b) {
-                  if (_this.medias[a][_this.medias[a].type] < _this.medias[b][_this.medias[b].type]) {
-                    return -1;
-                  }
-
-                  if (_this.medias[a][_this.medias[a].type] > _this.medias[b][_this.medias[b].type]) {
-                    return 1;
-                  }
-
-                  return 0;
-                });
-
-                console.log(_this.mediasKeys);
-                break;
-            }
+            _this.render(_this.mediasCards(_this.mediasKeys, _this.photographer.name), document.querySelector(".photographer-medias__grid"));
           }
         });
 
@@ -1210,17 +1180,47 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "lightBoxInit", function () {
-      var mediasFilter = _this.medias;
-      _this.mediasKeys = Object.keys(mediasFilter);
+    _defineProperty(_assertThisInitialized(_this), "mediasFilter", function (filter) {
+      switch (filter) {
+        case "Popularité":
+          _this.mediasKeys.sort(function (a, b) {
+            return parseInt(_this.medias[b].likes) - parseInt(_this.medias[a].likes);
+          });
 
+          break;
+
+        case "Date":
+          _this.mediasKeys.sort(function (a, b) {
+            return new Date(_this.medias[b].date.replace(/-/g, "/")) - new Date(_this.medias[a].date.replace(/-/g, "/"));
+          });
+
+          break;
+
+        case "Titre":
+          _this.mediasKeys.sort(function (a, b) {
+            if (_this.medias[a][_this.medias[a].type] < _this.medias[b][_this.medias[b].type]) {
+              return -1;
+            }
+
+            if (_this.medias[a][_this.medias[a].type] > _this.medias[b][_this.medias[b].type]) {
+              return 1;
+            }
+
+            return 0;
+          });
+
+          break;
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "lightBoxInit", function () {
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _lightBoxListenerStatus)) {
         document.addEventListener("click", function (event) {
           if (event.target.parentNode.parentNode.classList.contains("modal-trigger")) {
             var target = event.target.parentNode.parentNode;
             _this.currentKey = _this.mediasKeys.indexOf(target.getAttribute("data-id"));
 
-            _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(mediasFilter[target.getAttribute("data-id")], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__wrap"));
+            _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[target.getAttribute("data-id")], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__wrap"));
 
             document.querySelector("#lightbox").style.display = "flex";
           }
@@ -1250,29 +1250,24 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
       _this.lightBoxInit();
 
       var mediaCards = "";
-
-      for (var media in photographerMedias) {
-        mediaCards += _components_Media__WEBPACK_IMPORTED_MODULE_2__.default.getHtml(photographerMedias[media], photographerName);
-      }
-
+      photographerMedias.forEach(function (media) {
+        mediaCards += _components_Media__WEBPACK_IMPORTED_MODULE_2__.default.getHtml(_this.medias[media], photographerName);
+      });
       return mediaCards;
     });
 
     _defineProperty(_assertThisInitialized(_this), "getPage", function () {
       var url = window.location.pathname.split("/");
       var id = url[url.length - 1];
-      _this.id = id;
       _this.photographer = _this.orm.getPhotographerById(id);
+      _this.medias = _this.orm.getMediasByPhotographerId(id);
+      _this.mediasKeys = Object.keys(_this.medias);
 
-      var photographer = _this.orm.getPhotographerById(id);
-
-      var medias = _this.orm.getMediasByPhotographerId(id);
-
-      _this.medias = medias;
+      _this.mediasFilter('Popularité');
 
       _this.dropDownInit();
 
-      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(photographer.city, ", ").concat(photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(medias, photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml(), "</main>");
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(_this.photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml(), "</main>");
     });
 
     return _this;

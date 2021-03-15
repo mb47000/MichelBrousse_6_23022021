@@ -28,47 +28,59 @@ class PhotographerPage extends Page {
 
         if (event.target.classList.contains("dropdown-content")) {
           const dropdownContent = document.getElementById("sortMediaList");
-          const dropdownButton = document.getElementById("sortMediaButton")
+          const dropdownButton = document.getElementById("sortMediaButton");
           dropdownButton.innerHTML = event.target.innerHTML;
           dropdownContent.prepend(event.target.parentNode);
           dropdownContent.style.display = "none";
           dropdownContent.tabIndex = "-1";
-          switch (event.target.innerHTML) {
-            case "Popularité":
-              this.mediasKeys.sort(
-                (a, b) => parseInt(this.medias[b].likes) - parseInt(this.medias[a].likes)
-              );
-              break;
-            case "Date":
-              this.mediasKeys.sort(
-                (a, b) =>
-                  new Date(this.medias[b].date.replace(/-/g, "/")) -
-                  new Date(this.medias[a].date.replace(/-/g, "/"))
-              );
-              break;
-            case "Titre":
-              console.log(this.mediasKeys)
-              this.mediasKeys.sort((a, b) => {
-                if (this.medias[a][this.medias[a].type] < this.medias[b][this.medias[b].type]) {
-                  return -1;
-                }
-                if (this.medias[a][this.medias[a].type] > this.medias[b][this.medias[b].type]) {
-                  return 1;
-                }
-                return 0;
-              });
-              console.log(this.mediasKeys)
-              break;
-          }
+          this.mediasFilter(event.target.innerHTML);
+          this.render(
+            this.mediasCards(this.mediasKeys, this.photographer.name),
+            document.querySelector(".photographer-medias__grid")
+          );
         }
       });
       this.#dropDownListenerStatus = true;
     }
   };
 
+  mediasFilter = (filter) => {
+    switch (filter) {
+      case "Popularité":
+        this.mediasKeys.sort(
+          (a, b) =>
+            parseInt(this.medias[b].likes) -
+            parseInt(this.medias[a].likes)
+        );
+        break;
+      case "Date":
+        this.mediasKeys.sort(
+          (a, b) =>
+            new Date(this.medias[b].date.replace(/-/g, "/")) -
+            new Date(this.medias[a].date.replace(/-/g, "/"))
+        );
+        break;
+      case "Titre":
+        this.mediasKeys.sort((a, b) => {
+          if (
+            this.medias[a][this.medias[a].type] <
+            this.medias[b][this.medias[b].type]
+          ) {
+            return -1;
+          }
+          if (
+            this.medias[a][this.medias[a].type] >
+            this.medias[b][this.medias[b].type]
+          ) {
+            return 1;
+          }
+          return 0;
+        });
+        break;
+    }
+  }
+
   lightBoxInit = () => {
-    let mediasFilter = this.medias;
-    this.mediasKeys = Object.keys(mediasFilter);
     if (!this.#lightBoxListenerStatus) {
       document.addEventListener("click", (event) => {
         if (
@@ -80,7 +92,7 @@ class PhotographerPage extends Page {
           );
           this.render(
             Lightbox.getContent(
-              mediasFilter[target.getAttribute("data-id")],
+              this.medias[target.getAttribute("data-id")],
               this.photographer.name.replace(/\s/g, "")
             ),
             document.querySelector(".lightbox-modal__wrap")
@@ -128,35 +140,31 @@ class PhotographerPage extends Page {
 
   mediasCards = (photographerMedias, photographerName) => {
     this.lightBoxInit();
-
     let mediaCards = "";
-    for (const media in photographerMedias) {
-        mediaCards += Media.getHtml(
-          photographerMedias[media],
-          photographerName
-        );
-    }
+
+    photographerMedias.forEach((media) => {
+      mediaCards += Media.getHtml(this.medias[media], photographerName);
+    });
     return mediaCards;
   };
 
   getPage = () => {
     let url = window.location.pathname.split("/");
     let id = url[url.length - 1];
-    this.id = id;
     this.photographer = this.orm.getPhotographerById(id);
-    let photographer = this.orm.getPhotographerById(id);
-    let medias = this.orm.getMediasByPhotographerId(id);
-    this.medias = medias;
+    this.medias = this.orm.getMediasByPhotographerId(id);
+    this.mediasKeys = Object.keys(this.medias);
+    this.mediasFilter('Popularité');
     this.dropDownInit();
 
     return `<main class="container">${Header.getHtml()}<section class="section photographer-infos">
     <div class="photographer-infos__details">
       <h1 class="photographer-infos__name">${
-        photographer.name
+        this.photographer.name
       }</h1><span class="photographer-infos__location">
-      <p>${photographer.city}, ${photographer.country}</p>
+      <p>${this.photographer.city}, ${this.photographer.country}</p>
     </span><span class="photographer-infos__catchphrase">
-    <p>${photographer.tagline}</p>
+    <p>${this.photographer.tagline}</p>
   </span>
     </div><div class="photographer-infos__contact-wrap">
     <button class="photographer-infos__contact modal-trigger" data-target="contact">Contactez-moi</button>
@@ -164,7 +172,7 @@ class PhotographerPage extends Page {
   <div class="photographer-infos__img">
     <img
       class="user__img"
-      src="../../dist/SamplePhotos/PhotographersIDPhotos/${photographer.name.replace(
+      src="../../dist/SamplePhotos/PhotographersIDPhotos/${this.photographer.name.replace(
         /\s/g,
         ""
       )}.jpg"
@@ -189,8 +197,8 @@ class PhotographerPage extends Page {
 						</li>
 					</ul>
 				</div><div class="photographer-medias__grid">${this.mediasCards(
-          medias,
-          photographer.name
+          this.mediasKeys,
+          this.photographer.name
         )}</div></section>${Lightbox.getHtml()}</main>`;
   };
 }
