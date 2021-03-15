@@ -741,7 +741,7 @@ var Media = /*#__PURE__*/function () {
     key: "getHtml",
     value: function getHtml(media, photographerName) {
       var mediaSrc = media.type == 'image' ? "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(media.image) : 'https://via.placeholder.com/150';
-      return "<div class=\"media-card modal-trigger\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(mediaSrc, "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"fas fa-heart\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>");
+      return "<div class=\"media-card modal-trigger\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(mediaSrc, "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"like-button fas fa-heart\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>");
     }
   }]);
 
@@ -749,6 +749,33 @@ var Media = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Media);
+
+/***/ }),
+
+/***/ "./src/components/PhotographerWidget.js":
+/*!**********************************************!*\
+  !*** ./src/components/PhotographerWidget.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var PhotographerWidget = function PhotographerWidget() {
+  _classCallCheck(this, PhotographerWidget);
+};
+
+_defineProperty(PhotographerWidget, "getHtml", function (likes, price) {
+  return "<div class=\"photographer-widget\">\n        <span class=\"photographer-widget__likes-wrap\">\n            <p class=\"photographer-widget__likes-count\">".concat(likes, "<i class=\"fas fa-heart photographer-widget__likes-button\" aria-hidden=\"true\"></i></p>\n        </span>\n        <span class=\"photographer-widget__price-wrap\">").concat(price, "\u20AC / jour</span>\n    </div>");
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhotographerWidget);
 
 /***/ }),
 
@@ -1073,6 +1100,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./src/components/Header.js");
 /* harmony import */ var _components_Media__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Media */ "./src/components/Media.js");
 /* harmony import */ var _components_Lightbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Lightbox */ "./src/components/Lightbox.js");
+/* harmony import */ var _components_PhotographerWidget__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/PhotographerWidget */ "./src/components/PhotographerWidget.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -1108,9 +1136,12 @@ function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateM
 
 
 
+
 var _lightBoxListenerStatus = new WeakMap();
 
 var _dropDownListenerStatus = new WeakMap();
+
+var _likeListenerStatus = new WeakMap();
 
 var PhotographerPage = /*#__PURE__*/function (_Page) {
   _inherits(PhotographerPage, _Page);
@@ -1132,6 +1163,25 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
     _dropDownListenerStatus.set(_assertThisInitialized(_this), {
       writable: true,
       value: false
+    });
+
+    _likeListenerStatus.set(_assertThisInitialized(_this), {
+      writable: true,
+      value: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "like", function () {
+      if (!_classPrivateFieldGet(_assertThisInitialized(_this), _likeListenerStatus)) {
+        document.addEventListener("click", function (event) {
+          if (event.target.classList.contains("like-button")) {
+            _this.medias[event.target.parentNode.parentNode.parentNode.getAttribute("data-id")].likes++;
+            event.target.previousSibling.data = "".concat(++event.target.previousSibling.data, " ");
+            ++document.querySelector('.photographer-widget__likes-count').firstChild.data;
+          }
+        });
+
+        _classPrivateFieldSet(_assertThisInitialized(_this), _likeListenerStatus, true);
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "dropDownInit", function () {
@@ -1246,6 +1296,16 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "widget", function () {
+      var totalLikes = 0;
+
+      for (var media in _this.medias) {
+        totalLikes += _this.medias[media].likes;
+      }
+
+      return _components_PhotographerWidget__WEBPACK_IMPORTED_MODULE_4__.default.getHtml(totalLikes, _this.photographer.price);
+    });
+
     _defineProperty(_assertThisInitialized(_this), "mediasCards", function (photographerMedias, photographerName) {
       _this.lightBoxInit();
 
@@ -1265,9 +1325,11 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
       _this.mediasFilter('Popularité');
 
+      _this.like();
+
       _this.dropDownInit();
 
-      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(_this.photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml(), "</main>");
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(_this.photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml()).concat(_this.widget(), "</main>");
     });
 
     return _this;

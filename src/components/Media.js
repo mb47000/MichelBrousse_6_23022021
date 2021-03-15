@@ -13,7 +13,7 @@ class Media {
 						<div class="media-card__lower-body">
 							<p class="media-card__title">${mediaSrc}</p>
 							<p class="media-card__price">${media.price} €</p>
-							<p class="media-card__like">${media.likes} <i class="fas fa-heart"></i></p>
+							<p class="media-card__like">${media.likes} <i class="like-button fas fa-heart"></i></p>
 						</div>
 					</div>`;
   }

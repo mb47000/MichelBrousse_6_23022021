@@ -2,13 +2,28 @@ import Page from "../classes/Page";
 import Header from "../components/Header";
 import Media from "../components/Media";
 import Lightbox from "../components/Lightbox";
+import PhotographerWidget from "../components/PhotographerWidget";
 
 class PhotographerPage extends Page {
   #lightBoxListenerStatus = false;
   #dropDownListenerStatus = false;
+  #likeListenerStatus = false;
 
   constructor() {
     super();
+  }
+
+  like = () => {
+    if (!this.#likeListenerStatus){
+      document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("like-button")) {
+          this.medias[event.target.parentNode.parentNode.parentNode.getAttribute("data-id")].likes++
+          event.target.previousSibling.data = `${++event.target.previousSibling.data} `;
+          ++document.querySelector('.photographer-widget__likes-count').firstChild.data
+        }
+      })
+      this.#likeListenerStatus = true;
+    }
   }
 
   dropDownInit = () => {
@@ -138,6 +153,16 @@ class PhotographerPage extends Page {
     }
   };
 
+  widget = () => {
+    let totalLikes = 0;
+
+    for (const media in this.medias) {
+      totalLikes += this.medias[media].likes;
+    }
+
+    return PhotographerWidget.getHtml(totalLikes, this.photographer.price)
+  }
+
   mediasCards = (photographerMedias, photographerName) => {
     this.lightBoxInit();
     let mediaCards = "";
@@ -155,6 +180,7 @@ class PhotographerPage extends Page {
     this.medias = this.orm.getMediasByPhotographerId(id);
     this.mediasKeys = Object.keys(this.medias);
     this.mediasFilter('Popularité');
+    this.like();
     this.dropDownInit();
 
     return `<main class="container">${Header.getHtml()}<section class="section photographer-infos">
@@ -199,7 +225,7 @@ class PhotographerPage extends Page {
 				</div><div class="photographer-medias__grid">${this.mediasCards(
           this.mediasKeys,
           this.photographer.name
-        )}</div></section>${Lightbox.getHtml()}</main>`;
+        )}</div></section>${Lightbox.getHtml()}${this.widget()}</main>`;
   };
 }
 
