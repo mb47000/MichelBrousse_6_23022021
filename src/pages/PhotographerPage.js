@@ -3,11 +3,13 @@ import Header from "../components/Header";
 import Media from "../components/Media";
 import Lightbox from "../components/Lightbox";
 import PhotographerWidget from "../components/PhotographerWidget";
+import Form from "../components/Form";
 
 class PhotographerPage extends Page {
   #lightBoxListenerStatus = false;
   #dropDownListenerStatus = false;
   #likeListenerStatus = false;
+  #formListenerStatus = false;
 
   constructor() {
     super();
@@ -150,6 +152,24 @@ class PhotographerPage extends Page {
           }
         }
       });
+      this.#lightBoxListenerStatus = true;
+    }
+  };
+
+  formInit = () => {
+    if (!this.#formListenerStatus) {
+      document.addEventListener("click", (event) => {
+        if (
+          event.target.classList.contains("photographer-infos__contact")
+        ) {
+          document.querySelector("#form").style.display = "flex";
+        }
+
+        if (event.target.parentNode.classList.contains("modal-close")) {
+          document.getElementById("form").style.display = "none";
+        }
+      });
+      this.#formListenerStatus = true;
     }
   };
 
@@ -182,6 +202,7 @@ class PhotographerPage extends Page {
     this.mediasFilter('Popularité');
     this.like();
     this.dropDownInit();
+    this.formInit();
 
     return `<main class="container">${Header.getHtml()}<section class="section photographer-infos">
     <div class="photographer-infos__details">
@@ -225,7 +246,7 @@ class PhotographerPage extends Page {
 				</div><div class="photographer-medias__grid">${this.mediasCards(
           this.mediasKeys,
           this.photographer.name
-        )}</div></section>${Lightbox.getHtml()}${this.widget()}</main>`;
+        )}</div></section>${Lightbox.getHtml()}${Form.getHtml(this.photographer.name)}${this.widget()}</main>`;
   };
 }
 
