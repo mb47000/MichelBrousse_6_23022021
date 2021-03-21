@@ -544,7 +544,8 @@ var Router = /*#__PURE__*/function () {
 
   _createClass(Router, [{
     key: "listenNavigation",
-    value: function listenNavigation(querySelector) {
+    value: // add event listeners for page navigation
+    function listenNavigation(querySelector) {
       var _this = this;
 
       document.addEventListener("click", function (event) {
@@ -572,7 +573,8 @@ var Router = /*#__PURE__*/function () {
       var path = _ref.path,
           page = _ref.page;
       this.routes[path] = page;
-    }
+    } // Check if the current url are register in the routes array, if is not redirects to 404 error page
+
   }, {
     key: "pageToLoad",
     value: function pageToLoad() {
@@ -1112,6 +1114,7 @@ var HomePage = /*#__PURE__*/function (_Page) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "anchorScroll", function () {
+      // add event listeners for catch scroll on home page and show button to go content
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _scrollListenerStatus)) {
         document.addEventListener("scroll", function (event) {
           var scrollPosition = window.scrollY;

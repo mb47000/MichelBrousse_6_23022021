@@ -16,6 +16,7 @@ class HomePage extends Page {
   header = () => Header.getHtml();
 
   anchorScroll = () => {
+    // add event listeners for catch scroll on home page and show button to go content
     if (!this.#scrollListenerStatus) {
       document.addEventListener("scroll", (event) => {
         let scrollPosition = window.scrollY;
@@ -39,6 +40,7 @@ class HomePage extends Page {
     return AnchorContent.getHtml();
   };
 
+   // add event listeners for catch click on tags and call methods for filter photographer by tag
   tags = () => {
     if (!this.#tagListenerStatus) {
       let tagList = [];

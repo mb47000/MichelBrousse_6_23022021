@@ -3,7 +3,7 @@ import Media from "../entity/Media";
 
 class Factory {
   createPhotographer = (data) => new Photographer(data);
-  // createMedia = data => new Media(data);
+  
   createMedia = (data, type) => {
     switch (type) {
       case "image":

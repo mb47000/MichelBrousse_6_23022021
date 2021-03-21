@@ -8,6 +8,7 @@ class Router {
 
   routes = {};
 
+  // add event listeners for page navigation
   listenNavigation(querySelector) {
     document.addEventListener("click", (event) => {
       if (!event.target.classList.contains("scroll-to-content")) {
@@ -32,6 +33,7 @@ class Router {
     this.routes[path] = page;
   }
 
+  // Check if the current url are register in the routes array, if is not redirects to 404 error page
   pageToLoad() {
     if (Object.keys(this.routes).includes(this.currentRoute)) {
       return this.routes[this.currentRoute]();
