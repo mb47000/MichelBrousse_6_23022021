@@ -10,7 +10,10 @@ class Router {
 
   listenNavigation(querySelector) {
     document.addEventListener("click", (event) => {
-      event.preventDefault()
+      if (!event.target.classList.contains("scroll-to-content")) {
+        event.preventDefault();
+      }
+
       if (event.target.classList.contains(querySelector)) {
         event.preventDefault();
         this.redirectOnClick(event.target, this.appContainer);
@@ -38,7 +41,6 @@ class Router {
   }
 
   redirectOnClick(element, container) {
-
     let route = element.attributes["href"].value;
     history.pushState({ route }, route, route);
     this.loadPage(container, route);

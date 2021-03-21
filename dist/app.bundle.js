@@ -548,7 +548,9 @@ var Router = /*#__PURE__*/function () {
       var _this = this;
 
       document.addEventListener("click", function (event) {
-        event.preventDefault();
+        if (!event.target.classList.contains("scroll-to-content")) {
+          event.preventDefault();
+        }
 
         if (event.target.classList.contains(querySelector)) {
           event.preventDefault();
@@ -610,6 +612,33 @@ var Router = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/components/AnchorContent.js":
+/*!*****************************************!*\
+  !*** ./src/components/AnchorContent.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var AnchorContent = function AnchorContent() {
+  _classCallCheck(this, AnchorContent);
+};
+
+_defineProperty(AnchorContent, "getHtml", function (tags) {
+  return "<div class=\"content-link scroll-to-content\" style=\"display: none;\">\n\t\t\t\t<a href=\"#main\" class=\"content-link__anchor scroll-to-content\">Passer au contenu</a>\n\t\t\t</div>";
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AnchorContent);
+
+/***/ }),
+
 /***/ "./src/components/Card.js":
 /*!********************************!*\
   !*** ./src/components/Card.js ***!
@@ -632,14 +661,14 @@ var Card = function Card() {
 _defineProperty(Card, "tags", function (tags) {
   var tagHtml = "<ul class=\"user__categories-list\">";
   tags.forEach(function (tag) {
-    tagHtml += "<li class=\"user__categories-item\"><a class=\"tag user__categories-link\" value=\"".concat(tag, "\">").concat(tag, "</a></li>");
+    tagHtml += "<li class=\"user__categories-item\"><a class=\"tag user__categories-link\" lang=\"en\" href>".concat(tag, "</a></li>");
   });
   tagHtml += "</ul>";
   return tagHtml;
 });
 
 _defineProperty(Card, "getHtml", function (entity) {
-  return "<div class=\"card user\"><a href=\"/photographer/".concat(entity.id, "\" class=\"a-navigation\" data-id=").concat(entity.id, "><img class=\"card__avatar user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\"><h2 class=\"user__name\">").concat(entity.name, "</h2></a><div class=\"user__infos\"><p class=\"user__infos-location\">").concat(entity.city, "</p><p>").concat(entity.tagline, "</p><p>").concat(entity.price, "\u20AC/jour</p></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></div>");
+  return "<div class=\"user\"><a href=\"/photographer/".concat(entity.id, "\" class=\"a-navigation user__link\" data-id=").concat(entity.id, "><img class=\"user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\" alt=\"Portrait de ").concat(entity.name, "\"><h2 class=\"user__name\">").concat(entity.name, "</h2></a><div class=\"user__infos\"><span class=\"user__infos-location\"><p>").concat(entity.city, "</p></span><span class=\"user__infos-catchphrase\"><p>").concat(entity.tagline, "</p></span><span class=\"user__infos-price\"><p>").concat(entity.price, "\u20AC/jour</p></span></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Card);
@@ -759,6 +788,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var Media = /*#__PURE__*/function () {
   function Media() {
     _classCallCheck(this, Media);
@@ -767,13 +798,17 @@ var Media = /*#__PURE__*/function () {
   _createClass(Media, null, [{
     key: "getHtml",
     value: function getHtml(media, photographerName) {
-      var mediaSrc = media.type == 'image' ? "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(media.image) : 'https://via.placeholder.com/150';
-      return "<div class=\"media-card modal-trigger\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(mediaSrc, "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"like-button fas fa-heart\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>");
+      var mediaSrc = media.type == "image" ? "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(media.image) : "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(this.getThumbnailPath(media.video));
+      return "<div class=\"media-card modal-trigger\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"like-button fas fa-heart\" tabindex=\"0\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>");
     }
   }]);
 
   return Media;
 }();
+
+_defineProperty(Media, "getThumbnailPath", function (video) {
+  return "".concat(video.substring(0, video.length - 3), "jpg");
+});
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Media);
 
@@ -799,7 +834,7 @@ var PhotographerWidget = function PhotographerWidget() {
 };
 
 _defineProperty(PhotographerWidget, "getHtml", function (likes, price) {
-  return "<div class=\"photographer-widget\">\n        <span class=\"photographer-widget__likes-wrap\">\n            <p class=\"photographer-widget__likes-count\">".concat(likes, "<i class=\"fas fa-heart photographer-widget__likes-button\" aria-hidden=\"true\"></i></p>\n        </span>\n        <span class=\"photographer-widget__price-wrap\">").concat(price, "\u20AC / jour</span>\n    </div>");
+  return "<div class=\"photographer-widget\">\n        <span class=\"photographer-widget__likes-wrap\">\n            <p class=\"photographer-widget__likes-count\">".concat(likes, "<i class=\"fas fa-heart photographer-widget__likes-button\" aria-hidden=\"true\" tabindex=\"0\"></i></p>\n        </span>\n        <span class=\"photographer-widget__price-wrap\">").concat(price, "\u20AC / jour</span>\n    </div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhotographerWidget);
@@ -835,7 +870,7 @@ var Tags = /*#__PURE__*/function () {
     value: function getHtml() {
       var tagHtml = "<ul class=\"nav__list\">";
       this.tagList.forEach(function (tag) {
-        tagHtml += "<li class=\"nav__item\"><a class=\"tag nav__link\">".concat(tag, "</a></li>");
+        tagHtml += "<li class=\"nav__item\"><a class=\"tag nav__link\" value=\"".concat(tag, "\" href>").concat(tag, "</a></li>");
       });
       tagHtml += "</ul>";
       return tagHtml;
@@ -872,7 +907,8 @@ var Media = function Media(_ref, type) {
       tags = _ref.tags,
       likes = _ref.likes,
       date = _ref.date,
-      price = _ref.price;
+      price = _ref.price,
+      alt = _ref.alt;
 
   _classCallCheck(this, Media);
 
@@ -885,6 +921,7 @@ var Media = function Media(_ref, type) {
   this.likes = likes;
   this.date = date;
   this.price = price;
+  this.alt = alt;
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Media);
@@ -1001,6 +1038,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Tags__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Tags */ "./src/components/Tags.js");
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Header */ "./src/components/Header.js");
 /* harmony import */ var _classes_Page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../classes/Page */ "./src/classes/Page.js");
+/* harmony import */ var _components_AnchorContent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/AnchorContent */ "./src/components/AnchorContent.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -1033,6 +1071,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to set private field on non-instance"); } if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } return value; }
+
 function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to get private field on non-instance"); } if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
 
 
@@ -1040,7 +1080,10 @@ function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateM
 
 
 
+
 var _tagListenerStatus = new WeakMap();
+
+var _scrollListenerStatus = new WeakMap();
 
 var HomePage = /*#__PURE__*/function (_Page) {
   _inherits(HomePage, _Page);
@@ -1059,8 +1102,37 @@ var HomePage = /*#__PURE__*/function (_Page) {
       value: false
     });
 
+    _scrollListenerStatus.set(_assertThisInitialized(_this), {
+      writable: true,
+      value: false
+    });
+
     _defineProperty(_assertThisInitialized(_this), "header", function () {
       return _components_Header__WEBPACK_IMPORTED_MODULE_2__.default.getHtml();
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "anchorScroll", function () {
+      if (!_classPrivateFieldGet(_assertThisInitialized(_this), _scrollListenerStatus)) {
+        document.addEventListener("scroll", function (event) {
+          var scrollPosition = window.scrollY;
+          var url = window.location.pathname.split("/");
+          var currentPath = url[url.length - 1];
+
+          if (currentPath == "/" || currentPath == "") {
+            if (scrollPosition > _this.lastScrollPosition) {
+              document.querySelector(".scroll-to-content").style.display = "block";
+            } else if (scrollPosition === 0) {
+              document.querySelector(".scroll-to-content").style.display = "none";
+            }
+
+            _this.lastScrollPosition = scrollPosition;
+          }
+        });
+
+        _classPrivateFieldSet(_assertThisInitialized(_this), _scrollListenerStatus, true);
+      }
+
+      return _components_AnchorContent__WEBPACK_IMPORTED_MODULE_4__.default.getHtml();
     });
 
     _defineProperty(_assertThisInitialized(_this), "tags", function () {
@@ -1098,7 +1170,7 @@ var HomePage = /*#__PURE__*/function (_Page) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getPage", function () {
-      return "<main class=\"container\">".concat(_this.header(), "<nav aria-label=\"Photographer categories\"  class=\"nav\">").concat(_this.tags(), "</nav><h1 class=\"page-title\">Nos photographes</h1><section class=\"cards section\">").concat(_this.cards(_this.photographers), "</section></main>");
+      return "<main id=\"app\" class=\"container\">".concat(_this.header(), "<nav aria-label=\"Photographer categories\"  class=\"nav\">").concat(_this.tags(), "</nav>").concat(_this.anchorScroll(), "<h1 class=\"page-title\">Nos photographes</h1><section class=\"section cards\" id=\"main\">").concat(_this.cards(_this.photographers), "</section></main>");
     });
 
     _this.photographers = _this.orm.getAllPhotographers();
@@ -1212,7 +1284,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
           if (event.target.classList.contains("like-button")) {
             _this.medias[event.target.parentNode.parentNode.parentNode.getAttribute("data-id")].likes++;
             event.target.previousSibling.data = "".concat(++event.target.previousSibling.data, " ");
-            ++document.querySelector('.photographer-widget__likes-count').firstChild.data;
+            ++document.querySelector(".photographer-widget__likes-count").firstChild.data;
           }
         });
 
@@ -1264,6 +1336,16 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
         _classPrivateFieldSet(_assertThisInitialized(_this), _dropDownListenerStatus, true);
       }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "photographerTags", function () {
+      var tagHtml = "";
+
+      _this.photographer.tags.forEach(function (tag) {
+        tagHtml += "<li class=\"photographer-infos__categories-item\"><a class=\"photographer-infos__categories-link background-element\" lang=\"en\">".concat(tag, "</a></li>");
+      });
+
+      return tagHtml;
     });
 
     _defineProperty(_assertThisInitialized(_this), "mediasFilter", function (filter) {
@@ -1322,8 +1404,6 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
           }
 
           if (event.target.classList.contains("lightbox-modal__next") || event.target.parentNode.classList.contains("lightbox-modal__next")) {
-            console.log("next", _this.mediasKeys, _this.currentKey);
-
             if (_this.currentKey < _this.mediasKeys.length - 1) {
               _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[_this.mediasKeys[++_this.currentKey]], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__wrap"));
             }
@@ -1377,7 +1457,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
       _this.medias = _this.orm.getMediasByPhotographerId(id);
       _this.mediasKeys = Object.keys(_this.medias);
 
-      _this.mediasFilter('Popularité');
+      _this.mediasFilter("Popularité");
 
       _this.like();
 
@@ -1385,7 +1465,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
       _this.formInit();
 
-      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "<section class=\"section photographer-infos\">\n    <div class=\"photographer-infos__details\">\n      <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1><span class=\"photographer-infos__location\">\n      <p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p>\n    </span><span class=\"photographer-infos__catchphrase\">\n    <p>").concat(_this.photographer.tagline, "</p>\n  </span>\n    </div><div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml()).concat(_components_Form__WEBPACK_IMPORTED_MODULE_5__.default.getHtml(_this.photographer.name)).concat(_this.widget(), "</main>");
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "\n    <section class=\"section photographer-infos\">\n      <div class=\"photographer-infos__details\">\n        <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1>\n        <span class=\"photographer-infos__location\"><p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p></span>\n        <span class=\"photographer-infos__catchphrase\"><p>").concat(_this.photographer.tagline, "</p></span>\n        <div class=\"photographer-infos__categories\">\n\t\t\t\t\t<ul class=\"photographer-infos__categories-list\">\n\t\t\t\t\t\t").concat(_this.photographerTags(), "\t\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n      </div>\n    <div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"").concat(_this.photographer.name, "\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml()).concat(_components_Form__WEBPACK_IMPORTED_MODULE_5__.default.getHtml(_this.photographer.name)).concat(_this.widget(), "</main>");
     });
 
     return _this;

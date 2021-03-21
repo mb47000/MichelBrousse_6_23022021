@@ -40,7 +40,7 @@ body {
   text-rendering: optimizeSpeed;
   background: #e5e5e5;
   padding: 0 3rem;
-  @media (max-width: 600px) {
+  @media (max-width: 428px) {
   padding: 0 1.25rem;
   }
 }
@@ -62,4 +62,15 @@ img {
 a{
   color:inherit;
   text-decoration: none;
+}
+
+.sr-only{
+  @media screen {
+    display: none;
+  }
+}
+.screen-only{
+  @media speech {
+    display: none;
+  }
 }

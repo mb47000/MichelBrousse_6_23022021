@@ -1,6 +1,11 @@
 html {
 	font-family: "DM Sans", sans-serif;
 }
+.content-link{
+	font-size: 1.125rem;
+	line-height: 1.438rem;
+	font-weight: bold;
+}
 .page-title,
 .user__name {
 	font-size: 2.25rem;
@@ -116,7 +121,7 @@ html {
 	font-size: 1.5rem;
 	line-height: 1.938rem;
 }
-@media (max-width: 600px) {
+@media (max-width: 428px) {
 	.page-title,
 	.user__name {
 		font-size: 0.875rem;

@@ -1,5 +1,5 @@
 class Media {
-    constructor({id, photographerId, image = null, video = null, tags, likes, date, price}, type) {
+    constructor({id, photographerId, image = null, video = null, tags, likes, date, price, alt}, type) {
         this.type = type
         this.id = id;
         this.photographerId = photographerId;
@@ -9,6 +9,7 @@ class Media {
         this.likes = likes;
         this.date = date;
         this.price = price;
+        this.alt = alt;
     }
 }
 

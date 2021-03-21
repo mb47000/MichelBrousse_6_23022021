@@ -16,17 +16,23 @@ class PhotographerPage extends Page {
   }
 
   like = () => {
-    if (!this.#likeListenerStatus){
+    if (!this.#likeListenerStatus) {
       document.addEventListener("click", (event) => {
         if (event.target.classList.contains("like-button")) {
-          this.medias[event.target.parentNode.parentNode.parentNode.getAttribute("data-id")].likes++
-          event.target.previousSibling.data = `${++event.target.previousSibling.data} `;
-          ++document.querySelector('.photographer-widget__likes-count').firstChild.data
+          this.medias[
+            event.target.parentNode.parentNode.parentNode.getAttribute(
+              "data-id"
+            )
+          ].likes++;
+          event.target.previousSibling.data = `${++event.target.previousSibling
+            .data} `;
+          ++document.querySelector(".photographer-widget__likes-count")
+            .firstChild.data;
         }
-      })
+      });
       this.#likeListenerStatus = true;
     }
-  }
+  };
 
   dropDownInit = () => {
     if (!this.#dropDownListenerStatus) {
@@ -61,13 +67,20 @@ class PhotographerPage extends Page {
     }
   };
 
+  photographerTags = () => {
+    let tagHtml = ``;
+    this.photographer.tags.forEach((tag) => {
+      tagHtml += `<li class="photographer-infos__categories-item"><a class="photographer-infos__categories-link background-element" lang="en">${tag}</a></li>`;
+    });
+    return tagHtml;
+  };
+
   mediasFilter = (filter) => {
     switch (filter) {
       case "Popularité":
         this.mediasKeys.sort(
           (a, b) =>
-            parseInt(this.medias[b].likes) -
-            parseInt(this.medias[a].likes)
+            parseInt(this.medias[b].likes) - parseInt(this.medias[a].likes)
         );
         break;
       case "Date":
@@ -95,7 +108,7 @@ class PhotographerPage extends Page {
         });
         break;
     }
-  }
+  };
 
   lightBoxInit = () => {
     if (!this.#lightBoxListenerStatus) {
@@ -140,7 +153,6 @@ class PhotographerPage extends Page {
           event.target.classList.contains("lightbox-modal__next") ||
           event.target.parentNode.classList.contains("lightbox-modal__next")
         ) {
-          console.log("next", this.mediasKeys, this.currentKey);
           if (this.currentKey < this.mediasKeys.length - 1) {
             this.render(
               Lightbox.getContent(
@@ -159,9 +171,7 @@ class PhotographerPage extends Page {
   formInit = () => {
     if (!this.#formListenerStatus) {
       document.addEventListener("click", (event) => {
-        if (
-          event.target.classList.contains("photographer-infos__contact")
-        ) {
+        if (event.target.classList.contains("photographer-infos__contact")) {
           document.querySelector("#form").style.display = "flex";
         }
 
@@ -180,8 +190,8 @@ class PhotographerPage extends Page {
       totalLikes += this.medias[media].likes;
     }
 
-    return PhotographerWidget.getHtml(totalLikes, this.photographer.price)
-  }
+    return PhotographerWidget.getHtml(totalLikes, this.photographer.price);
+  };
 
   mediasCards = (photographerMedias, photographerName) => {
     this.lightBoxInit();
@@ -199,21 +209,28 @@ class PhotographerPage extends Page {
     this.photographer = this.orm.getPhotographerById(id);
     this.medias = this.orm.getMediasByPhotographerId(id);
     this.mediasKeys = Object.keys(this.medias);
-    this.mediasFilter('Popularité');
+    this.mediasFilter("Popularité");
     this.like();
     this.dropDownInit();
     this.formInit();
 
-    return `<main class="container">${Header.getHtml()}<section class="section photographer-infos">
-    <div class="photographer-infos__details">
-      <h1 class="photographer-infos__name">${
-        this.photographer.name
-      }</h1><span class="photographer-infos__location">
-      <p>${this.photographer.city}, ${this.photographer.country}</p>
-    </span><span class="photographer-infos__catchphrase">
-    <p>${this.photographer.tagline}</p>
-  </span>
-    </div><div class="photographer-infos__contact-wrap">
+    return `<main class="container">${Header.getHtml()}
+    <section class="section photographer-infos">
+      <div class="photographer-infos__details">
+        <h1 class="photographer-infos__name">${this.photographer.name}</h1>
+        <span class="photographer-infos__location"><p>${
+          this.photographer.city
+        }, ${this.photographer.country}</p></span>
+        <span class="photographer-infos__catchphrase"><p>${
+          this.photographer.tagline
+        }</p></span>
+        <div class="photographer-infos__categories">
+					<ul class="photographer-infos__categories-list">
+						${this.photographerTags()}	
+					</ul>
+				</div>
+      </div>
+    <div class="photographer-infos__contact-wrap">
     <button class="photographer-infos__contact modal-trigger" data-target="contact">Contactez-moi</button>
   </div>
   <div class="photographer-infos__img">
@@ -223,7 +240,7 @@ class PhotographerPage extends Page {
         /\s/g,
         ""
       )}.jpg"
-      alt=""
+      alt="${this.photographer.name}"
     />
   </div></section><section class="section photographer-medias">
   <div class="photographer-medias__sort-wrap">
@@ -246,7 +263,9 @@ class PhotographerPage extends Page {
 				</div><div class="photographer-medias__grid">${this.mediasCards(
           this.mediasKeys,
           this.photographer.name
-        )}</div></section>${Lightbox.getHtml()}${Form.getHtml(this.photographer.name)}${this.widget()}</main>`;
+        )}</div></section>${Lightbox.getHtml()}${Form.getHtml(
+      this.photographer.name
+    )}${this.widget()}</main>`;
   };
 }
 

@@ -3,7 +3,7 @@ class Card {
     let tagHtml = `<ul class="user__categories-list">`;
 
     tags.forEach((tag) => {
-      tagHtml += `<li class="user__categories-item"><a class="tag user__categories-link" value="${tag}">${tag}</a></li>`;
+      tagHtml += `<li class="user__categories-item"><a class="tag user__categories-link" lang="en" href>${tag}</a></li>`;
     });
 
     tagHtml += `</ul>`;
@@ -11,16 +11,16 @@ class Card {
   };
 
   static getHtml = (entity) =>
-    `<div class="card user"><a href="/photographer/${
+    `<div class="user"><a href="/photographer/${
       entity.id
-    }" class="a-navigation" data-id=${entity.id}><img class="card__avatar user__img" src="./dist/SamplePhotos/PhotographersIDPhotos/${entity.name.replace(
+    }" class="a-navigation user__link" data-id=${entity.id}><img class="user__img" src="./dist/SamplePhotos/PhotographersIDPhotos/${entity.name.replace(
       /\s/g,
       ""
-    )}.jpg"><h2 class="user__name">${
+    )}.jpg" alt="Portrait de ${entity.name}"><h2 class="user__name">${
       entity.name
-    }</h2></a><div class="user__infos"><p class="user__infos-location">${
+    }</h2></a><div class="user__infos"><span class="user__infos-location"><p>${
       entity.city
-    }</p><p>${entity.tagline}</p><p>${entity.price}€/jour</p></div>
+    }</p></span><span class="user__infos-catchphrase"><p>${entity.tagline}</p></span><span class="user__infos-price"><p>${entity.price}€/jour</p></span></div>
     <div class="user__categories">${this.tags(entity.tags)}
     </div></div>`;
 }

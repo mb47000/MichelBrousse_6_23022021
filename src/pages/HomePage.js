@@ -2,9 +2,11 @@ import Card from "../components/Card";
 import Tags from "../components/Tags";
 import Header from "../components/Header";
 import Page from "../classes/Page";
+import AnchorContent from "../components/AnchorContent";
 
 class HomePage extends Page {
   #tagListenerStatus = false;
+  #scrollListenerStatus = false;
 
   constructor() {
     super();
@@ -12,6 +14,30 @@ class HomePage extends Page {
   }
 
   header = () => Header.getHtml();
+
+  anchorScroll = () => {
+    if (!this.#scrollListenerStatus) {
+      document.addEventListener("scroll", (event) => {
+        let scrollPosition = window.scrollY;
+        let url = window.location.pathname.split("/");
+        let currentPath = url[url.length - 1];
+        
+        if (currentPath == "/" || currentPath == "") {
+          if (scrollPosition > this.lastScrollPosition) {
+            document.querySelector(".scroll-to-content").style.display =
+              "block";
+          } else if (scrollPosition === 0) {
+            document.querySelector(".scroll-to-content").style.display = "none";
+          }
+          this.lastScrollPosition = scrollPosition;
+        }
+      });
+
+      this.#scrollListenerStatus = true;
+    }
+
+    return AnchorContent.getHtml();
+  };
 
   tags = () => {
     if (!this.#tagListenerStatus) {
@@ -27,10 +53,15 @@ class HomePage extends Page {
 
       document.addEventListener("click", (event) => {
         if (event.target.classList.contains("tag")) {
-         let filterPhotographer = this.orm.getPhotographerByTag(event.target.text)
-         this.render(this.cards(filterPhotographer), document.querySelector(".cards"))
+          let filterPhotographer = this.orm.getPhotographerByTag(
+            event.target.text
+          );
+          this.render(
+            this.cards(filterPhotographer),
+            document.querySelector(".cards")
+          );
         }
-      })
+      });
 
       this.tagListenerStatus = true;
     }
@@ -47,7 +78,7 @@ class HomePage extends Page {
   };
 
   getPage = () =>
-    `<main class="container">${this.header()}<nav aria-label="Photographer categories"  class="nav">${this.tags()}</nav><h1 class="page-title">Nos photographes</h1><section class="cards section">${this.cards(
+    `<main id="app" class="container">${this.header()}<nav aria-label="Photographer categories"  class="nav">${this.tags()}</nav>${this.anchorScroll()}<h1 class="page-title">Nos photographes</h1><section class="section cards" id="main">${this.cards(
       this.photographers
     )}</section></main>`;
 }
