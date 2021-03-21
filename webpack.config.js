@@ -29,6 +29,9 @@ module.exports = {
   devtool: "source-map",
   devServer: {
     writeToDisk: true,
+    historyApiFallback: {
+      index: 'index.html'
+    }
   },
   experiments: {
     topLevelAwait: true,

@@ -549,7 +549,7 @@ var Router = /*#__PURE__*/function () {
       var _this = this;
 
       document.addEventListener("click", function (event) {
-        if (!event.target.classList.contains("scroll-to-content")) {
+        if (!event.target.classList.contains("scroll-to-content") || event.target.classList.contains("modal-trigger")) {
           event.preventDefault();
         }
 
@@ -663,7 +663,7 @@ var Card = function Card() {
 _defineProperty(Card, "tags", function (tags) {
   var tagHtml = "<ul class=\"user__categories-list\">";
   tags.forEach(function (tag) {
-    tagHtml += "<li class=\"user__categories-item\"><a class=\"tag user__categories-link\" lang=\"en\" href>".concat(tag, "</a></li>");
+    tagHtml += "<li class=\"user__categories-item\"><a class=\"tag user__categories-link\" lang=\"en\" href><span class=\"sr-only\">tag</span>".concat(tag, "</a></li>");
   });
   tagHtml += "</ul>";
   return tagHtml;
@@ -760,13 +760,13 @@ var Lightbox = function Lightbox() {
 };
 
 _defineProperty(Lightbox, "getHtml", function () {
-  return "\n    <div class=\"lightbox-modal modal\"  id=\"lightbox\">\n\t\t\t\t<div class=\"lightbox-modal__wrap\">\n\t\t\t\t</div>\n\t\t\t</div>";
+  return "\n    <div class=\"lightbox-modal modal\"  id=\"lightbox\">\n\t\t\t\t<div class=\"lightbox-modal__wrap\">\n\t\t\t\t<button class=\"lightbox-modal__close modal-close\" data-target=\"lightbox\">X</button>\n <button class=\"lightbox-modal__previous\"><i class=\"fas fa-chevron-left\"></i></button>\n\t <div class=\"lightbox-modal__content lightbox-modal__img-wrap\">\n\t </div>\n\t <button href=\"\" class=\"lightbox-modal__next\"><i class=\"fas fa-chevron-right\"></i></button>\n\t <div class=\"lightbox-modal__title-wrap\">\n\t\t <p class=\"lightbox-modal__title\">Arc en ciel</p>\n\t </div>\n\t\t\t\t</div>\n\t\t\t</div>";
 });
 
 _defineProperty(Lightbox, "getContent", function (media, path) {
   var type = media.type == "image" ? "img" : "video";
   var typeSrc = media.type == "image" ? media.image : media.video;
-  return "<button class=\"lightbox-modal__close modal-close\" data-target=\"lightbox\">X</button>\n <button class=\"lightbox-modal__previous\"><i class=\"fas fa-chevron-left\"></i></button>\n\t <div class=\"lightbox-modal__content lightbox-modal__img-wrap\">".concat(media.id, "<").concat(type, "\n\t\t src=\"../../dist/SamplePhotos/").concat(path, "/").concat(typeSrc, "\"\n\t\t alt=\"\"\n\t\t class=\"lightbox-modal__img carousel__image\"\n\t\t ").concat(type === "video" ? "controls" : "", "\n\t />\n\t </div>\n\t <button href=\"\" class=\"lightbox-modal__next\"><i class=\"fas fa-chevron-right\"></i></button>\n\t <div class=\"lightbox-modal__title-wrap\">\n\t\t <p class=\"lightbox-modal__title\">Arc en ciel</p>\n\t </div>");
+  return "<".concat(type, "\n\t\t src=\"../../dist/SamplePhotos/").concat(path, "/").concat(typeSrc, "\"\n\t\t alt=\"\"\n\t\t class=\"lightbox-modal__img carousel__image\"\n\t\t ").concat(type === "video" ? "controls" : "", "\n\t />");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Lightbox);
@@ -801,7 +801,7 @@ var Media = /*#__PURE__*/function () {
     key: "getHtml",
     value: function getHtml(media, photographerName) {
       var mediaSrc = media.type == "image" ? "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(media.image) : "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(this.getThumbnailPath(media.video));
-      return "<div class=\"media-card modal-trigger\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"like-button fas fa-heart\" tabindex=\"0\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>");
+      return "<a class=\"media-card modal-trigger\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\" href>\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"like-button fas fa-heart\" tabindex=\"0\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</a>");
     }
   }]);
 
@@ -872,7 +872,7 @@ var Tags = /*#__PURE__*/function () {
     value: function getHtml() {
       var tagHtml = "<ul class=\"nav__list\">";
       this.tagList.forEach(function (tag) {
-        tagHtml += "<li class=\"nav__item\"><a class=\"tag nav__link\" value=\"".concat(tag, "\" href>").concat(tag, "</a></li>");
+        tagHtml += "<li class=\"nav__item\"><a class=\"tag nav__link\" value=\"".concat(tag, "\" href lang=\"en\"><span class=\"sr-only\">tag</span>").concat(tag, "</a></li>");
       });
       tagHtml += "</ul>";
       return tagHtml;
@@ -990,7 +990,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var jsonFetcher = new _classes_JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("./src/data/data.json");
+var jsonFetcher = new _classes_JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("../src/data/data.json");
 var orm = new _classes_Orm__WEBPACK_IMPORTED_MODULE_5__.default(await jsonFetcher.fetchData());
 var homePage = new _pages_HomePage__WEBPACK_IMPORTED_MODULE_3__.default();
 var photographerPage = new _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__.default();
@@ -1387,11 +1387,12 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
     _defineProperty(_assertThisInitialized(_this), "lightBoxInit", function () {
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _lightBoxListenerStatus)) {
         document.addEventListener("click", function (event) {
-          if (event.target.parentNode.parentNode.classList.contains("modal-trigger")) {
+          if (event.target.parentNode.parentNode.classList.contains("modal-trigger") || event.target.classList.contains("modal-trigger")) {
             var target = event.target.parentNode.parentNode;
+            target = target.classList.contains("modal-trigger") ? event.target.parentNode.parentNode : event.target;
             _this.currentKey = _this.mediasKeys.indexOf(target.getAttribute("data-id"));
 
-            _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[target.getAttribute("data-id")], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__wrap"));
+            _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[target.getAttribute("data-id")], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__content"));
 
             document.querySelector("#lightbox").style.display = "flex";
           }
@@ -1402,13 +1403,13 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
           if (event.target.classList.contains("lightbox-modal__previous") || event.target.parentNode.classList.contains("lightbox-modal__previous")) {
             if (_this.currentKey > 0) {
-              _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[_this.mediasKeys[--_this.currentKey]], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__wrap"));
+              _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[_this.mediasKeys[--_this.currentKey]], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__content"));
             }
           }
 
           if (event.target.classList.contains("lightbox-modal__next") || event.target.parentNode.classList.contains("lightbox-modal__next")) {
             if (_this.currentKey < _this.mediasKeys.length - 1) {
-              _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[_this.mediasKeys[++_this.currentKey]], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__wrap"));
+              _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[_this.mediasKeys[++_this.currentKey]], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__content"));
             }
           }
         });

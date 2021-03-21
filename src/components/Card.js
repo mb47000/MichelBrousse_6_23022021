@@ -3,7 +3,7 @@ class Card {
     let tagHtml = `<ul class="user__categories-list">`;
 
     tags.forEach((tag) => {
-      tagHtml += `<li class="user__categories-item"><a class="tag user__categories-link" lang="en" href>${tag}</a></li>`;
+      tagHtml += `<li class="user__categories-item"><a class="tag user__categories-link" lang="en" href><span class="sr-only">tag</span>${tag}</a></li>`;
     });
 
     tagHtml += `</ul>`;

@@ -13,9 +13,9 @@ class Media {
             this.getThumbnailPath(media.video)
           }`;
 
-    return `<div class="media-card modal-trigger" data-target="lightbox" data-id=${
+    return `<a class="media-card modal-trigger" data-target="lightbox" data-id=${
       media.id
-    } tabIndex="0">
+    } tabIndex="0" href>
 						<div class="media-card__upper-body">
 							<img
 								class="media-card__img"
@@ -30,7 +30,7 @@ class Media {
                 media.likes
               } <i class="like-button fas fa-heart" tabindex="0"></i></p>
 						</div>
-					</div>`;
+					</a>`;
   }
 }
 

@@ -11,10 +11,9 @@ class Router {
   // add event listeners for page navigation
   listenNavigation(querySelector) {
     document.addEventListener("click", (event) => {
-      if (!event.target.classList.contains("scroll-to-content")) {
+      if (!event.target.classList.contains("scroll-to-content") || event.target.classList.contains("modal-trigger")) {
         event.preventDefault();
       }
-
       if (event.target.classList.contains(querySelector)) {
         event.preventDefault();
         this.redirectOnClick(event.target, this.appContainer);

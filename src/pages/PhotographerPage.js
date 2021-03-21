@@ -114,9 +114,15 @@ class PhotographerPage extends Page {
     if (!this.#lightBoxListenerStatus) {
       document.addEventListener("click", (event) => {
         if (
-          event.target.parentNode.parentNode.classList.contains("modal-trigger")
+          event.target.parentNode.parentNode.classList.contains(
+            "modal-trigger"
+          ) ||
+          event.target.classList.contains("modal-trigger")
         ) {
           let target = event.target.parentNode.parentNode;
+          target = target.classList.contains("modal-trigger")
+            ? event.target.parentNode.parentNode
+            : event.target;
           this.currentKey = this.mediasKeys.indexOf(
             target.getAttribute("data-id")
           );
@@ -125,7 +131,7 @@ class PhotographerPage extends Page {
               this.medias[target.getAttribute("data-id")],
               this.photographer.name.replace(/\s/g, "")
             ),
-            document.querySelector(".lightbox-modal__wrap")
+            document.querySelector(".lightbox-modal__content")
           );
           document.querySelector("#lightbox").style.display = "flex";
         }
@@ -144,7 +150,7 @@ class PhotographerPage extends Page {
                 this.medias[this.mediasKeys[--this.currentKey]],
                 this.photographer.name.replace(/\s/g, "")
               ),
-              document.querySelector(".lightbox-modal__wrap")
+              document.querySelector(".lightbox-modal__content")
             );
           }
         }
@@ -159,7 +165,7 @@ class PhotographerPage extends Page {
                 this.medias[this.mediasKeys[++this.currentKey]],
                 this.photographer.name.replace(/\s/g, "")
               ),
-              document.querySelector(".lightbox-modal__wrap")
+              document.querySelector(".lightbox-modal__content")
             );
           }
         }
