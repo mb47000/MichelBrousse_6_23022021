@@ -56,8 +56,9 @@ class HomePage extends Page {
       document.addEventListener("click", (event) => {
         if (event.target.classList.contains("tag")) {
           let filterPhotographer = this.orm.getPhotographerByTag(
-            event.target.text
+            event.target.getAttribute("data-tag")
           );
+
           this.render(
             this.cards(filterPhotographer),
             document.querySelector(".cards")
@@ -67,7 +68,7 @@ class HomePage extends Page {
 
       this.tagListenerStatus = true;
     }
-
+    
     return this.photographerTags.getHtml();
   };
 

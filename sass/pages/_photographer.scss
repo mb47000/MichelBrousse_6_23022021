@@ -197,7 +197,7 @@
 	height: 100vh;
 	margin-left: -3rem;
 	overflow-y: auto;
-	// display: flex;
+	display: none;
 	justify-content: center;
 	align-items: flex-start;
 	&__wrap {
@@ -276,7 +276,7 @@
 	height: 100%;
 	background: #e5e5e5;
 	margin-left: -3rem;
-	// display: flex;
+	display: none;
 	justify-content: center;
 	align-items: flex-end;
 	@media(max-width:428px){
@@ -328,6 +328,7 @@
 		text-align: left;
 	}
 	&__close {
+		cursor: pointer;
 		width: 5.875rem;
 		position: absolute;
 		top: 2%;
