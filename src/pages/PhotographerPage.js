@@ -19,19 +19,19 @@ class PhotographerPage extends Page {
     if (!this.#likeListenerStatus) {
       const addLike = (event) => {
         this.medias[
-          event.target.parentNode.parentNode.parentNode.getAttribute(
-            "data-id"
-          )
+          event.target.parentNode.parentNode.parentNode.getAttribute("data-id")
         ].likes++;
         event.target.previousSibling.data = `${++event.target.previousSibling
           .data} `;
-        ++document.querySelector(".photographer-widget__likes-count")
-          .firstChild.data;
-      }
-
+        ++document.querySelector(".photographer-widget__likes-count").firstChild
+          .data;
+      };
 
       document.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" && event.target.classList.contains("like-button")) {
+        if (
+          event.key === "Enter" &&
+          event.target.classList.contains("like-button")
+        ) {
           addLike(event);
         }
       });
@@ -47,6 +47,19 @@ class PhotographerPage extends Page {
 
   dropDownInit = () => {
     if (!this.#dropDownListenerStatus) {
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          event.target.classList.contains("dropdown-content")
+        ) {
+          const dropdownContent = document.getElementById("sortMediaList");
+          const dropdownButton = document.getElementById("sortMediaButton");
+          dropdownContent.style.display = "none";
+          dropdownContent.tabIndex = "-1";
+          dropdownButton.focus();
+        }
+      });
+
       document.addEventListener("click", (event) => {
         if (event.target.classList.contains("dropdown-button")) {
           const dropdownLi = document.getElementsByClassName(
@@ -72,6 +85,7 @@ class PhotographerPage extends Page {
             this.mediasCards(this.mediasKeys, this.photographer.name),
             document.querySelector(".photographer-medias__grid")
           );
+          dropdownButton.focus();
         }
       });
       this.#dropDownListenerStatus = true;
@@ -122,11 +136,10 @@ class PhotographerPage extends Page {
   };
 
   lightBoxInit = () => {
-
     const nextMedia = () => {
       if (this.currentKey < this.mediasKeys.length - 1) {
         let title = document.querySelector(".lightbox-modal__title");
-        
+
         this.render(
           Lightbox.getContent(
             this.medias[this.mediasKeys[++this.currentKey]],
@@ -134,11 +147,9 @@ class PhotographerPage extends Page {
           ),
           document.querySelector(".lightbox-modal__content")
         );
-        title.innerHTML = this.medias[
-          this.mediasKeys[this.currentKey]
-        ].alt;
+        title.innerHTML = this.medias[this.mediasKeys[this.currentKey]].alt;
       }
-    }
+    };
 
     const previousMedia = () => {
       if (this.currentKey > 0) {
@@ -150,24 +161,29 @@ class PhotographerPage extends Page {
           ),
           document.querySelector(".lightbox-modal__content")
         );
-        title.innerHTML = this.medias[
-          this.mediasKeys[this.currentKey]
-        ].alt;
+        title.innerHTML = this.medias[this.mediasKeys[this.currentKey]].alt;
       }
-    }
+    };
 
     if (!this.#lightBoxListenerStatus) {
-
       document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          console.log("close")
+        if (
+          event.key === "Escape" &&
+          event.target.classList.contains("media-card")
+        ) {
           document.getElementById("lightbox").style.display = "none";
         }
-        if (event.key === "ArrowRight") {
+        if (
+          event.key === "ArrowRight" &&
+          event.target.classList.contains("media-card")
+        ) {
           nextMedia();
+          console.log(event.target.classList.contains("media-card"));
         }
-
-        if (event.key === "ArrowLeft") {
+        if (
+          event.key === "ArrowLeft" &&
+          event.target.classList.contains("media-card")
+        ) {
           previousMedia();
         }
       });

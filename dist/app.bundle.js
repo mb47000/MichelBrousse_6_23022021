@@ -1306,6 +1306,15 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
     _defineProperty(_assertThisInitialized(_this), "dropDownInit", function () {
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _dropDownListenerStatus)) {
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && event.target.classList.contains("dropdown-content")) {
+            var dropdownContent = document.getElementById("sortMediaList");
+            var dropdownButton = document.getElementById("sortMediaButton");
+            dropdownContent.style.display = "none";
+            dropdownContent.tabIndex = "-1";
+            dropdownButton.focus();
+          }
+        });
         document.addEventListener("click", function (event) {
           if (event.target.classList.contains("dropdown-button")) {
             var dropdownLi = document.getElementsByClassName("dropdown-content");
@@ -1343,6 +1352,8 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
             _this.mediasFilter(event.target.innerHTML);
 
             _this.render(_this.mediasCards(_this.mediasKeys, _this.photographer.name), document.querySelector(".photographer-medias__grid"));
+
+            dropdownButton.focus();
           }
         });
 
@@ -1416,16 +1427,16 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _lightBoxListenerStatus)) {
         document.addEventListener("keydown", function (event) {
-          if (event.key === "Escape") {
-            console.log("close");
+          if (event.key === "Escape" && event.target.classList.contains("media-card")) {
             document.getElementById("lightbox").style.display = "none";
           }
 
-          if (event.key === "ArrowRight") {
+          if (event.key === "ArrowRight" && event.target.classList.contains("media-card")) {
             nextMedia();
+            console.log(event.target.classList.contains("media-card"));
           }
 
-          if (event.key === "ArrowLeft") {
+          if (event.key === "ArrowLeft" && event.target.classList.contains("media-card")) {
             previousMedia();
           }
         });
