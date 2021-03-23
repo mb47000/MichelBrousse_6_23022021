@@ -3,17 +3,17 @@ class Form {
     return `
       <div class="contact-modal modal"  id="form">
                   <div class="contact-modal__wrap">
-                  <a href="" class="modal-close" data-target="contact">
-						<i class="fas fa-times contact-modal__close modal-close"></i>
+                  <a href="" class="form-close" data-target="contact">
+						<i class="fas fa-times contact-modal__close form-close"></i>
 					</a>
 					<div class="contact-form">
 						<h1 class="contact-form__title">Contactez- moi<br />${name}</h1>
-						<form action="" class="contact-form__form">
+						<form action="" class="contact-form__form" id="formContact">
 							<label for="firstName" class="contact-form__label">
 								Prénom
 								<input
 									type="text"
-									name=""
+									name="firstName"
 									id="firstName"
 									class="contact-form__input"
 								/>
@@ -22,7 +22,7 @@ class Form {
 								Nom
 								<input
 									type="text"
-									name=""
+									name="lastName"
 									id="lastName"
 									class="contact-form__input"
 								/>
@@ -31,7 +31,7 @@ class Form {
 								Email
 								<input
 									type="email"
-									name=""
+									name="email"
 									id="email"
 									class="contact-form__input"
 								/>
@@ -39,7 +39,7 @@ class Form {
 							<label for="message" class="contact-form__label">
 								Votre message
 								<textarea
-									name=""
+									name="message"
 									id="message"
 									class="contact-form__textarea"
 								></textarea>

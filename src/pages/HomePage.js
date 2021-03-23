@@ -55,6 +55,7 @@ class HomePage extends Page {
 
       document.addEventListener("click", (event) => {
         if (event.target.classList.contains("tag")) {
+          event.preventDefault();
           let filterPhotographer = this.orm.getPhotographerByTag(
             event.target.getAttribute("data-tag")
           );

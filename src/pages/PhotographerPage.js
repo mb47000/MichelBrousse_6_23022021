@@ -74,6 +74,7 @@ class PhotographerPage extends Page {
         }
 
         if (event.target.classList.contains("dropdown-content")) {
+          event.preventDefault();
           const dropdownContent = document.getElementById("sortMediaList");
           const dropdownButton = document.getElementById("sortMediaButton");
           dropdownButton.innerHTML = event.target.innerHTML;
@@ -167,23 +168,26 @@ class PhotographerPage extends Page {
 
     if (!this.#lightBoxListenerStatus) {
       document.addEventListener("keydown", (event) => {
-        if (
-          event.key === "Escape" &&
-          event.target.classList.contains("media-card")
-        ) {
+        if (event.key === "Escape" && this.lightBoxOpen == true) {
+          const backgroundElements = document.getElementsByClassName(
+            "background-element"
+          );
+          let targetId = document.querySelector(
+            `[data-id="${this.mediasKeys[this.currentKey]}"]`
+          );
           document.getElementById("lightbox").style.display = "none";
+          for (let element of backgroundElements) {
+            element.setAttribute("tabindex", "0");
+          }
+          document.body.style.overflowY = "scroll";
+          this.lightBoxOpen = false;
+          targetId.focus();
         }
-        if (
-          event.key === "ArrowRight" &&
-          event.target.classList.contains("media-card")
-        ) {
+        if (event.key === "ArrowRight" && this.lightBoxOpen == true) {
           nextMedia();
           console.log(event.target.classList.contains("media-card"));
         }
-        if (
-          event.key === "ArrowLeft" &&
-          event.target.classList.contains("media-card")
-        ) {
+        if (event.key === "ArrowLeft" && this.lightBoxOpen == true) {
           previousMedia();
         }
       });
@@ -195,6 +199,7 @@ class PhotographerPage extends Page {
           ) ||
           event.target.classList.contains("modal-trigger")
         ) {
+          event.preventDefault();
           let target = event.target.parentNode.parentNode;
           target = target.classList.contains("modal-trigger")
             ? event.target.parentNode.parentNode
@@ -202,6 +207,13 @@ class PhotographerPage extends Page {
           this.currentKey = this.mediasKeys.indexOf(
             target.getAttribute("data-id")
           );
+          let backgroundElements = document.getElementsByClassName(
+            "background-element"
+          );
+          for (let element of backgroundElements) {
+            element.setAttribute("tabindex", "-1");
+          }
+          document.body.style.overflowY = "hidden";
           let title = document.querySelector(".lightbox-modal__title");
           title.innerHTML = this.medias[target.getAttribute("data-id")].alt;
           this.render(
@@ -211,17 +223,33 @@ class PhotographerPage extends Page {
             ),
             document.querySelector(".lightbox-modal__content")
           );
+          let nextButton = document.getElementById("lightbox-next");
           document.querySelector("#lightbox").style.display = "flex";
+          this.lightBoxOpen = true;
+          nextButton.focus();
         }
 
         if (event.target.classList.contains("modal-close")) {
+          const backgroundElements = document.getElementsByClassName(
+            "background-element"
+          );
+          let targetId = document.querySelector(
+            `[data-id="${this.mediasKeys[this.currentKey]}"]`
+          );
           document.getElementById("lightbox").style.display = "none";
+          for (let element of backgroundElements) {
+            element.setAttribute("tabindex", "0");
+          }
+          document.body.style.overflowY = "scroll";
+          this.lightBoxOpen = false;
+          targetId.focus();
         }
 
         if (
           event.target.classList.contains("lightbox-modal__previous") ||
           event.target.parentNode.classList.contains("lightbox-modal__previous")
         ) {
+          event.preventDefault();
           previousMedia();
         }
 
@@ -229,6 +257,7 @@ class PhotographerPage extends Page {
           event.target.classList.contains("lightbox-modal__next") ||
           event.target.parentNode.classList.contains("lightbox-modal__next")
         ) {
+          event.preventDefault();
           nextMedia();
         }
       });
@@ -238,13 +267,62 @@ class PhotographerPage extends Page {
 
   formInit = () => {
     if (!this.#formListenerStatus) {
+      document.addEventListener("submit", (event) => {
+        let form = document.querySelector('#formContact')
+        let data = new FormData(form);
+        for (let [key, value] of data) {
+          console.log(key,':', value)
+        }
+        event.preventDefault();
+      })
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && this.formOpen == true) {
+         
+          const backgroundElements = document.getElementsByClassName(
+            "background-element"
+          );
+          document.getElementById("form").style.display = "none";
+          for (let element of backgroundElements) {
+            element.setAttribute("tabindex", "0");
+          }
+          const formButton = document.getElementById("formButton");
+
+          document.body.style.overflowY = "scroll";
+          this.formOpen = false;
+          formButton.focus();
+        }
+      });
+
       document.addEventListener("click", (event) => {
         if (event.target.classList.contains("photographer-infos__contact")) {
           document.querySelector("#form").style.display = "flex";
+          let backgroundElements = document.getElementsByClassName(
+            "background-element"
+          );
+          for (let element of backgroundElements) {
+            element.setAttribute("tabindex", "-1");
+          }
+          document.body.style.overflowY = "hidden";
+          this.formOpen = true;
+          let form = document.getElementById("firstName");
+          form.focus();
         }
 
-        if (event.target.parentNode.classList.contains("modal-close")) {
+        if (event.target.parentNode.classList.contains("form-close")) {
+          event.preventDefault();
           document.getElementById("form").style.display = "none";
+          const backgroundElements = document.getElementsByClassName(
+            "background-element"
+          );
+          for (let element of backgroundElements) {
+            element.setAttribute("tabindex", "0");
+          }
+          const formButton = document.getElementById("formButton");
+
+          document.body.style.overflowY = "scroll";
+          this.formOpen = false;
+          formButton.focus();
         }
       });
       this.#formListenerStatus = true;
@@ -299,7 +377,7 @@ class PhotographerPage extends Page {
 				</div>
       </div>
     <div class="photographer-infos__contact-wrap">
-    <button class="photographer-infos__contact modal-trigger background-element" data-target="contact">Contactez-moi</button>
+    <button id="formButton" class="photographer-infos__contact background-element" data-target="contact">Contactez-moi</button>
   </div>
   <div class="photographer-infos__img">
     <img

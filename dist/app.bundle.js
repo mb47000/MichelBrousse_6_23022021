@@ -549,10 +549,9 @@ var Router = /*#__PURE__*/function () {
       var _this = this;
 
       document.addEventListener("click", function (event) {
-        if (!event.target.classList.contains("scroll-to-content") || event.target.classList.contains("modal-trigger")) {
-          event.preventDefault();
-        }
-
+        // if (!event.target.classList.contains("scroll-to-content")) {
+        //   event.preventDefault();
+        // }
         if (event.target.classList.contains(querySelector)) {
           event.preventDefault();
 
@@ -697,7 +696,7 @@ var Form = function Form() {
 };
 
 _defineProperty(Form, "getHtml", function (name) {
-  return "\n      <div class=\"contact-modal modal\"  id=\"form\">\n                  <div class=\"contact-modal__wrap\">\n                  <a href=\"\" class=\"modal-close\" data-target=\"contact\">\n\t\t\t\t\t\t<i class=\"fas fa-times contact-modal__close modal-close\"></i>\n\t\t\t\t\t</a>\n\t\t\t\t\t<div class=\"contact-form\">\n\t\t\t\t\t\t<h1 class=\"contact-form__title\">Contactez- moi<br />".concat(name, "</h1>\n\t\t\t\t\t\t<form action=\"\" class=\"contact-form__form\">\n\t\t\t\t\t\t\t<label for=\"firstName\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tPr\xE9nom\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"\"\n\t\t\t\t\t\t\t\t\tid=\"firstName\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"lastName\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tNom\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"\"\n\t\t\t\t\t\t\t\t\tid=\"lastName\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"email\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tEmail\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"email\"\n\t\t\t\t\t\t\t\t\tname=\"\"\n\t\t\t\t\t\t\t\t\tid=\"email\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"message\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tVotre message\n\t\t\t\t\t\t\t\t<textarea\n\t\t\t\t\t\t\t\t\tname=\"\"\n\t\t\t\t\t\t\t\t\tid=\"message\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__textarea\"\n\t\t\t\t\t\t\t\t></textarea>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"contact-form__submit\">Envoyer</button>\n\t\t\t\t\t\t</form>\n\t\t\t\t\t</div>\n                  </div>\n              </div>");
+  return "\n      <div class=\"contact-modal modal\"  id=\"form\">\n                  <div class=\"contact-modal__wrap\">\n                  <a href=\"\" class=\"form-close\" data-target=\"contact\">\n\t\t\t\t\t\t<i class=\"fas fa-times contact-modal__close form-close\"></i>\n\t\t\t\t\t</a>\n\t\t\t\t\t<div class=\"contact-form\">\n\t\t\t\t\t\t<h1 class=\"contact-form__title\">Contactez- moi<br />".concat(name, "</h1>\n\t\t\t\t\t\t<form action=\"\" class=\"contact-form__form\" id=\"formContact\">\n\t\t\t\t\t\t\t<label for=\"firstName\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tPr\xE9nom\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"firstName\"\n\t\t\t\t\t\t\t\t\tid=\"firstName\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"lastName\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tNom\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"lastName\"\n\t\t\t\t\t\t\t\t\tid=\"lastName\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"email\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tEmail\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"email\"\n\t\t\t\t\t\t\t\t\tname=\"email\"\n\t\t\t\t\t\t\t\t\tid=\"email\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"message\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tVotre message\n\t\t\t\t\t\t\t\t<textarea\n\t\t\t\t\t\t\t\t\tname=\"message\"\n\t\t\t\t\t\t\t\t\tid=\"message\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__textarea\"\n\t\t\t\t\t\t\t\t></textarea>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"contact-form__submit\">Envoyer</button>\n\t\t\t\t\t\t</form>\n\t\t\t\t\t</div>\n                  </div>\n              </div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Form);
@@ -760,7 +759,7 @@ var Lightbox = function Lightbox() {
 };
 
 _defineProperty(Lightbox, "getHtml", function () {
-  return "\n    <div class=\"lightbox-modal modal\"  id=\"lightbox\">\n\t\t\t\t<div class=\"lightbox-modal__wrap\">\n\t\t\t\t<button class=\"lightbox-modal__close modal-close\" data-target=\"lightbox\">X</button>\n <a class=\"lightbox-modal__previous\" href><i class=\"fas fa-chevron-left\"></i></a>\n\t <div class=\"lightbox-modal__content lightbox-modal__img-wrap\">\n\t </div>\n\t <a href=\"\" class=\"lightbox-modal__next\"><i class=\"fas fa-chevron-right\"></i></a>\n\t <div class=\"lightbox-modal__title-wrap\">\n\t\t <p class=\"lightbox-modal__title\"></p>\n\t </div>\n\t\t\t\t</div>\n\t\t\t</div>";
+  return "\n    <div class=\"lightbox-modal modal\"  id=\"lightbox\">\n\t\t\t\t<div class=\"lightbox-modal__wrap\">\n\t\t\t\t<button class=\"lightbox-modal__close modal-close\" data-target=\"lightbox\">X</button>\n <a class=\"lightbox-modal__previous\" href><i class=\"fas fa-chevron-left\"></i></a>\n\t <div class=\"lightbox-modal__content lightbox-modal__img-wrap\">\n\t </div>\n\t <a href=\"\" class=\"lightbox-modal__next\" id=\"lightbox-next\"><i class=\"fas fa-chevron-right\"></i></a>\n\t <div class=\"lightbox-modal__title-wrap\">\n\t\t <p class=\"lightbox-modal__title\"></p>\n\t </div>\n\t\t\t\t</div>\n\t\t\t</div>";
 });
 
 _defineProperty(Lightbox, "getContent", function (media, path) {
@@ -801,7 +800,7 @@ var Media = /*#__PURE__*/function () {
     key: "getHtml",
     value: function getHtml(media, photographerName) {
       var mediaSrc = media.type == "image" ? "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(media.image) : "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(this.getThumbnailPath(media.video));
-      return "<a class=\"media-card modal-trigger background-element\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\" href>\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <i class=\"like-button fas fa-heart\" aria-hidden=\"true\" tabindex=\"0\"></i></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</a>");
+      return "<a class=\"media-card modal-trigger background-element\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\" href>\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <span class=\"like-button fas fa-heart background-element\" aria-hidden=\"true\" tabindex=\"0\"></span></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</a>");
     }
   }]);
 
@@ -1151,6 +1150,8 @@ var HomePage = /*#__PURE__*/function (_Page) {
         _this.photographerTags = new _components_Tags__WEBPACK_IMPORTED_MODULE_1__.default(tagList);
         document.addEventListener("click", function (event) {
           if (event.target.classList.contains("tag")) {
+            event.preventDefault();
+
             var filterPhotographer = _this.orm.getPhotographerByTag(event.target.getAttribute("data-tag"));
 
             _this.render(_this.cards(filterPhotographer), document.querySelector(".cards"));
@@ -1206,7 +1207,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Form__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Form */ "./src/components/Form.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -1339,6 +1348,8 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
           }
 
           if (event.target.classList.contains("dropdown-content")) {
+            event.preventDefault();
+
             var _dropdownContent = document.getElementById("sortMediaList");
 
             var dropdownButton = document.getElementById("sortMediaButton");
@@ -1427,41 +1438,106 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _lightBoxListenerStatus)) {
         document.addEventListener("keydown", function (event) {
-          if (event.key === "Escape" && event.target.classList.contains("media-card")) {
+          if (event.key === "Escape" && _this.lightBoxOpen == true) {
+            var backgroundElements = document.getElementsByClassName("background-element");
+            var targetId = document.querySelector("[data-id=\"".concat(_this.mediasKeys[_this.currentKey], "\"]"));
             document.getElementById("lightbox").style.display = "none";
+
+            var _iterator2 = _createForOfIteratorHelper(backgroundElements),
+                _step2;
+
+            try {
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                var element = _step2.value;
+                element.setAttribute("tabindex", "0");
+              }
+            } catch (err) {
+              _iterator2.e(err);
+            } finally {
+              _iterator2.f();
+            }
+
+            document.body.style.overflowY = "scroll";
+            _this.lightBoxOpen = false;
+            targetId.focus();
           }
 
-          if (event.key === "ArrowRight" && event.target.classList.contains("media-card")) {
+          if (event.key === "ArrowRight" && _this.lightBoxOpen == true) {
             nextMedia();
             console.log(event.target.classList.contains("media-card"));
           }
 
-          if (event.key === "ArrowLeft" && event.target.classList.contains("media-card")) {
+          if (event.key === "ArrowLeft" && _this.lightBoxOpen == true) {
             previousMedia();
           }
         });
         document.addEventListener("click", function (event) {
           if (event.target.parentNode.parentNode.classList.contains("modal-trigger") || event.target.classList.contains("modal-trigger")) {
+            event.preventDefault();
             var target = event.target.parentNode.parentNode;
             target = target.classList.contains("modal-trigger") ? event.target.parentNode.parentNode : event.target;
             _this.currentKey = _this.mediasKeys.indexOf(target.getAttribute("data-id"));
+            var backgroundElements = document.getElementsByClassName("background-element");
+
+            var _iterator3 = _createForOfIteratorHelper(backgroundElements),
+                _step3;
+
+            try {
+              for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                var element = _step3.value;
+                element.setAttribute("tabindex", "-1");
+              }
+            } catch (err) {
+              _iterator3.e(err);
+            } finally {
+              _iterator3.f();
+            }
+
+            document.body.style.overflowY = "hidden";
             var title = document.querySelector(".lightbox-modal__title");
             title.innerHTML = _this.medias[target.getAttribute("data-id")].alt;
 
             _this.render(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getContent(_this.medias[target.getAttribute("data-id")], _this.photographer.name.replace(/\s/g, "")), document.querySelector(".lightbox-modal__content"));
 
+            var nextButton = document.getElementById("lightbox-next");
             document.querySelector("#lightbox").style.display = "flex";
+            _this.lightBoxOpen = true;
+            nextButton.focus();
           }
 
           if (event.target.classList.contains("modal-close")) {
+            var _backgroundElements = document.getElementsByClassName("background-element");
+
+            var targetId = document.querySelector("[data-id=\"".concat(_this.mediasKeys[_this.currentKey], "\"]"));
             document.getElementById("lightbox").style.display = "none";
+
+            var _iterator4 = _createForOfIteratorHelper(_backgroundElements),
+                _step4;
+
+            try {
+              for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                var _element = _step4.value;
+
+                _element.setAttribute("tabindex", "0");
+              }
+            } catch (err) {
+              _iterator4.e(err);
+            } finally {
+              _iterator4.f();
+            }
+
+            document.body.style.overflowY = "scroll";
+            _this.lightBoxOpen = false;
+            targetId.focus();
           }
 
           if (event.target.classList.contains("lightbox-modal__previous") || event.target.parentNode.classList.contains("lightbox-modal__previous")) {
+            event.preventDefault();
             previousMedia();
           }
 
           if (event.target.classList.contains("lightbox-modal__next") || event.target.parentNode.classList.contains("lightbox-modal__next")) {
+            event.preventDefault();
             nextMedia();
           }
         });
@@ -1472,13 +1548,104 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
     _defineProperty(_assertThisInitialized(_this), "formInit", function () {
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _formListenerStatus)) {
+        document.addEventListener("submit", function (event) {
+          var form = document.querySelector('#formContact');
+          var data = new FormData(form);
+
+          var _iterator5 = _createForOfIteratorHelper(data),
+              _step5;
+
+          try {
+            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+              var _step5$value = _slicedToArray(_step5.value, 2),
+                  key = _step5$value[0],
+                  value = _step5$value[1];
+
+              console.log(key, ':', value);
+            }
+          } catch (err) {
+            _iterator5.e(err);
+          } finally {
+            _iterator5.f();
+          }
+
+          event.preventDefault();
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && _this.formOpen == true) {
+            var backgroundElements = document.getElementsByClassName("background-element");
+            document.getElementById("form").style.display = "none";
+
+            var _iterator6 = _createForOfIteratorHelper(backgroundElements),
+                _step6;
+
+            try {
+              for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+                var element = _step6.value;
+                element.setAttribute("tabindex", "0");
+              }
+            } catch (err) {
+              _iterator6.e(err);
+            } finally {
+              _iterator6.f();
+            }
+
+            var formButton = document.getElementById("formButton");
+            document.body.style.overflowY = "scroll";
+            _this.formOpen = false;
+            formButton.focus();
+          }
+        });
         document.addEventListener("click", function (event) {
           if (event.target.classList.contains("photographer-infos__contact")) {
             document.querySelector("#form").style.display = "flex";
+            var backgroundElements = document.getElementsByClassName("background-element");
+
+            var _iterator7 = _createForOfIteratorHelper(backgroundElements),
+                _step7;
+
+            try {
+              for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+                var element = _step7.value;
+                element.setAttribute("tabindex", "-1");
+              }
+            } catch (err) {
+              _iterator7.e(err);
+            } finally {
+              _iterator7.f();
+            }
+
+            document.body.style.overflowY = "hidden";
+            _this.formOpen = true;
+            var form = document.getElementById("firstName");
+            form.focus();
           }
 
-          if (event.target.parentNode.classList.contains("modal-close")) {
+          if (event.target.parentNode.classList.contains("form-close")) {
+            event.preventDefault();
             document.getElementById("form").style.display = "none";
+
+            var _backgroundElements2 = document.getElementsByClassName("background-element");
+
+            var _iterator8 = _createForOfIteratorHelper(_backgroundElements2),
+                _step8;
+
+            try {
+              for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+                var _element2 = _step8.value;
+
+                _element2.setAttribute("tabindex", "0");
+              }
+            } catch (err) {
+              _iterator8.e(err);
+            } finally {
+              _iterator8.f();
+            }
+
+            var formButton = document.getElementById("formButton");
+            document.body.style.overflowY = "scroll";
+            _this.formOpen = false;
+            formButton.focus();
           }
         });
 
@@ -1521,7 +1688,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
       _this.formInit();
 
-      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "\n    <section class=\"section photographer-infos\">\n      <div class=\"photographer-infos__details\">\n        <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1>\n        <span class=\"photographer-infos__location\"><p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p></span>\n        <span class=\"photographer-infos__catchphrase\"><p>").concat(_this.photographer.tagline, "</p></span>\n        <div class=\"photographer-infos__categories\">\n\t\t\t\t\t<ul class=\"photographer-infos__categories-list\">\n\t\t\t\t\t\t").concat(_this.photographerTags(), "\t\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n      </div>\n    <div class=\"photographer-infos__contact-wrap\">\n    <button class=\"photographer-infos__contact modal-trigger background-element\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"").concat(_this.photographer.name, "\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml()).concat(_components_Form__WEBPACK_IMPORTED_MODULE_5__.default.getHtml(_this.photographer.name)).concat(_this.widget(), "</main>");
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "\n    <section class=\"section photographer-infos\">\n      <div class=\"photographer-infos__details\">\n        <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1>\n        <span class=\"photographer-infos__location\"><p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p></span>\n        <span class=\"photographer-infos__catchphrase\"><p>").concat(_this.photographer.tagline, "</p></span>\n        <div class=\"photographer-infos__categories\">\n\t\t\t\t\t<ul class=\"photographer-infos__categories-list\">\n\t\t\t\t\t\t").concat(_this.photographerTags(), "\t\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n      </div>\n    <div class=\"photographer-infos__contact-wrap\">\n    <button id=\"formButton\" class=\"photographer-infos__contact background-element\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"").concat(_this.photographer.name, "\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml()).concat(_components_Form__WEBPACK_IMPORTED_MODULE_5__.default.getHtml(_this.photographer.name)).concat(_this.widget(), "</main>");
     });
 
     return _this;

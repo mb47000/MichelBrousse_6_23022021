@@ -7,7 +7,7 @@ class Lightbox {
  <a class="lightbox-modal__previous" href><i class="fas fa-chevron-left"></i></a>
 	 <div class="lightbox-modal__content lightbox-modal__img-wrap">
 	 </div>
-	 <a href="" class="lightbox-modal__next"><i class="fas fa-chevron-right"></i></a>
+	 <a href="" class="lightbox-modal__next" id="lightbox-next"><i class="fas fa-chevron-right"></i></a>
 	 <div class="lightbox-modal__title-wrap">
 		 <p class="lightbox-modal__title"></p>
 	 </div>

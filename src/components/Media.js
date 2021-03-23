@@ -28,7 +28,7 @@ class Media {
 							<p class="media-card__price">${media.price} €</p>
 							<p class="media-card__like">${
                 media.likes
-              } <i class="like-button fas fa-heart" aria-hidden="true" tabindex="0"></i></p>
+              } <span class="like-button fas fa-heart background-element" aria-hidden="true" tabindex="0"></span></p>
 						</div>
 					</a>`;
   }
