@@ -986,7 +986,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var jsonFetcher = new _classes_JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("../src/data/data.json");
+var jsonFetcher = new _classes_JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("../MichelBrousse_6_23022021/src/data/data.json");
 var orm = new _classes_Orm__WEBPACK_IMPORTED_MODULE_5__.default(await jsonFetcher.fetchData());
 var homePage = new _pages_HomePage__WEBPACK_IMPORTED_MODULE_3__.default();
 var photographerPage = new _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__.default();
