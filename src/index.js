@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import PhotographerPage from "./pages/PhotographerPage";
 import Orm from "./classes/Orm"
 
-const jsonFetcher = new JsonFetcher("../src/data/data.json");
+const jsonFetcher = new JsonFetcher("../MichelBrousse_6_23022021/src/data/data.json");
 const orm = new Orm(await jsonFetcher.fetchData());
 
 const homePage = new HomePage();
