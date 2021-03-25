@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    width: 100%;
+}
+
+.page-title{
+    padding: 2.75rem 0;
+    width: 25%;
+    @media (max-width: 1024px) {
+        width: 50%;
+        order: 2;
+    }
+}
+.section{
+    width:100%;
+    display: flex;
+    @media (max-width: 1024px) {
+        order: 4;
+    }
+}
