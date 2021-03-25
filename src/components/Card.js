@@ -11,7 +11,7 @@ class Card {
   };
 
   static getHtml = (entity) =>
-    `<div class="user"><a href="/photographer/${
+    `<div class="user"><a href="/MichelBrousse_6_23022021/photographer/${
       entity.id
     }" class="a-navigation user__link" data-id=${entity.id}><img class="user__img" src="./dist/SamplePhotos/PhotographersIDPhotos/${entity.name.replace(
       /\s/g,

@@ -666,7 +666,7 @@ _defineProperty(Card, "tags", function (tags) {
 });
 
 _defineProperty(Card, "getHtml", function (entity) {
-  return "<div class=\"user\"><a href=\"/photographer/".concat(entity.id, "\" class=\"a-navigation user__link\" data-id=").concat(entity.id, "><img class=\"user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\" alt=\"Portrait de ").concat(entity.name, "\"><h2 class=\"user__name\">").concat(entity.name, "</h2></a><div class=\"user__infos\"><span class=\"user__infos-location\"><p>").concat(entity.city, "</p></span><span class=\"user__infos-catchphrase\"><p>").concat(entity.tagline, "</p></span><span class=\"user__infos-price\"><p>").concat(entity.price, "\u20AC/jour</p></span></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></div>");
+  return "<div class=\"user\"><a href=\"/MichelBrousse_6_23022021/photographer/".concat(entity.id, "\" class=\"a-navigation user__link\" data-id=").concat(entity.id, "><img class=\"user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\" alt=\"Portrait de ").concat(entity.name, "\"><h2 class=\"user__name\">").concat(entity.name, "</h2></a><div class=\"user__infos\"><span class=\"user__infos-location\"><p>").concat(entity.city, "</p></span><span class=\"user__infos-catchphrase\"><p>").concat(entity.tagline, "</p></span><span class=\"user__infos-price\"><p>").concat(entity.price, "\u20AC/jour</p></span></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Card);
@@ -993,15 +993,15 @@ var photographerPage = new _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__.
 var appContainer = document.querySelector("body");
 var router = new _classes_Router__WEBPACK_IMPORTED_MODULE_0__.default(appContainer);
 router.addRoute({
-  path: "/",
+  path: "/MichelBrousse_6_23022021/",
   page: homePage.getPage
 });
 router.addRoute({
-  path: "/index.html",
+  path: "/MichelBrousse_6_23022021/index.html",
   page: homePage.getPage
 });
 router.addRoute({
-  path: "/404",
+  path: "/MichelBrousse_6_23022021/404",
   page: "<h1>page 404</h1>"
 });
 var photographers = orm.getAllPhotographers();
@@ -1009,7 +1009,7 @@ var photographers = orm.getAllPhotographers();
 for (var photographer in photographers) {
   var id = photographers[photographer].id;
   router.addRoute({
-    path: "/photographer/".concat(id),
+    path: "/MichelBrousse_6_23022021/photographer/".concat(id),
     page: photographerPage.getPage
   });
 }
