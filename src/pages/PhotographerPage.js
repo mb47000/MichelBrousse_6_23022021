@@ -37,6 +37,7 @@ class PhotographerPage extends Page {
       });
 
       document.addEventListener("click", (event) => {
+        event.preventDefault();
         if (event.target.classList.contains("like-button")) {
           addLike(event);
         }
@@ -359,6 +360,7 @@ class PhotographerPage extends Page {
     this.like();
     this.dropDownInit();
     this.formInit();
+    document.title = `${this.photographer.name} - Fisheye`;
 
     return `<main class="container">${Header.getHtml()}
     <section class="section photographer-infos">

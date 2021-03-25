@@ -37,7 +37,7 @@ body {
   min-height: 100vh;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
-  background: #e5e5e5;
+  background: #ffffff;
   padding: 0 3rem;
 }
 @media (max-width: 428px) {
@@ -758,7 +758,7 @@ html {
   z-index: 1000;
   width: calc(100% + 3rem);
   height: 100%;
-  background: #e5e5e5;
+  background: #ffffff;
   margin-left: -3rem;
   display: none;
   justify-content: center;

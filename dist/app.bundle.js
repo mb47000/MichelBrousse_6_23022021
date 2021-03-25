@@ -549,9 +549,6 @@ var Router = /*#__PURE__*/function () {
       var _this = this;
 
       document.addEventListener("click", function (event) {
-        // if (!event.target.classList.contains("scroll-to-content")) {
-        //   event.preventDefault();
-        // }
         if (event.target.classList.contains(querySelector)) {
           event.preventDefault();
 
@@ -728,7 +725,7 @@ var Header = /*#__PURE__*/function () {
   _createClass(Header, null, [{
     key: "getHtml",
     value: function getHtml() {
-      return "<header role=\"banner\" class=\"header\"><a href=\"../index.html\" class=\"header__link a-navigation background-element\"><img src=\"../../dist/SamplePhotos/logo-fisheye.png\" alt=\"Fisheye Homepage\" class=\"header__img\"/></a></header>";
+      return "<header role=\"banner\" class=\"header\"><a href=\"/index.html\" class=\"header__link a-navigation background-element\"><img src=\"../../dist/SamplePhotos/logo-fisheye.png\" alt=\"Fisheye Homepage\" class=\"header__img\"/></a></header>";
     }
   }]);
 
@@ -1174,6 +1171,7 @@ var HomePage = /*#__PURE__*/function (_Page) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getPage", function () {
+      document.title = 'Accueil - Fisheye';
       return "<main id=\"app\" class=\"container\">".concat(_this.header(), "<nav aria-label=\"Photographer categories\"  class=\"nav\">").concat(_this.tags(), "</nav>").concat(_this.anchorScroll(), "<h1 class=\"page-title\">Nos photographes</h1><section class=\"section cards\" id=\"main\">").concat(_this.cards(_this.photographers), "</section></main>");
     });
 
@@ -1304,6 +1302,8 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
           }
         });
         document.addEventListener("click", function (event) {
+          event.preventDefault();
+
           if (event.target.classList.contains("like-button")) {
             addLike(event);
           }
@@ -1688,6 +1688,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
       _this.formInit();
 
+      document.title = "".concat(_this.photographer.name, " - Fisheye");
       return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "\n    <section class=\"section photographer-infos\">\n      <div class=\"photographer-infos__details\">\n        <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1>\n        <span class=\"photographer-infos__location\"><p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p></span>\n        <span class=\"photographer-infos__catchphrase\"><p>").concat(_this.photographer.tagline, "</p></span>\n        <div class=\"photographer-infos__categories\">\n\t\t\t\t\t<ul class=\"photographer-infos__categories-list\">\n\t\t\t\t\t\t").concat(_this.photographerTags(), "\t\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n      </div>\n    <div class=\"photographer-infos__contact-wrap\">\n    <button id=\"formButton\" class=\"photographer-infos__contact background-element\" data-target=\"contact\">Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"").concat(_this.photographer.name, "\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml()).concat(_components_Form__WEBPACK_IMPORTED_MODULE_5__.default.getHtml(_this.photographer.name)).concat(_this.widget(), "</main>");
     });
 

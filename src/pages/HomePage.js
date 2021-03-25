@@ -22,7 +22,7 @@ class HomePage extends Page {
         let scrollPosition = window.scrollY;
         let url = window.location.pathname.split("/");
         let currentPath = url[url.length - 1];
-        
+
         if (currentPath == "/" || currentPath == "") {
           if (scrollPosition > this.lastScrollPosition) {
             document.querySelector(".scroll-to-content").style.display =
@@ -40,7 +40,7 @@ class HomePage extends Page {
     return AnchorContent.getHtml();
   };
 
-   // add event listeners for catch click on tags and call methods for filter photographer by tag
+  // add event listeners for catch click on tags and call methods for filter photographer by tag
   tags = () => {
     if (!this.#tagListenerStatus) {
       let tagList = [];
@@ -69,7 +69,7 @@ class HomePage extends Page {
 
       this.tagListenerStatus = true;
     }
-    
+
     return this.photographerTags.getHtml();
   };
 
@@ -81,10 +81,11 @@ class HomePage extends Page {
     return cards;
   };
 
-  getPage = () =>
-    `<main id="app" class="container">${this.header()}<nav aria-label="Photographer categories"  class="nav">${this.tags()}</nav>${this.anchorScroll()}<h1 class="page-title">Nos photographes</h1><section class="section cards" id="main">${this.cards(
+  getPage = () =>{
+    document.title = 'Accueil - Fisheye';
+    return `<main id="app" class="container">${this.header()}<nav aria-label="Photographer categories"  class="nav">${this.tags()}</nav>${this.anchorScroll()}<h1 class="page-title">Nos photographes</h1><section class="section cards" id="main">${this.cards(
       this.photographers
-    )}</section></main>`;
+    )}</section></main>`;}
 }
 
 export default HomePage;
