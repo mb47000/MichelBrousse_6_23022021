@@ -186,7 +186,6 @@ class PhotographerPage extends Page {
         }
         if (event.key === "ArrowRight" && this.lightBoxOpen == true) {
           nextMedia();
-          console.log(event.target.classList.contains("media-card"));
         }
         if (event.key === "ArrowLeft" && this.lightBoxOpen == true) {
           previousMedia();

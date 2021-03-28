@@ -1463,7 +1463,6 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
           if (event.key === "ArrowRight" && _this.lightBoxOpen == true) {
             nextMedia();
-            console.log(event.target.classList.contains("media-card"));
           }
 
           if (event.key === "ArrowLeft" && _this.lightBoxOpen == true) {
