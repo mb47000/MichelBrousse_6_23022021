@@ -83,7 +83,7 @@ class HomePage extends Page {
 
   getPage = () =>{
     document.title = 'Accueil - Fisheye';
-    return `<main id="app" class="container">${this.header()}<nav aria-label="Photographer categories"  class="nav">${this.tags()}</nav>${this.anchorScroll()}<h1 class="page-title">Nos photographes</h1><section class="section cards" id="main">${this.cards(
+    return `<main id="app" class="container">${this.header()}<nav aria-label="Categories des Photographes par tags"  class="nav">${this.tags()}</nav>${this.anchorScroll()}<h1 class="page-title">Nos photographes</h1><section class="section cards" id="main">${this.cards(
       this.photographers
     )}</section></main>`;}
 }

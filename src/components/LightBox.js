@@ -3,11 +3,11 @@ class Lightbox {
     return `
     <div class="lightbox-modal modal"  id="lightbox">
 				<div class="lightbox-modal__wrap">
-				<button class="lightbox-modal__close modal-close" data-target="lightbox">X</button>
- <a class="lightbox-modal__previous" href><i class="fas fa-chevron-left"></i></a>
+				<button class="lightbox-modal__close modal-close" data-target="lightbox" aria-label="fermeture de la lightbox"><span aria-hidden="true">X</span><span class="sr-only">fermeture de la lightbox</span></button>
+ <a class="lightbox-modal__previous" href aria-label="media précédent"><i class="fas fa-chevron-left"></i></a>
 	 <div class="lightbox-modal__content lightbox-modal__img-wrap">
 	 </div>
-	 <a href="" class="lightbox-modal__next" id="lightbox-next"><i class="fas fa-chevron-right"></i></a>
+	 <a href="" class="lightbox-modal__next" id="lightbox-next" aria-label="media suivant"><i class="fas fa-chevron-right"></i></a>
 	 <div class="lightbox-modal__title-wrap">
 		 <p class="lightbox-modal__title"></p>
 	 </div>

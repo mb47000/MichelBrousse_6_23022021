@@ -3,7 +3,7 @@ class Form {
     return `
       <div class="contact-modal modal"  id="form">
                   <div class="contact-modal__wrap">
-                  <a href="" class="form-close" data-target="contact">
+                  <a href="" aria-label="Fermeture formulaire" class="form-close" data-target="contact">
 						<i class="fas fa-times contact-modal__close form-close"></i>
 					</a>
 					<div class="contact-form">

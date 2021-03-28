@@ -57,10 +57,6 @@ a {
 button {
   cursor: pointer; }
 
-@media screen {
-  .sr-only {
-    display: none; } }
-
 @media speech {
   .screen-only {
     display: none; } }
@@ -258,6 +254,11 @@ html {
   .nav__link:before,
   .photographer-infos__categories-link:before {
     content: "#"; }
+    @media speech {
+      .user__categories-link:before,
+      .nav__link:before,
+      .photographer-infos__categories-link:before {
+        display: none; } }
 
 .nav__item:not(:first-child),
 .photographer-infos__categories-item:not(:first-child) {

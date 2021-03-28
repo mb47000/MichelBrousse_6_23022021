@@ -68,11 +68,6 @@ button {
   cursor: pointer;
 }
 
-.sr-only{
-  @media screen {
-    display: none;
-  }
-}
 .screen-only{
   @media speech {
     display: none;

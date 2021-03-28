@@ -67,7 +67,7 @@ class PhotographerPage extends Page {
             "dropdown-content"
           );
           const dropdownContent = document.getElementById("sortMediaList");
-          dropdownContent.style.display = "block			";
+          dropdownContent.style.display = "block";
           for (let content of dropdownLi) {
             content.tabIndex = "0";
           }
@@ -79,6 +79,7 @@ class PhotographerPage extends Page {
           const dropdownContent = document.getElementById("sortMediaList");
           const dropdownButton = document.getElementById("sortMediaButton");
           dropdownButton.innerHTML = event.target.innerHTML;
+          console.log(event.target)
           dropdownContent.prepend(event.target.parentNode);
           dropdownContent.style.display = "none";
           dropdownContent.tabIndex = "-1";
@@ -378,7 +379,7 @@ class PhotographerPage extends Page {
 				</div>
       </div>
     <div class="photographer-infos__contact-wrap">
-    <button id="formButton" class="photographer-infos__contact background-element" data-target="contact">Contactez-moi</button>
+    <button id="formButton" class="photographer-infos__contact background-element" data-target="contact"><span class="sr-only">Formulaire</span>Contactez-moi</button>
   </div>
   <div class="photographer-infos__img">
     <img
