@@ -37,8 +37,8 @@ class PhotographerPage extends Page {
       });
 
       document.addEventListener("click", (event) => {
-        event.preventDefault();
         if (event.target.classList.contains("like-button")) {
+          event.preventDefault();
           addLike(event);
         }
       });

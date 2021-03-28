@@ -1302,9 +1302,8 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
           }
         });
         document.addEventListener("click", function (event) {
-          event.preventDefault();
-
           if (event.target.classList.contains("like-button")) {
+            event.preventDefault();
             addLike(event);
           }
         });

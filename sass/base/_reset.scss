@@ -64,6 +64,10 @@ a{
   text-decoration: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .sr-only{
   @media screen {
     display: none;
