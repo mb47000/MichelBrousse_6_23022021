@@ -129,14 +129,14 @@ class PhotographerPage extends Page {
       case "Titre":
         this.mediasKeys.sort((a, b) => {
           if (
-            this.medias[a][this.medias[a].type] <
-            this.medias[b][this.medias[b].type]
+            this.medias[a].alt <
+            this.medias[b].alt
           ) {
             return -1;
           }
           if (
-            this.medias[a][this.medias[a].type] >
-            this.medias[b][this.medias[b].type]
+            this.medias[a].alt >
+            this.medias[b].alt
           ) {
             return 1;
           }

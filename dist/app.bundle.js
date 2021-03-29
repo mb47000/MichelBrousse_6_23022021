@@ -1117,7 +1117,7 @@ var HomePage = /*#__PURE__*/function (_Page) {
           var url = window.location.pathname.split("/");
           var currentPath = url[url.length - 1];
 
-          if (currentPath == "/" || currentPath == "") {
+          if (currentPath == "/" || currentPath == "" || currentPath == "/index.html") {
             if (scrollPosition > _this.lastScrollPosition) {
               document.querySelector(".scroll-to-content").style.display = "block";
             } else if (scrollPosition === 0) {
@@ -1409,11 +1409,11 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
         case "Titre":
           _this.mediasKeys.sort(function (a, b) {
-            if (_this.medias[a][_this.medias[a].type] < _this.medias[b][_this.medias[b].type]) {
+            if (_this.medias[a].alt < _this.medias[b].alt) {
               return -1;
             }
 
-            if (_this.medias[a][_this.medias[a].type] > _this.medias[b][_this.medias[b].type]) {
+            if (_this.medias[a].alt > _this.medias[b].alt) {
               return 1;
             }
 

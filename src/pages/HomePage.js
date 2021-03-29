@@ -23,7 +23,7 @@ class HomePage extends Page {
         let url = window.location.pathname.split("/");
         let currentPath = url[url.length - 1];
 
-        if (currentPath == "/" || currentPath == "") {
+        if (currentPath == "/" || currentPath == "" || currentPath == "/index.html") {
           if (scrollPosition > this.lastScrollPosition) {
             document.querySelector(".scroll-to-content").style.display =
               "block";
