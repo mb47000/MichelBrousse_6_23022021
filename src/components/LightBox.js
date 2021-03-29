@@ -11,8 +11,8 @@ class Lightbox {
 	 <div class="lightbox-modal__title-wrap">
 		 <p class="lightbox-modal__title"></p>
 	 </div>
-				</div>
-			</div>`;
+	</div>
+</div>`;
   };
 
   static getContent = (media, path) => {

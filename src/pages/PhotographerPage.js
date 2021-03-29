@@ -376,7 +376,7 @@ class PhotographerPage extends Page {
     document.title = `${this.photographer.name} - Fisheye`;
 
     return `<main class="container">${Header.getHtml()}
-    <section class="section photographer-infos" aria-label=”carte des informations du photographe”>
+    <section class="section photographer-infos" aria-label="carte des informations du photographe">
       <div class="photographer-infos__details">
         <h1 class="photographer-infos__name">${this.photographer.name}</h1>
         <span class="photographer-infos__location"><p>${
