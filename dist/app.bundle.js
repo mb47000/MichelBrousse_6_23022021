@@ -986,22 +986,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var jsonFetcher = new _classes_JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("../src/data/data.json");
+var jsonFetcher = new _classes_JsonFetcher__WEBPACK_IMPORTED_MODULE_2__.default("../MichelBrousse_6_23022021/src/data/data.json");
 var orm = new _classes_Orm__WEBPACK_IMPORTED_MODULE_5__.default(await jsonFetcher.fetchData());
 var homePage = new _pages_HomePage__WEBPACK_IMPORTED_MODULE_3__.default();
 var photographerPage = new _pages_PhotographerPage__WEBPACK_IMPORTED_MODULE_4__.default();
 var appContainer = document.querySelector("body");
 var router = new _classes_Router__WEBPACK_IMPORTED_MODULE_0__.default(appContainer);
 router.addRoute({
-  path: "/",
+  path: "/MichelBrousse_6_23022021/",
   page: homePage.getPage
 });
 router.addRoute({
-  path: "/index.html",
+  path: "/MichelBrousse_6_23022021/index.html",
   page: homePage.getPage
 });
 router.addRoute({
-  path: "/404",
+  path: "/MichelBrousse_6_23022021/404",
   page: "<h1>page 404</h1>"
 });
 var photographers = orm.getAllPhotographers();
@@ -1009,7 +1009,7 @@ var photographers = orm.getAllPhotographers();
 for (var photographer in photographers) {
   var id = photographers[photographer].id;
   router.addRoute({
-    path: "/photographer/".concat(id),
+    path: "/MichelBrousse_6_23022021/photographer/".concat(id),
     page: photographerPage.getPage
   });
 }
