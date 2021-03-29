@@ -179,6 +179,7 @@ class PhotographerPage extends Page {
     };
 
     if (!this.#lightBoxListenerStatus) {
+      // close lightbox on escape keydown 
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && this.lightBoxOpen == true) {
           const backgroundElements = document.getElementsByClassName(
@@ -203,6 +204,7 @@ class PhotographerPage extends Page {
         }
       });
 
+      // open the lightbox on click to media card
       document.addEventListener("click", (event) => {
         if (
           event.target.parentNode.parentNode.classList.contains(
@@ -240,6 +242,7 @@ class PhotographerPage extends Page {
           nextButton.focus();
         }
 
+        // close modal on click
         if (event.target.classList.contains("modal-close")) {
           const backgroundElements = document.getElementsByClassName(
             "background-element"
