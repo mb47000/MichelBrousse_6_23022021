@@ -17,6 +17,8 @@ class PhotographerPage extends Page {
 
   like = () => {
     if (!this.#likeListenerStatus) {
+
+      // add like to media, increments object likes and show likes. 
       const addLike = (event) => {
         this.medias[
           event.target.parentNode.parentNode.parentNode.getAttribute("data-id")
@@ -49,6 +51,7 @@ class PhotographerPage extends Page {
   dropDownInit = () => {
     if (!this.#dropDownListenerStatus) {
       document.addEventListener("keydown", (event) => {
+        // close dropdown when keydown on escape
         if (
           event.key === "Escape" &&
           event.target.classList.contains("dropdown-content")
@@ -57,12 +60,15 @@ class PhotographerPage extends Page {
           const dropdownButton = document.getElementById("sortMediaButton");
           dropdownContent.style.display = "none";
           dropdownContent.tabIndex = "-1";
+          dropdownButton.setAttribute("aria-expanded", "false");
           dropdownButton.focus();
         }
       });
 
+      // open dropdown for filter media on click on filter button
       document.addEventListener("click", (event) => {
         if (event.target.classList.contains("dropdown-button")) {
+          const dropdownButton = document.getElementById("sortMediaButton");
           const dropdownLi = document.getElementsByClassName(
             "dropdown-content"
           );
@@ -71,15 +77,16 @@ class PhotographerPage extends Page {
           for (let content of dropdownLi) {
             content.tabIndex = "0";
           }
+          dropdownButton.setAttribute("aria-expanded", "true");
           dropdownLi[1].focus();
         }
 
+        // on click, filter media by the choice taken
         if (event.target.classList.contains("dropdown-content")) {
           event.preventDefault();
           const dropdownContent = document.getElementById("sortMediaList");
           const dropdownButton = document.getElementById("sortMediaButton");
           dropdownButton.innerHTML = event.target.innerHTML;
-          console.log(event.target)
           dropdownContent.prepend(event.target.parentNode);
           dropdownContent.style.display = "none";
           dropdownContent.tabIndex = "-1";
@@ -88,6 +95,7 @@ class PhotographerPage extends Page {
             this.mediasCards(this.mediasKeys, this.photographer.name),
             document.querySelector(".photographer-medias__grid")
           );
+          dropdownButton.setAttribute("aria-expanded", "false");
           dropdownButton.focus();
         }
       });
@@ -139,6 +147,7 @@ class PhotographerPage extends Page {
   };
 
   lightBoxInit = () => {
+    // show next media in the lightbox
     const nextMedia = () => {
       if (this.currentKey < this.mediasKeys.length - 1) {
         let title = document.querySelector(".lightbox-modal__title");
@@ -154,6 +163,7 @@ class PhotographerPage extends Page {
       }
     };
 
+    // show media media in the lightbox
     const previousMedia = () => {
       if (this.currentKey > 0) {
         let title = document.querySelector(".lightbox-modal__title");
@@ -363,7 +373,7 @@ class PhotographerPage extends Page {
     document.title = `${this.photographer.name} - Fisheye`;
 
     return `<main class="container">${Header.getHtml()}
-    <section class="section photographer-infos">
+    <section class="section photographer-infos" aria-label=”carte des informations du photographe”>
       <div class="photographer-infos__details">
         <h1 class="photographer-infos__name">${this.photographer.name}</h1>
         <span class="photographer-infos__location"><p>${
@@ -393,7 +403,7 @@ class PhotographerPage extends Page {
   </div></section><section class="section photographer-medias">
   <div class="photographer-medias__sort-wrap">
 					<span id="sortMediasLabel" class="photographer-medias__sort-label">
-						Trier par
+						Trier par <span class="sr-only">popularité ou date ou titre</span>
 					</span>
 					<button id="sortMediaButton" class="photographer-medias__sort-button dropdown-button background-element" aria-haspopup="listbox" aria-labelledby="sortMediasLabel">
 						Popularité

@@ -657,7 +657,7 @@ var Card = function Card() {
 };
 
 _defineProperty(Card, "tags", function (tags) {
-  var tagHtml = "<ul class=\"user__categories-list\">";
+  var tagHtml = "<ul class=\"user__categories-list\" aria-label=\"filtrer par tag\">";
   tags.forEach(function (tag) {
     tagHtml += "<li class=\"user__categories-item background-element\"><a class=\"tag user__categories-link\" lang=\"en\" data-tag=\"".concat(tag, "\" href><span class=\"sr-only\">tag</span>").concat(tag, "</a></li>");
   });
@@ -666,7 +666,7 @@ _defineProperty(Card, "tags", function (tags) {
 });
 
 _defineProperty(Card, "getHtml", function (entity) {
-  return "<div class=\"user\"><a href=\"/photographer/".concat(entity.id, "\" class=\"a-navigation user__link\" data-id=").concat(entity.id, "><img class=\"user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\" alt=\"Portrait de ").concat(entity.name, "\"><h2 class=\"user__name\">").concat(entity.name, "</h2></a><div class=\"user__infos\"><span class=\"user__infos-location\"><p>").concat(entity.city, "</p></span><span class=\"user__infos-catchphrase\"><p>").concat(entity.tagline, "</p></span><span class=\"user__infos-price\"><p>").concat(entity.price, "\u20AC/jour</p></span></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></div>");
+  return "<article class=\"user\"><a href=\"/photographer/".concat(entity.id, "\" class=\"a-navigation user__link\" data-id=").concat(entity.id, "><img class=\"user__img\" src=\"./dist/SamplePhotos/PhotographersIDPhotos/").concat(entity.name.replace(/\s/g, ""), ".jpg\" alt=\"Portrait de ").concat(entity.name, "\"><h2 class=\"user__name\">").concat(entity.name, "</h2></a><div class=\"user__infos\"><span class=\"user__infos-location\"><p>").concat(entity.city, "</p></span><span class=\"user__infos-catchphrase\"><p>").concat(entity.tagline, "</p></span><span class=\"user__infos-price\"><p>").concat(entity.price, "\u20AC/jour</p></span></div>\n    <div class=\"user__categories\">").concat(Card.tags(entity.tags), "\n    </div></article>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Card);
@@ -693,7 +693,7 @@ var Form = function Form() {
 };
 
 _defineProperty(Form, "getHtml", function (name) {
-  return "\n      <div class=\"contact-modal modal\"  id=\"form\">\n                  <div class=\"contact-modal__wrap\">\n                  <a href=\"\" aria-label=\"Fermeture formulaire\" class=\"form-close\" data-target=\"contact\">\n\t\t\t\t\t\t<i class=\"fas fa-times contact-modal__close form-close\"></i>\n\t\t\t\t\t</a>\n\t\t\t\t\t<div class=\"contact-form\">\n\t\t\t\t\t\t<h1 class=\"contact-form__title\">Contactez- moi<br />".concat(name, "</h1>\n\t\t\t\t\t\t<form action=\"\" class=\"contact-form__form\" id=\"formContact\">\n\t\t\t\t\t\t\t<label for=\"firstName\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tPr\xE9nom\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"firstName\"\n\t\t\t\t\t\t\t\t\tid=\"firstName\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"lastName\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tNom\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"lastName\"\n\t\t\t\t\t\t\t\t\tid=\"lastName\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"email\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tEmail\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"email\"\n\t\t\t\t\t\t\t\t\tname=\"email\"\n\t\t\t\t\t\t\t\t\tid=\"email\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"message\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tVotre message\n\t\t\t\t\t\t\t\t<textarea\n\t\t\t\t\t\t\t\t\tname=\"message\"\n\t\t\t\t\t\t\t\t\tid=\"message\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__textarea\"\n\t\t\t\t\t\t\t\t></textarea>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"contact-form__submit\">Envoyer</button>\n\t\t\t\t\t\t</form>\n\t\t\t\t\t</div>\n                  </div>\n              </div>");
+  return "\n      <div class=\"contact-modal modal\"  id=\"form\">\n                  <div class=\"contact-modal__wrap\">\n                  <a href=\"\" aria-label=\"Fermeture formulaire\" class=\"form-close\" data-target=\"contact\">\n\t\t\t\t\t\t<span class=\"fas fa-times contact-modal__close form-close\"></span>\n\t\t\t\t\t</a>\n\t\t\t\t\t<div class=\"contact-form\">\n\t\t\t\t\t\t<h1 class=\"contact-form__title\">Contactez- moi<br />".concat(name, "</h1>\n\t\t\t\t\t\t<form action=\"\" class=\"contact-form__form\" id=\"formContact\">\n\t\t\t\t\t\t\t<label for=\"firstName\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tPr\xE9nom\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"firstName\"\n\t\t\t\t\t\t\t\t\tid=\"firstName\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"lastName\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tNom\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"lastName\"\n\t\t\t\t\t\t\t\t\tid=\"lastName\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"email\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tEmail\n\t\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\t\ttype=\"email\"\n\t\t\t\t\t\t\t\t\tname=\"email\"\n\t\t\t\t\t\t\t\t\tid=\"email\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__input\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label for=\"message\" class=\"contact-form__label\">\n\t\t\t\t\t\t\t\tVotre message\n\t\t\t\t\t\t\t\t<textarea\n\t\t\t\t\t\t\t\t\tname=\"message\"\n\t\t\t\t\t\t\t\t\tid=\"message\"\n\t\t\t\t\t\t\t\t\tclass=\"contact-form__textarea\"\n\t\t\t\t\t\t\t\t></textarea>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"contact-form__submit\">Envoyer</button>\n\t\t\t\t\t\t</form>\n\t\t\t\t\t</div>\n                  </div>\n              </div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Form);
@@ -756,7 +756,7 @@ var Lightbox = function Lightbox() {
 };
 
 _defineProperty(Lightbox, "getHtml", function () {
-  return "\n    <div class=\"lightbox-modal modal\"  id=\"lightbox\">\n\t\t\t\t<div class=\"lightbox-modal__wrap\">\n\t\t\t\t<button class=\"lightbox-modal__close modal-close\" data-target=\"lightbox\" aria-label=\"fermeture de la lightbox\"><span aria-hidden=\"true\">X</span><span class=\"sr-only\">fermeture de la lightbox</span></button>\n <a class=\"lightbox-modal__previous\" href aria-label=\"media pr\xE9c\xE9dent\"><i class=\"fas fa-chevron-left\"></i></a>\n\t <div class=\"lightbox-modal__content lightbox-modal__img-wrap\">\n\t </div>\n\t <a href=\"\" class=\"lightbox-modal__next\" id=\"lightbox-next\" aria-label=\"media suivant\"><i class=\"fas fa-chevron-right\"></i></a>\n\t <div class=\"lightbox-modal__title-wrap\">\n\t\t <p class=\"lightbox-modal__title\"></p>\n\t </div>\n\t\t\t\t</div>\n\t\t\t</div>";
+  return "\n    <div class=\"lightbox-modal modal\"  id=\"lightbox\">\n\t\t\t\t<div class=\"lightbox-modal__wrap\">\n\t\t\t\t<button class=\"lightbox-modal__close modal-close\" data-target=\"lightbox\" aria-label=\"fermeture de la lightbox\"><span aria-hidden=\"true\">X</span><span class=\"sr-only\">fermeture de la lightbox</span></button>\n <a class=\"lightbox-modal__previous\" href aria-label=\"media pr\xE9c\xE9dent\"><span class=\"fas fa-chevron-left\"></span></a>\n\t <div class=\"lightbox-modal__content lightbox-modal__img-wrap\">\n\t </div>\n\t <a href=\"\" class=\"lightbox-modal__next\" id=\"lightbox-next\" aria-label=\"media suivant\"><span class=\"fas fa-chevron-right\"></span></a>\n\t <div class=\"lightbox-modal__title-wrap\">\n\t\t <p class=\"lightbox-modal__title\"></p>\n\t </div>\n\t\t\t\t</div>\n\t\t\t</div>";
 });
 
 _defineProperty(Lightbox, "getContent", function (media, path) {
@@ -797,7 +797,7 @@ var Media = /*#__PURE__*/function () {
     key: "getHtml",
     value: function getHtml(media, photographerName) {
       var mediaSrc = media.type == "image" ? "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(media.image) : "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(this.getThumbnailPath(media.video));
-      return "<a class=\"media-card modal-trigger background-element\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\" href>\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <span class=\"like-button fas fa-heart background-element\" aria-hidden=\"true\" tabindex=\"0\"></span></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</a>");
+      return "<a class=\"media-card modal-trigger background-element\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\" href>\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <span class=\"like-button fas fa-heart background-element\" aria-label=\"boutton j'aime\" tabindex=\"0\"><span class=\"sr-only\">j'aime</span></span></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</a>");
     }
   }]);
 
@@ -832,7 +832,7 @@ var PhotographerWidget = function PhotographerWidget() {
 };
 
 _defineProperty(PhotographerWidget, "getHtml", function (likes, price) {
-  return "<div class=\"photographer-widget\">\n        <span class=\"photographer-widget__likes-wrap\">\n            <p class=\"photographer-widget__likes-count\">".concat(likes, "<i class=\"fas fa-heart photographer-widget__likes-button\" aria-hidden=\"true\"></i></p>\n        </span>\n        <span class=\"photographer-widget__price-wrap\">").concat(price, "\u20AC / jour</span>\n    </div>");
+  return "<div class=\"photographer-widget\" aria-label=\u201DWidget photographe\u201D>\n        <span class=\"photographer-widget__likes-wrap\">\n            <p class=\"photographer-widget__likes-count\">".concat(likes, " <span class=\"sr-only\">j'aime</span><span class=\"fas fa-heart photographer-widget__likes-button\" aria-hidden=\"true\"></span></p>\n        </span>\n        <span class=\"photographer-widget__price-wrap\">").concat(price, "\u20AC / jour</span>\n    </div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhotographerWidget);
@@ -1290,6 +1290,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
     _defineProperty(_assertThisInitialized(_this), "like", function () {
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _likeListenerStatus)) {
+        // add like to media, increments object likes and show likes. 
         var addLike = function addLike(event) {
           _this.medias[event.target.parentNode.parentNode.parentNode.getAttribute("data-id")].likes++;
           event.target.previousSibling.data = "".concat(++event.target.previousSibling.data, " ");
@@ -1315,16 +1316,20 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
     _defineProperty(_assertThisInitialized(_this), "dropDownInit", function () {
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _dropDownListenerStatus)) {
         document.addEventListener("keydown", function (event) {
+          // close dropdown when keydown on escape
           if (event.key === "Escape" && event.target.classList.contains("dropdown-content")) {
             var dropdownContent = document.getElementById("sortMediaList");
             var dropdownButton = document.getElementById("sortMediaButton");
             dropdownContent.style.display = "none";
             dropdownContent.tabIndex = "-1";
+            dropdownButton.setAttribute("aria-expanded", "false");
             dropdownButton.focus();
           }
-        });
+        }); // open dropdown for filter media on click on filter button
+
         document.addEventListener("click", function (event) {
           if (event.target.classList.contains("dropdown-button")) {
+            var dropdownButton = document.getElementById("sortMediaButton");
             var dropdownLi = document.getElementsByClassName("dropdown-content");
             var dropdownContent = document.getElementById("sortMediaList");
             dropdownContent.style.display = "block";
@@ -1343,17 +1348,19 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
               _iterator.f();
             }
 
+            dropdownButton.setAttribute("aria-expanded", "true");
             dropdownLi[1].focus();
-          }
+          } // on click, filter media by the choice taken
+
 
           if (event.target.classList.contains("dropdown-content")) {
             event.preventDefault();
 
             var _dropdownContent = document.getElementById("sortMediaList");
 
-            var dropdownButton = document.getElementById("sortMediaButton");
-            dropdownButton.innerHTML = event.target.innerHTML;
-            console.log(event.target);
+            var _dropdownButton = document.getElementById("sortMediaButton");
+
+            _dropdownButton.innerHTML = event.target.innerHTML;
 
             _dropdownContent.prepend(event.target.parentNode);
 
@@ -1364,7 +1371,9 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
             _this.render(_this.mediasCards(_this.mediasKeys, _this.photographer.name), document.querySelector(".photographer-medias__grid"));
 
-            dropdownButton.focus();
+            _dropdownButton.setAttribute("aria-expanded", "false");
+
+            _dropdownButton.focus();
           }
         });
 
@@ -1416,6 +1425,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "lightBoxInit", function () {
+      // show next media in the lightbox
       var nextMedia = function nextMedia() {
         if (_this.currentKey < _this.mediasKeys.length - 1) {
           var title = document.querySelector(".lightbox-modal__title");
@@ -1424,7 +1434,8 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
 
           title.innerHTML = _this.medias[_this.mediasKeys[_this.currentKey]].alt;
         }
-      };
+      }; // show media media in the lightbox
+
 
       var previousMedia = function previousMedia() {
         if (_this.currentKey > 0) {
@@ -1688,7 +1699,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
       _this.formInit();
 
       document.title = "".concat(_this.photographer.name, " - Fisheye");
-      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "\n    <section class=\"section photographer-infos\">\n      <div class=\"photographer-infos__details\">\n        <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1>\n        <span class=\"photographer-infos__location\"><p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p></span>\n        <span class=\"photographer-infos__catchphrase\"><p>").concat(_this.photographer.tagline, "</p></span>\n        <div class=\"photographer-infos__categories\">\n\t\t\t\t\t<ul class=\"photographer-infos__categories-list\">\n\t\t\t\t\t\t").concat(_this.photographerTags(), "\t\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n      </div>\n    <div class=\"photographer-infos__contact-wrap\">\n    <button id=\"formButton\" class=\"photographer-infos__contact background-element\" data-target=\"contact\"><span class=\"sr-only\">Formulaire</span>Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"").concat(_this.photographer.name, "\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml()).concat(_components_Form__WEBPACK_IMPORTED_MODULE_5__.default.getHtml(_this.photographer.name)).concat(_this.widget(), "</main>");
+      return "<main class=\"container\">".concat(_components_Header__WEBPACK_IMPORTED_MODULE_1__.default.getHtml(), "\n    <section class=\"section photographer-infos\" aria-label=\u201Dcarte des informations du photographe\u201D>\n      <div class=\"photographer-infos__details\">\n        <h1 class=\"photographer-infos__name\">").concat(_this.photographer.name, "</h1>\n        <span class=\"photographer-infos__location\"><p>").concat(_this.photographer.city, ", ").concat(_this.photographer.country, "</p></span>\n        <span class=\"photographer-infos__catchphrase\"><p>").concat(_this.photographer.tagline, "</p></span>\n        <div class=\"photographer-infos__categories\">\n\t\t\t\t\t<ul class=\"photographer-infos__categories-list\">\n\t\t\t\t\t\t").concat(_this.photographerTags(), "\t\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n      </div>\n    <div class=\"photographer-infos__contact-wrap\">\n    <button id=\"formButton\" class=\"photographer-infos__contact background-element\" data-target=\"contact\"><span class=\"sr-only\">Formulaire</span>Contactez-moi</button>\n  </div>\n  <div class=\"photographer-infos__img\">\n    <img\n      class=\"user__img\"\n      src=\"../../dist/SamplePhotos/PhotographersIDPhotos/").concat(_this.photographer.name.replace(/\s/g, ""), ".jpg\"\n      alt=\"").concat(_this.photographer.name, "\"\n    />\n  </div></section><section class=\"section photographer-medias\">\n  <div class=\"photographer-medias__sort-wrap\">\n\t\t\t\t\t<span id=\"sortMediasLabel\" class=\"photographer-medias__sort-label\">\n\t\t\t\t\t\tTrier par <span class=\"sr-only\">popularit\xE9 ou date ou titre</span>\n\t\t\t\t\t</span>\n\t\t\t\t\t<button id=\"sortMediaButton\" class=\"photographer-medias__sort-button dropdown-button background-element\" aria-haspopup=\"listbox\" aria-labelledby=\"sortMediasLabel\">\n\t\t\t\t\t\tPopularit\xE9\n\t\t\t\t\t</button>\n\t\t\t\t\t<ul id=\"sortMediaList\" class=\"photographer-medias__sort-list dropdown-content\" tabindex=\"-1\" role=\"listbox\" aria-labelledby=\"exp_elem\">\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Popularit\xE9</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Date</a>\n\t\t\t\t\t\t</li><li class=\"photographer-medias__sort-option\" role=\"option\">\n\t\t\t\t\t\t\t<a href=\"\" class=\"photographer-medias__sort-option-link dropdown-content\">Titre</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div><div class=\"photographer-medias__grid\">").concat(_this.mediasCards(_this.mediasKeys, _this.photographer.name), "</div></section>").concat(_components_Lightbox__WEBPACK_IMPORTED_MODULE_3__.default.getHtml()).concat(_components_Form__WEBPACK_IMPORTED_MODULE_5__.default.getHtml(_this.photographer.name)).concat(_this.widget(), "</main>");
     });
 
     return _this;

@@ -4,7 +4,7 @@ class Form {
       <div class="contact-modal modal"  id="form">
                   <div class="contact-modal__wrap">
                   <a href="" aria-label="Fermeture formulaire" class="form-close" data-target="contact">
-						<i class="fas fa-times contact-modal__close form-close"></i>
+						<span class="fas fa-times contact-modal__close form-close"></span>
 					</a>
 					<div class="contact-form">
 						<h1 class="contact-form__title">Contactez- moi<br />${name}</h1>
