@@ -797,7 +797,7 @@ var Media = /*#__PURE__*/function () {
     key: "getHtml",
     value: function getHtml(media, photographerName) {
       var mediaSrc = media.type == "image" ? "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(media.image) : "../../dist/SamplePhotos/".concat(photographerName.replace(/\s/g, ""), "/").concat(this.getThumbnailPath(media.video));
-      return "<a class=\"media-card modal-trigger background-element\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\" href>\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <span class=\"like-button fas fa-heart background-element\" aria-label=\"boutton j'aime\" tabindex=\"0\"><span class=\"sr-only\">j'aime</span></span></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</a>");
+      return "<a class=\"media-card modal-trigger background-element\" data-target=\"lightbox\" data-id=".concat(media.id, " tabIndex=\"0\" href aria-label=\"carte media\">\n\t\t\t\t\t\t<div class=\"media-card__upper-body\">\n\t\t\t\t\t\t\t<img\n\t\t\t\t\t\t\t\tclass=\"media-card__img\"\n\t\t\t\t\t\t\t\tsrc=\"").concat(mediaSrc, "\"\n\t\t\t\t\t\t\t\talt=\"").concat(media.alt.trim(), "\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"media-card__lower-body\">\n\t\t\t\t\t\t\t<p class=\"media-card__title\">").concat(media.alt.trim(), "</p>\n\t\t\t\t\t\t\t<p class=\"media-card__price\">").concat(media.price, " \u20AC</p>\n\t\t\t\t\t\t\t<p class=\"media-card__like\">").concat(media.likes, " <span class=\"like-button fas fa-heart background-element\" tabindex=\"0\" aria-hidden=\"false\"><span class=\"sr-only\">ajouter j'aime</span></span></p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</a>");
     }
   }]);
 
@@ -832,7 +832,7 @@ var PhotographerWidget = function PhotographerWidget() {
 };
 
 _defineProperty(PhotographerWidget, "getHtml", function (likes, price) {
-  return "<div class=\"photographer-widget\" aria-label=\u201DWidget photographe\u201D>\n        <span class=\"photographer-widget__likes-wrap\">\n            <p class=\"photographer-widget__likes-count\">".concat(likes, " <span class=\"sr-only\">j'aime</span><span class=\"fas fa-heart photographer-widget__likes-button\" aria-hidden=\"true\"></span></p>\n        </span>\n        <span class=\"photographer-widget__price-wrap\">").concat(price, "\u20AC / jour</span>\n    </div>");
+  return "<div class=\"photographer-widget\" aria-label=\"Widget photographe\">\n        <span class=\"photographer-widget__likes-wrap\">\n            <p class=\"photographer-widget__likes-count\">".concat(likes, " <span class=\"sr-only\">j'aime</span><span class=\"fas fa-heart photographer-widget__likes-button\" aria-hidden=\"true\"></span></p>\n        </span>\n        <span class=\"photographer-widget__price-wrap\">").concat(price, "\u20AC / jour</span>\n    </div>");
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhotographerWidget);
@@ -1448,6 +1448,7 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
       };
 
       if (!_classPrivateFieldGet(_assertThisInitialized(_this), _lightBoxListenerStatus)) {
+        // close lightbox on escape keydown 
         document.addEventListener("keydown", function (event) {
           if (event.key === "Escape" && _this.lightBoxOpen == true) {
             var backgroundElements = document.getElementsByClassName("background-element");
@@ -1480,7 +1481,8 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
           if (event.key === "ArrowLeft" && _this.lightBoxOpen == true) {
             previousMedia();
           }
-        });
+        }); // open the lightbox on click to media card
+
         document.addEventListener("click", function (event) {
           if (event.target.parentNode.parentNode.classList.contains("modal-trigger") || event.target.classList.contains("modal-trigger")) {
             event.preventDefault();
@@ -1513,7 +1515,8 @@ var PhotographerPage = /*#__PURE__*/function (_Page) {
             document.querySelector("#lightbox").style.display = "flex";
             _this.lightBoxOpen = true;
             nextButton.focus();
-          }
+          } // close modal on click
+
 
           if (event.target.classList.contains("modal-close")) {
             var _backgroundElements = document.getElementsByClassName("background-element");

@@ -15,7 +15,7 @@ class Media {
 
     return `<a class="media-card modal-trigger background-element" data-target="lightbox" data-id=${
       media.id
-    } tabIndex="0" href>
+    } tabIndex="0" href aria-label="carte media">
 						<div class="media-card__upper-body">
 							<img
 								class="media-card__img"
@@ -28,7 +28,7 @@ class Media {
 							<p class="media-card__price">${media.price} €</p>
 							<p class="media-card__like">${
                 media.likes
-              } <span class="like-button fas fa-heart background-element" aria-label="boutton j'aime" tabindex="0"><span class="sr-only">j'aime</span></span></p>
+              } <span class="like-button fas fa-heart background-element" tabindex="0" aria-hidden="false"><span class="sr-only">ajouter j'aime</span></span></p>
 						</div>
 					</a>`;
   }
